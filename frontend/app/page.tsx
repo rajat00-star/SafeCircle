@@ -5,53 +5,15 @@ import Scramble from "@/components/Scramble";
 import ScanRail from "@/components/ScanRail";
 import ScrollIndicator from "@/components/ScrollIndicator";
 import ThreatField from "@/components/ThreatField";
-import HeroScene from "@/components/HeroLoader";
+import GlobeHero from "@/components/GlobeHero";
 
-const HEADLINE = ["The internet", "isn’t always", "what it seems."];
 const MARQUEE = ["Urgency", "Impersonation", "OTP requests", "Payment pressure", "Threats", "Secrecy", "Look-alike links", "Remote access"];
 
 export default function Home() {
   return (
     <>
       <ScrollIndicator />
-      <section id="hero" className="hero" aria-labelledby="hero-title">
-        <HeroScene />
-        <div className="container" style={{ width: "100%" }}>
-          <div className="hero-grid">
-            <div>
-              <span className="eyebrow fade-up" style={{ ["--d" as string]: 200 }}>SafeCircle Guardian · Scam &amp; phishing analysis</span>
-              <h1 id="hero-title" className="display" aria-label={HEADLINE.join(" ")}>
-                {HEADLINE.map((line, i) => (
-                  <span className="line" key={line} aria-hidden="true">
-                    <span className="rise" style={{ ["--d" as string]: 250 + i * 150 }}>
-                      <Scramble text={line.toUpperCase()} delay={350 + i * 150} duration={650} startOnView={false} />
-                    </span>
-                  </span>
-                ))}
-              </h1>
-            </div>
-            <div className="hero-side fade-up" style={{ ["--d" as string]: 800 }}>
-              <p className="label-caps" style={{ color: "var(--silver)", lineHeight: 1.9, marginBottom: 16 }}>
-                Understand the signals.<br />Expose the deception.<br />Make safer decisions.
-              </p>
-              <p className="small" style={{ fontSize: 15, color: "var(--muted)" }}>
-                Paste a message or link. SafeCircle points to the exact words and link features that look like a scam,
-                explains each one, and tells you what to do next.
-              </p>
-              <div className="row">
-                <a href="#analyze" className="btn primary">Analyze a message <span className="arrow" aria-hidden="true">→</span></a>
-                <a href="#protection" className="btn glass">Explore protection</a>
-              </div>
-            </div>
-          </div>
-          <div className="hero-meta fade-up" style={{ ["--d" as string]: 1100 }}>
-            <span>Explainable by design</span>
-            <span>Links read, never opened</span>
-            <span>Nothing stored by default</span>
-            <span>Scroll ↓</span>
-          </div>
-        </div>
-      </section>
+      <GlobeHero />
 
       <Analyzer />
 
