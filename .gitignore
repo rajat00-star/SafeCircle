@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.db
+.env
+.env.*
+!.env.example
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/next-env.d.ts
+frontend/tsconfig.tsbuildinfo
+e2e/node_modules/
+e2e/screenshots/
+.pytest_cache/

@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-10-10T04:46:49+00:00",
+  "thresholds": {
+    "suspicious": 30,
+    "high": 60
+  },
+  "messages_dataset": "SMS Spam Collection, held-out 20% stratified test split (seed 42)",
+  "urls_dataset": "Phishing.Database phishing-links-ACTIVE.txt (MIT), random sample vs Cisco Umbrella top-1M hostnames, uniform random sample",
+  "n_urls_per_class": 5000,
+  "metrics": {
+    "rules_only@30": {
+      "precision": 0.9091,
+      "recall": 0.2013,
+      "f1": 0.3297,
+      "false_positive_rate": 0.0031
+    },
+    "ml_only@0.5": {
+      "precision": 0.9724,
+      "recall": 0.9463,
+      "f1": 0.9592,
+      "false_positive_rate": 0.0041
+    },
+    "hybrid@30": {
+      "precision": 0.9467,
+      "recall": 0.953,
+      "f1": 0.9498,
+      "false_positive_rate": 0.0083
+    },
+    "hybrid@60": {
+      "precision": 1.0,
+      "recall": 0.6376,
+      "f1": 0.7787,
+      "false_positive_rate": 0.0
+    },
+    "url_full_url": {
+      "precision": 0.9511,
+      "recall": 0.634,
+      "f1": 0.7608,
+      "false_positive_rate": 0.0326
+    },
+    "url_hostname_only": {
+      "precision": 0.9492,
+      "recall": 0.609,
+      "f1": 0.742,
+      "false_positive_rate": 0.0326
+    },
+    "url_full_url_heuristics_only": {
+      "precision": 0.9347,
+      "recall": 0.1918,
+      "f1": 0.3183,
+      "false_positive_rate": 0.0134
+    },
+    "url_hostname_only_heuristics_only": {
+      "precision": 0.8822,
+      "recall": 0.1004,
+      "f1": 0.1803,
+      "false_positive_rate": 0.0134
+    }
+  },
+  "latency_message_p50_ms": 0.685,
+  "latency_message_p95_ms": 1.169,
+  "latency_url_p50_ms": 0.936
+}

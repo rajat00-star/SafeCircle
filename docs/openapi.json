@@ -1,0 +1,2032 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "SafeCircle Guardian API",
+  "description": "Explainable scam, phishing and social-engineering detection with consent-based trusted contacts.",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/api/v1/health": {
+   "get": {
+    "tags": [
+     "meta"
+    ],
+    "summary": "Health",
+    "operationId": "health_api_v1_health_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/meta/model-card": {
+   "get": {
+    "tags": [
+     "meta"
+    ],
+    "summary": "How the detector works and how it was evaluated",
+    "operationId": "model_card_api_v1_meta_model_card_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/analyze/message": {
+   "post": {
+    "tags": [
+     "analysis"
+    ],
+    "summary": "Check a message, email or chat for scam and phishing signals",
+    "operationId": "analyze_message_endpoint_api_v1_analyze_message_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/MessageIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AnalysisOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/analyze/url": {
+   "post": {
+    "tags": [
+     "analysis"
+    ],
+    "summary": "Check a single link without opening it",
+    "operationId": "analyze_url_endpoint_api_v1_analyze_url_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UrlIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AnalysisOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/profiles": {
+   "post": {
+    "tags": [
+     "profile & privacy"
+    ],
+    "summary": "Create an anonymous profile. No email or phone number is required.",
+    "operationId": "create_profile_api_v1_profiles_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ProfileCreate"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProfileCreated"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/profiles/me": {
+   "get": {
+    "tags": [
+     "profile & privacy"
+    ],
+    "summary": "Me",
+    "operationId": "me_api_v1_profiles_me_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProfileOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "profile & privacy"
+    ],
+    "summary": "Update privacy settings",
+    "operationId": "update_settings_api_v1_profiles_me_patch",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SettingsIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProfileOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "profile & privacy"
+    ],
+    "summary": "Delete the profile and all data, including contacts and alerts",
+    "operationId": "delete_profile_api_v1_profiles_me_delete",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/profiles/me/export": {
+   "get": {
+    "tags": [
+     "profile & privacy"
+    ],
+    "summary": "Download everything stored about this profile",
+    "operationId": "export_api_v1_profiles_me_export_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/analyses": {
+   "get": {
+    "tags": [
+     "profile & privacy"
+    ],
+    "summary": "History (only if history is enabled)",
+    "operationId": "list_analyses_api_v1_analyses_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/AnalysisRecord"
+         },
+         "title": "Response List Analyses Api V1 Analyses Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "profile & privacy"
+    ],
+    "summary": "Clear all history",
+    "operationId": "clear_analyses_api_v1_analyses_delete",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/analyses/{analysis_id}": {
+   "delete": {
+    "tags": [
+     "profile & privacy"
+    ],
+    "summary": "Delete Analysis",
+    "operationId": "delete_analysis_api_v1_analyses__analysis_id__delete",
+    "parameters": [
+     {
+      "name": "analysis_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Analysis Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/contacts": {
+   "post": {
+    "tags": [
+     "trusted contacts"
+    ],
+    "summary": "Add Contact",
+    "operationId": "add_contact_api_v1_contacts_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ContactCreate"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ContactCreated"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "get": {
+    "tags": [
+     "trusted contacts"
+    ],
+    "summary": "List Contacts",
+    "operationId": "list_contacts_api_v1_contacts_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/ContactOut"
+         },
+         "title": "Response List Contacts Api V1 Contacts Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/contacts/{contact_id}": {
+   "delete": {
+    "tags": [
+     "trusted contacts"
+    ],
+    "summary": "Revoke a contact (ends the link immediately)",
+    "operationId": "revoke_contact_api_v1_contacts__contact_id__delete",
+    "parameters": [
+     {
+      "name": "contact_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Contact Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/alerts": {
+   "post": {
+    "tags": [
+     "trusted contacts"
+    ],
+    "summary": "Send an alert to consenting trusted contacts",
+    "operationId": "send_alert_api_v1_alerts_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AlertCreate"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AlertSent"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/guardian/invite": {
+   "get": {
+    "tags": [
+     "trusted contacts"
+    ],
+    "summary": "Invite Info",
+    "operationId": "invite_info_api_v1_guardian_invite_get",
+    "parameters": [
+     {
+      "name": "x-guardian-token",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "X-Guardian-Token"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/InviteInfo"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/guardian/accept": {
+   "post": {
+    "tags": [
+     "trusted contacts"
+    ],
+    "summary": "Accept",
+    "operationId": "accept_api_v1_guardian_accept_post",
+    "parameters": [
+     {
+      "name": "x-guardian-token",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "X-Guardian-Token"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/InviteInfo"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/guardian/decline": {
+   "post": {
+    "tags": [
+     "trusted contacts"
+    ],
+    "summary": "Decline",
+    "operationId": "decline_api_v1_guardian_decline_post",
+    "parameters": [
+     {
+      "name": "x-guardian-token",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "X-Guardian-Token"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/guardian/alerts": {
+   "get": {
+    "tags": [
+     "trusted contacts"
+    ],
+    "summary": "Inbox",
+    "operationId": "inbox_api_v1_guardian_alerts_get",
+    "parameters": [
+     {
+      "name": "x-guardian-token",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "X-Guardian-Token"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GuardianInbox"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/guardian/alerts/{alert_id}/ack": {
+   "post": {
+    "tags": [
+     "trusted contacts"
+    ],
+    "summary": "Acknowledge",
+    "operationId": "acknowledge_api_v1_guardian_alerts__alert_id__ack_post",
+    "parameters": [
+     {
+      "name": "alert_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Alert Id"
+      }
+     },
+     {
+      "name": "x-guardian-token",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "X-Guardian-Token"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AlertOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "AlertCreate": {
+    "properties": {
+     "alert_ticket": {
+      "type": "string",
+      "maxLength": 4000,
+      "title": "Alert Ticket"
+     },
+     "contact_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 5,
+      "minItems": 1,
+      "title": "Contact Ids"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 280
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "include_excerpt": {
+      "type": "boolean",
+      "title": "Include Excerpt",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "alert_ticket",
+     "contact_ids"
+    ],
+    "title": "AlertCreate"
+   },
+   "AlertOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "risk_score": {
+      "type": "integer",
+      "title": "Risk Score"
+     },
+     "risk_level": {
+      "type": "string",
+      "title": "Risk Level"
+     },
+     "categories": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Categories"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "redacted_excerpt": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Redacted Excerpt"
+     },
+     "acknowledged_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Acknowledged At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "created_at",
+     "risk_score",
+     "risk_level",
+     "categories",
+     "note",
+     "redacted_excerpt",
+     "acknowledged_at"
+    ],
+    "title": "AlertOut"
+   },
+   "AlertSent": {
+    "properties": {
+     "sent_to": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Sent To"
+     },
+     "skipped": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Skipped"
+     }
+    },
+    "type": "object",
+    "required": [
+     "sent_to",
+     "skipped"
+    ],
+    "title": "AlertSent"
+   },
+   "AnalysisOut": {
+    "properties": {
+     "kind": {
+      "type": "string",
+      "enum": [
+       "message",
+       "url"
+      ],
+      "title": "Kind"
+     },
+     "risk_score": {
+      "type": "integer",
+      "maximum": 100.0,
+      "minimum": 0.0,
+      "title": "Risk Score"
+     },
+     "risk_level": {
+      "type": "string",
+      "enum": [
+       "low",
+       "medium",
+       "high"
+      ],
+      "title": "Risk Level"
+     },
+     "verdict": {
+      "type": "string",
+      "title": "Verdict"
+     },
+     "categories": {
+      "items": {
+       "$ref": "#/components/schemas/CategoryOut"
+      },
+      "type": "array",
+      "title": "Categories"
+     },
+     "combinations": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Combinations"
+     },
+     "urls": {
+      "items": {
+       "$ref": "#/components/schemas/UrlOut"
+      },
+      "type": "array",
+      "title": "Urls"
+     },
+     "ml": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/MlOut"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "recommendations": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Recommendations"
+     },
+     "redacted_excerpt": {
+      "type": "string",
+      "title": "Redacted Excerpt"
+     },
+     "engine_version": {
+      "type": "string",
+      "title": "Engine Version"
+     },
+     "processing_ms": {
+      "type": "number",
+      "title": "Processing Ms"
+     },
+     "ai_summary": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ai Summary"
+     },
+     "ai_status": {
+      "type": "string",
+      "title": "Ai Status",
+      "default": "disabled"
+     },
+     "stored": {
+      "type": "boolean",
+      "title": "Stored",
+      "default": false
+     },
+     "analysis_id": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Analysis Id"
+     },
+     "alert_ticket": {
+      "type": "string",
+      "title": "Alert Ticket"
+     }
+    },
+    "type": "object",
+    "required": [
+     "kind",
+     "risk_score",
+     "risk_level",
+     "verdict",
+     "categories",
+     "combinations",
+     "urls",
+     "ml",
+     "recommendations",
+     "redacted_excerpt",
+     "engine_version",
+     "processing_ms",
+     "alert_ticket"
+    ],
+    "title": "AnalysisOut"
+   },
+   "AnalysisRecord": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "risk_score": {
+      "type": "integer",
+      "title": "Risk Score"
+     },
+     "risk_level": {
+      "type": "string",
+      "title": "Risk Level"
+     },
+     "categories": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Categories"
+     },
+     "redacted_excerpt": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Redacted Excerpt"
+     },
+     "engine_version": {
+      "type": "string",
+      "title": "Engine Version"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "created_at",
+     "kind",
+     "risk_score",
+     "risk_level",
+     "categories",
+     "redacted_excerpt",
+     "engine_version"
+    ],
+    "title": "AnalysisRecord"
+   },
+   "CategoryOut": {
+    "properties": {
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "explanation": {
+      "type": "string",
+      "title": "Explanation"
+     },
+     "weight": {
+      "type": "number",
+      "title": "Weight"
+     },
+     "evidence": {
+      "items": {
+       "$ref": "#/components/schemas/Evidence"
+      },
+      "type": "array",
+      "title": "Evidence"
+     }
+    },
+    "type": "object",
+    "required": [
+     "code",
+     "title",
+     "explanation",
+     "weight",
+     "evidence"
+    ],
+    "title": "CategoryOut"
+   },
+   "ContactCreate": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "relationship_label": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Relationship Label"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name"
+    ],
+    "title": "ContactCreate"
+   },
+   "ContactCreated": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "relationship_label": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Relationship Label"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "invite_expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Invite Expires At"
+     },
+     "consented_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Consented At"
+     },
+     "ended_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ended At"
+     },
+     "invite_url": {
+      "type": "string",
+      "title": "Invite Url",
+      "description": "Shown once. Send it to the contact yourself."
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "relationship_label",
+     "status",
+     "created_at",
+     "invite_expires_at",
+     "consented_at",
+     "ended_at",
+     "invite_url"
+    ],
+    "title": "ContactCreated"
+   },
+   "ContactOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "relationship_label": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Relationship Label"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "invite_expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Invite Expires At"
+     },
+     "consented_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Consented At"
+     },
+     "ended_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ended At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "relationship_label",
+     "status",
+     "created_at",
+     "invite_expires_at",
+     "consented_at",
+     "ended_at"
+    ],
+    "title": "ContactOut"
+   },
+   "Evidence": {
+    "properties": {
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "start": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Start"
+     },
+     "end": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "End"
+     },
+     "rule": {
+      "type": "string",
+      "title": "Rule"
+     }
+    },
+    "type": "object",
+    "required": [
+     "text",
+     "rule"
+    ],
+    "title": "Evidence"
+   },
+   "GuardianInbox": {
+    "properties": {
+     "requester_name": {
+      "type": "string",
+      "title": "Requester Name"
+     },
+     "contact_name": {
+      "type": "string",
+      "title": "Contact Name"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "alerts": {
+      "items": {
+       "$ref": "#/components/schemas/AlertOut"
+      },
+      "type": "array",
+      "title": "Alerts"
+     }
+    },
+    "type": "object",
+    "required": [
+     "requester_name",
+     "contact_name",
+     "status",
+     "alerts"
+    ],
+    "title": "GuardianInbox"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "InviteInfo": {
+    "properties": {
+     "requester_name": {
+      "type": "string",
+      "title": "Requester Name"
+     },
+     "contact_name": {
+      "type": "string",
+      "title": "Contact Name"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "invite_expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Invite Expires At"
+     },
+     "what_you_will_receive": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "What You Will Receive"
+     },
+     "what_you_will_not_receive": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "What You Will Not Receive"
+     }
+    },
+    "type": "object",
+    "required": [
+     "requester_name",
+     "contact_name",
+     "status",
+     "invite_expires_at",
+     "what_you_will_receive",
+     "what_you_will_not_receive"
+    ],
+    "title": "InviteInfo"
+   },
+   "MessageIn": {
+    "properties": {
+     "text": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Text",
+      "description": "Message, email or chat text to check"
+     },
+     "explain_with_ai": {
+      "type": "boolean",
+      "title": "Explain With Ai",
+      "description": "Ask the optional AI layer for a plain-language summary",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "text"
+    ],
+    "title": "MessageIn"
+   },
+   "MlOut": {
+    "properties": {
+     "probability": {
+      "type": "number",
+      "title": "Probability"
+     },
+     "top_terms": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Top Terms"
+     },
+     "model_version": {
+      "type": "string",
+      "title": "Model Version"
+     }
+    },
+    "type": "object",
+    "required": [
+     "probability",
+     "top_terms",
+     "model_version"
+    ],
+    "title": "MlOut"
+   },
+   "ProfileCreate": {
+    "properties": {
+     "display_name": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 1,
+      "title": "Display Name"
+     }
+    },
+    "type": "object",
+    "required": [
+     "display_name"
+    ],
+    "title": "ProfileCreate"
+   },
+   "ProfileCreated": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "store_history": {
+      "type": "boolean",
+      "title": "Store History"
+     },
+     "store_excerpts": {
+      "type": "boolean",
+      "title": "Store Excerpts"
+     },
+     "retention_days": {
+      "type": "integer",
+      "title": "Retention Days"
+     },
+     "token": {
+      "type": "string",
+      "title": "Token",
+      "description": "Shown once. Store it on the device; the server keeps only a hash."
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "display_name",
+     "created_at",
+     "store_history",
+     "store_excerpts",
+     "retention_days",
+     "token"
+    ],
+    "title": "ProfileCreated"
+   },
+   "ProfileOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "store_history": {
+      "type": "boolean",
+      "title": "Store History"
+     },
+     "store_excerpts": {
+      "type": "boolean",
+      "title": "Store Excerpts"
+     },
+     "retention_days": {
+      "type": "integer",
+      "title": "Retention Days"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "display_name",
+     "created_at",
+     "store_history",
+     "store_excerpts",
+     "retention_days"
+    ],
+    "title": "ProfileOut"
+   },
+   "SettingsIn": {
+    "properties": {
+     "store_history": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Store History"
+     },
+     "store_excerpts": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Store Excerpts"
+     },
+     "retention_days": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 365.0,
+        "minimum": 1.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Retention Days"
+     },
+     "display_name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 60,
+        "minLength": 1
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Display Name"
+     }
+    },
+    "type": "object",
+    "title": "SettingsIn"
+   },
+   "UrlIn": {
+    "properties": {
+     "url": {
+      "type": "string",
+      "minLength": 3,
+      "title": "Url"
+     }
+    },
+    "type": "object",
+    "required": [
+     "url"
+    ],
+    "title": "UrlIn"
+   },
+   "UrlOut": {
+    "properties": {
+     "url": {
+      "type": "string",
+      "title": "Url"
+     },
+     "hostname": {
+      "type": "string",
+      "title": "Hostname"
+     },
+     "registered_domain": {
+      "type": "string",
+      "title": "Registered Domain"
+     },
+     "risk_score": {
+      "type": "integer",
+      "title": "Risk Score"
+     },
+     "signals": {
+      "items": {
+       "$ref": "#/components/schemas/UrlSignalOut"
+      },
+      "type": "array",
+      "title": "Signals"
+     },
+     "start": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Start"
+     },
+     "end": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "End"
+     }
+    },
+    "type": "object",
+    "required": [
+     "url",
+     "hostname",
+     "registered_domain",
+     "risk_score",
+     "signals"
+    ],
+    "title": "UrlOut"
+   },
+   "UrlSignalOut": {
+    "properties": {
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "detail": {
+      "type": "string",
+      "title": "Detail"
+     },
+     "weight": {
+      "type": "number",
+      "title": "Weight"
+     }
+    },
+    "type": "object",
+    "required": [
+     "code",
+     "title",
+     "detail",
+     "weight"
+    ],
+    "title": "UrlSignalOut"
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   }
+  }
+ }
+}

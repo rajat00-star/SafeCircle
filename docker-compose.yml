@@ -1,0 +1,27 @@
+# Local production-like stack: PostgreSQL + the app.
+# Usage: SAFECIRCLE_SECRET_KEY=$(openssl rand -hex 32) docker compose up --build
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: safecircle
+      POSTGRES_USER: safecircle
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-safecircle-local-only}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U safecircle"]
+      interval: 5s
+      retries: 10
+  app:
+    build: .
+    depends_on:
+      db: { condition: service_healthy }
+    ports: ["8000:8000"]
+    environment:
+      SAFECIRCLE_ENV: production
+      SAFECIRCLE_DATABASE_URL: postgresql+psycopg2://safecircle:${POSTGRES_PASSWORD:-safecircle-local-only}@db:5432/safecircle
+      SAFECIRCLE_SECRET_KEY: ${SAFECIRCLE_SECRET_KEY:?set SAFECIRCLE_SECRET_KEY}
+      SAFECIRCLE_PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8000}
+      SAFECIRCLE_CORS_ORIGINS: ${PUBLIC_BASE_URL:-http://localhost:8000}
+volumes:
+  pgdata:

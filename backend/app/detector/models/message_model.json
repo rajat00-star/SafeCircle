@@ -1,0 +1,11 @@
+{
+  "version": "sms-tfidf-lr-1.0",
+  "trained_at": "2026-10-10T04:21:51+00:00",
+  "dataset": "SMS Spam Collection (Almeida & Hidalgo, UCI, CC BY 4.0)",
+  "train_size": 4459,
+  "test_size": 1115,
+  "cv_best_C": 30.0,
+  "cv_f1_mean": 0.9543,
+  "vocabulary_size": 12997,
+  "sha256": "73518f333d0bbb9336e688b7656d201bddcbf398a2e81f695dce2e63503bf70a"
+}

@@ -1,0 +1,9 @@
+**/node_modules
+**/.next
+frontend/out
+**/__pycache__
+**/*.db
+.git
+e2e
+evaluation/data/phishing_urls_dev.txt
+docs/screenshots

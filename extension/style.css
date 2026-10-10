@@ -1,0 +1,19 @@
+body { font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 14px; color: #121826; background: #fff; min-width: 340px; }
+h1 { font-size: 16px; margin: 0 0 10px; }
+h3 { font-size: 13px; margin: 14px 0 4px; text-transform: uppercase; letter-spacing: .03em; color: #5b6475; }
+ul { padding-left: 18px; margin: 0; } li + li { margin-top: 6px; }
+.muted { color: #5b6475; font-size: 12.5px; }
+.head { border-left: 5px solid #ccc; padding: 4px 0 4px 10px; }
+.head.low { border-color: #12805c; } .head.medium { border-color: #b45309; } .head.high { border-color: #c62828; }
+.badge { font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 99px; text-transform: uppercase; }
+.badge.low { background: #e3f5ee; color: #12805c; } .badge.medium { background: #fff3e0; color: #b45309; } .badge.high { background: #fdecec; color: #c62828; }
+.verdict { font-weight: 600; margin: 6px 0 0; }
+.error { color: #c62828; }
+input { width: 100%; box-sizing: border-box; padding: 8px; font: inherit; border: 1px solid #e1e5ee; border-radius: 8px; }
+button { background: #1f5eff; color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; font: inherit; font-weight: 600; cursor: pointer; margin-top: 10px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.subject { word-break: break-all; background: #f0f2f8; padding: 8px; border-radius: 8px; font-size: 12.5px; margin-bottom: 10px; }
+@media (prefers-color-scheme: dark) {
+  body { background: #151b27; color: #e8ecf4; } .muted, h3 { color: #9aa4b6; } .subject { background: #1c2433; }
+  input { background: #1c2433; color: #e8ecf4; border-color: #283246; }
+}

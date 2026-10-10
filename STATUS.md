@@ -1,0 +1,38 @@
+# Project status
+
+Last updated: 2026-10-10. Submission deadline: 2026-10-12.
+
+## Done and verified
+
+| Area | Evidence |
+|---|---|
+| Detector (rules, link analysis, two local models, fusion, explanations) | 40 detector tests pass; evaluation in `evaluation/results/metrics.json` |
+| FastAPI backend: analysis, profiles, privacy settings, history, export/delete, trusted contacts, consent, alerts, guardian inbox | 63 tests pass on SQLite and on PostgreSQL 16 (2026-10-10) |
+| Alembic migration | `upgrade head` and `downgrade base` run on PostgreSQL 16 |
+| Next.js dashboard (Check, History, Trusted contacts, Guardian, Privacy, How it works, Extension) | Type-check and static build pass; 18-step Playwright journey passes against a production-mode server on PostgreSQL, including mobile width and no console errors |
+| Browser extension (MV3) | Loaded in Chromium; selected-text and link checks return results (`e2e/extension.mjs`). The toolbar popup's tab lookup was not exercised by the automated test |
+| Optional Claude summary layer | Tested with a mocked client only (no API key available); disabled by default |
+| Security controls | Rate limits, body limit, signed tickets, hashed tokens, headers/CSP, content-free logs: covered by tests or checked in responses |
+| Clean-room install | Fresh venv from `requirements.txt` + `npm ci` + build + migrate + run: works |
+| Docs | README, architecture, API (+ OpenAPI), threat model, privacy, deployment, methodology |
+| Research paper | `paper/SafeCircle-Guardian-Paper.docx` (8 pages, 19 references, measured results only) |
+| Presentation | `slides/SafeCircle-Guardian.pptx` (11 slides, real screenshots, native chart) |
+| Idea document | `docs/submission/SafeCircle-Guardian-Idea.docx` |
+
+## Measured results
+Messages hybrid (≥ 30): P 0.947, R 0.953, F1 0.950, FPR 0.83%. Links (full URL): P 0.951, R 0.634, F1 0.761, FPR 3.26%.
+Message analysis p50 0.69 ms in-process; HTTP p50 4.8 ms on localhost. Details: `docs/methodology.md`.
+
+## Not verified / known limitations
+- **Docker image build not run**: the container registry (Docker Hub and the ECR mirror) was unreachable from the build
+  environment. The same steps were verified outside Docker (clean-room install). First real build will happen on the host.
+- **Not deployed yet**: needs a hosting account (see Blockers).
+- English only; no OCR; SMS benchmark is dated spam; benign URL sample is hostnames only; final test numbers are not fully
+  blind (see methodology).
+- In-process rate limiter (per instance). No account recovery by design.
+
+## Blockers (need the project owner)
+1. **GitHub**: no GitHub account is linked to this workspace, so the repository can't be published. Connect GitHub and
+   create an empty repository (e.g. `safecircle-guardian`).
+2. **Hosting**: a Render account (free tier works) connected to that GitHub repository, then New → Blueprint. Any container
+   host works; see `docs/deployment.md`.
