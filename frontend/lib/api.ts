@@ -99,6 +99,9 @@ async function request<T>(path: string, init: RequestInit & { guardianToken?: st
 export const api = {
   analyzeMessage: (text: string, explain_with_ai = false) =>
     request<Analysis>("/analyze/message", { method: "POST", body: JSON.stringify({ text, explain_with_ai }) }),
+  // Same analysis without the profile key, so it is never written to anyone's history (used by the landing-page demo).
+  analyzeMessageAnonymous: (text: string) =>
+    request<Analysis>("/analyze/message", { method: "POST", body: JSON.stringify({ text, explain_with_ai: false }), auth: false }),
   analyzeUrl: (url: string) => request<Analysis>("/analyze/url", { method: "POST", body: JSON.stringify({ url }) }),
   createProfile: (display_name: string) =>
     request<Profile & { token: string }>("/profiles", { method: "POST", body: JSON.stringify({ display_name }), auth: false }),

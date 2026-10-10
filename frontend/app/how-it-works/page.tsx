@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import PageHeader from "@/components/PageHeader";
 import { api, type ModelCard } from "@/lib/api";
 
 const pct = (x: number) => `${(x * 100).toFixed(1)}%`;
@@ -20,18 +21,16 @@ export default function HowPage() {
   const ev = card?.evaluation;
 
   return (
-    <div className="stack">
-      <div>
-        <h1>How SafeCircle decides</h1>
-        <p className="lead">Three independent checks run on your device's request in about a millisecond, with no paid AI service required. Each finding comes with the evidence that triggered it.</p>
+    <div className="container stack">
+      <PageHeader index="05 / The lab" eyebrow="// How it decides" title={"How SafeCircle\ndecides"}
+        lead="Three independent checks run on the server for each request, typically in about a millisecond, with no paid AI service required. Each finding comes with the evidence that triggered it." />
+      <div className="lab-strip">
+        <div className="lab-panel"><span className="label-caps">Signal 01</span><h3>Tactic rules</h3><p>Hand-written, explainable patterns for the pressure tactics scammers use: urgency, impersonation, OTP and PIN requests, payment pressure, threats, secrecy, prize lures, remote-access apps and hidden characters. Safety advice like “never share your OTP” is recognised and not flagged.</p></div>
+        <div className="lab-panel center"><span className="label-caps">Signal 02</span><h3>Link inspection</h3><p>Every link is read, never opened: look-alike brand domains, typos like “amaz0n”, raw IP addresses, shorteners, free hosting, risky downloads, plus a small model trained on thousands of reported phishing domains.</p></div>
+        <div className="lab-panel"><span className="label-caps">Signal 03</span><h3>Language model</h3><p>A lightweight TF-IDF and logistic-regression model trained on the public SMS Spam Collection, with the words that pushed the score up shown to you.</p></div>
       </div>
-      <div className="grid3">
-        <div className="card"><h3>1. Tactic rules</h3><p className="small muted">Hand-written, explainable patterns for the pressure tactics scammers use: urgency, impersonation, OTP and PIN requests, payment pressure, threats, secrecy, prize lures, remote-access apps and hidden characters. Safety advice like “never share your OTP” is recognised and not flagged.</p></div>
-        <div className="card"><h3>2. Link inspection</h3><p className="small muted">Every link is read, never opened: look-alike brand domains, typos like “amaz0n”, raw IP addresses, shorteners, free hosting, risky downloads, plus a small model trained on thousands of reported phishing domains.</p></div>
-        <div className="card"><h3>3. Language model</h3><p className="small muted">A lightweight TF-IDF and logistic-regression model trained on the public SMS Spam Collection, with the words that pushed the score up shown to you.</p></div>
-      </div>
-      <div className="card">
-        <h2>Measured results</h2>
+      <div className="card glow">
+        <div className="panel-label"><h2 style={{ margin: 0 }}>Measured results</h2><span className="label-caps">Held-out test data</span></div>
         {err && <p className="muted">Couldn't load the results from the server.</p>}
         {!ev && !err && <p className="muted">Loading…</p>}
         {ev && (
@@ -47,7 +46,7 @@ export default function HowPage() {
             </div>
             <p className="small muted">Median analysis time per message: {ev.latency_message_p50_ms} ms (95th percentile {ev.latency_message_p95_ms} ms).</p>
             <h3 style={{ marginTop: 16 }}>Limits you should know</h3>
-            <ul className="small muted" style={{ paddingLeft: 18 }}>
+            <ul className="small muted bullets">
               <li>The SMS dataset is from 2011 and mostly UK marketing spam, not modern scams, so rule recall on it is low by design: the rules look for social-engineering tactics, not adverts.</li>
               <li>The benign link set is popular hostnames without paths, which are easier than real everyday links. Real-world error rates will differ.</li>
               <li>English only. Messages in other languages and images are not analysed yet.</li>

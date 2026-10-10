@@ -44,7 +44,7 @@ export default function AlertPanel({ result }: { result: Analysis }) {
   return (
     <div className="stack">
       <fieldset style={{ border: 0, padding: 0, margin: 0 }}>
-        <legend className="small muted" style={{ marginBottom: 8 }}>Choose who to alert</legend>
+        <legend className="label-caps" style={{ marginBottom: 8 }}>Choose who to alert</legend>
         {contacts.map((c) => (
           <div className="toggle" key={c.id} style={{ borderBottom: 0, padding: "4px 0" }}>
             <input type="checkbox" id={`c-${c.id}`} checked={selected.includes(c.id)}
@@ -66,7 +66,7 @@ export default function AlertPanel({ result }: { result: Analysis }) {
         </div>
       </div>
       <div className="row">
-        <button className="btn" disabled={busy || selected.length === 0} onClick={send}>
+        <button className="btn primary" disabled={busy || selected.length === 0} onClick={send}>
           {busy ? "Sending…" : "Send alert"}
         </button>
         <span className="small muted">Only the risk level, warning signs and your note are shared.</span>

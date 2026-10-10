@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import PageHeader from "@/components/PageHeader";
 import { api, ApiError, CATEGORY_LABELS, type AlertItem, type InviteInfo } from "@/lib/api";
 
 // The trusted contact's page. The access token lives in the URL fragment (#t=...),
@@ -38,21 +39,22 @@ export default function GuardianPage() {
   }
 
   return (
-    <div className="stack">
-      <h1>SafeCircle trusted contact</h1>
+    <div className="container stack">
+      <PageHeader index="Trusted contact" eyebrow="Private link" title={"Trusted\ncontact"}
+        lead="This page belongs to a private SafeCircle link. It shows only what the person who invited you chooses to send." />
       {error && <div className="alert error" role="alert">{error}</div>}
       {done && <div className="alert success" role="status">{done}</div>}
       {info && info.status === "pending" && (
-        <div className="card stack" style={{ maxWidth: 720 }}>
+        <div className="card glow stack" style={{ maxWidth: 820 }}>
           <h2>{info.requester_name} would like you as a trusted contact</h2>
           <p className="muted" style={{ margin: 0 }}>If you accept, {info.requester_name} can ask for your opinion when a message looks like a scam.</p>
           <div className="grid2">
-            <div><h3>You will receive</h3><ul className="small" style={{ paddingLeft: 18 }}>{info.what_you_will_receive.map((x) => <li key={x}>{x}</li>)}</ul></div>
-            <div><h3>You will not receive</h3><ul className="small" style={{ paddingLeft: 18 }}>{info.what_you_will_not_receive.map((x) => <li key={x}>{x}</li>)}</ul></div>
+            <div><h3 style={{ color: "var(--low)" }}>You will receive</h3><ul className="small arrows">{info.what_you_will_receive.map((x) => <li key={x}>{x}</li>)}</ul></div>
+            <div><h3 style={{ color: "var(--high)" }}>You will not receive</h3><ul className="small arrows">{info.what_you_will_not_receive.map((x) => <li key={x}>{x}</li>)}</ul></div>
           </div>
           <p className="small muted" style={{ margin: 0 }}>Invitation expires {new Date(info.invite_expires_at).toLocaleString()}. Bookmark this page: it is also where alerts will appear.</p>
           <div className="row">
-            <button className="btn" onClick={accept}>I agree to be a trusted contact</button>
+            <button className="btn primary" onClick={accept}>I agree to be a trusted contact</button>
             <button className="btn secondary" onClick={() => decline(false)}>Decline</button>
           </div>
         </div>
@@ -62,14 +64,14 @@ export default function GuardianPage() {
           <p className="lead">You are a trusted contact for <strong>{info.requester_name}</strong>. Alerts they send you appear below. Bookmark this page.</p>
           <div className="row"><button className="btn secondary small" onClick={() => load(token!)}>Refresh</button>
             <span className="spacer" /><button className="btn ghost small" onClick={() => decline(true)}>Stop being a trusted contact</button></div>
-          {alerts && alerts.length === 0 && <div className="card muted">No alerts yet.</div>}
+          {alerts && alerts.length === 0 && <div className="empty"><div className="ring" aria-hidden="true" />No alerts yet.</div>}
           {alerts?.map((a) => (
             <div className="card stack" key={a.id}>
               <div className="row">
                 <span className={`badge ${a.risk_level}`}>{a.risk_level === "high" ? "High risk" : a.risk_level === "medium" ? "Suspicious" : "Low risk"} · {a.risk_score}/100</span>
                 <span className="small muted">{new Date(a.created_at).toLocaleString()}</span>
                 <span className="spacer" />
-                {a.acknowledged_at ? <span className="small muted">Seen</span> : <button className="btn small" onClick={() => ack(a.id)}>Mark as seen</button>}
+                {a.acknowledged_at ? <span className="small muted">Seen</span> : <button className="btn primary small" onClick={() => ack(a.id)}>Mark as seen</button>}
               </div>
               <div><strong>Warning signs:</strong> {a.categories.map((c) => CATEGORY_LABELS[c] ?? c).join(", ") || "none"}</div>
               {a.note && <div><strong>{info.requester_name} says:</strong> {a.note}</div>}

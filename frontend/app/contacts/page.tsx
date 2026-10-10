@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import PageHeader from "@/components/PageHeader";
 import ProfileGate from "@/components/ProfileGate";
 import { api, ApiError, type Contact } from "@/lib/api";
 
@@ -44,8 +45,9 @@ function Contacts() {
   return (
     <div className="stack">
       <div className="grid2">
-        <form className="card stack" onSubmit={add}>
-          <h2>Invite a trusted contact</h2>
+        <form className="card glow stack" onSubmit={add}>
+          <span className="label-caps">Step 1 · Create an invite</span>
+          <h2 style={{ margin: 0 }}>Invite a trusted contact</h2>
           <div>
             <label htmlFor="cn">Their name</label>
             <input id="cn" type="text" maxLength={60} value={name} onChange={(e) => setName(e.target.value)} required />
@@ -54,23 +56,24 @@ function Contacts() {
             <label htmlFor="cr">Relationship (optional)</label>
             <input id="cr" type="text" maxLength={40} value={rel} onChange={(e) => setRel(e.target.value)} placeholder="e.g. Daughter" />
           </div>
-          <div><button className="btn" type="submit" disabled={!name.trim()}>Create invite link</button></div>
+          <div><button className="btn primary" type="submit" disabled={!name.trim()}>Create invite link</button></div>
           {error && <div className="alert error" role="alert">{error}</div>}
         </form>
         <div className="card stack">
-          <h2>How consent works</h2>
-          <ol className="small" style={{ margin: 0, paddingLeft: 18 }}>
-            <li>You create a private invite link and send it to them yourself (SafeCircle never messages anyone for you).</li>
-            <li>They open it, see exactly what they would receive, and accept or decline.</li>
-            <li>Alerts are only sent when you press “Ask a trusted contact” on a result.</li>
-            <li>Either of you can end the link at any time. Invites expire after 72 hours.</li>
+          <span className="label-caps">How consent works</span>
+          <ol className="steps">
+            <li><strong>You send the link yourself</strong>You create a private invite link and send it to them. SafeCircle never messages anyone for you.</li>
+            <li><strong>They decide</strong>They open it, see exactly what they would receive, and accept or decline.</li>
+            <li><strong>You choose each alert</strong>Alerts are only sent when you press “Ask a trusted contact” on a result. They appear on the contact&apos;s SafeCircle page; there are no SMS or email notifications.</li>
+            <li><strong>Either side can stop</strong>Either of you can end the link at any time. Invites expire after 72 hours.</li>
           </ol>
         </div>
       </div>
 
       {invite && (
-        <div className="card stack" role="status">
-          <h2>Send this link to {invite.name}</h2>
+        <div className="card glow stack" role="status">
+          <span className="label-caps">Step 2 · Share privately</span>
+          <h2 style={{ margin: 0 }}>Send this link to {invite.name}</h2>
           <p className="small muted" style={{ margin: 0 }}>This link is shown only once. Anyone with it can act as {invite.name}, so send it privately.</p>
           <div className="row">
             <input type="text" readOnly value={invite.url} aria-label="Invite link" onFocus={(e) => e.target.select()} style={{ flex: 1, minWidth: 0 }} />
@@ -80,8 +83,8 @@ function Contacts() {
       )}
 
       <div className="card">
-        <h2>Your trusted contacts</h2>
-        {contacts.length === 0 ? <p className="muted">No contacts yet.</p> : (
+        <div className="panel-label"><h2 style={{ margin: 0 }}>Your trusted contacts</h2><span className="label-caps">{contacts.length} / 5</span></div>
+        {contacts.length === 0 ? <div className="empty"><div className="ring" aria-hidden="true" /><h3>No contacts yet</h3><p style={{ margin: 0 }}>Create an invite above. Nobody is added until they accept.</p></div> : (
           <div className="table-wrap">
             <table>
               <thead><tr><th>Name</th><th>Status</th><th>Added</th><th></th></tr></thead>
@@ -106,11 +109,9 @@ function Contacts() {
 
 export default function ContactsPage() {
   return (
-    <div className="stack">
-      <div>
-        <h1>Trusted contacts</h1>
-        <p className="lead">Choose up to five people who can give you a second opinion. They only ever see what you choose to send, and only after they agree.</p>
-      </div>
+    <div className="container">
+      <PageHeader index="03 / Trusted circle" eyebrow="Consent on both sides" title={"Trusted\ncontacts"}
+        lead="Choose up to five people who can give you a second opinion. They only ever see what you choose to send, and only after they agree." />
       <ProfileGate purpose="Trusted contacts are linked to a private profile.">{() => <Contacts />}</ProfileGate>
     </div>
   );
