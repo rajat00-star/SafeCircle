@@ -109,7 +109,7 @@ export default function GlobeHero() {
                     <>
                       <div className="row" style={{ justifyContent: "space-between" }}>
                         <strong>{selected.name}</strong>
-                        <span className={`badge ${tierOf(total(selected, range, tactic))}`}>{tierWord[tierOf(total(selected, range, tactic))]}</span>
+                        <span className={`badge ${tierOf(total(selected, range, tactic)) === "low" ? "ice" : tierOf(total(selected, range, tactic))}`}>{tierWord[tierOf(total(selected, range, tactic))]}</span>
                       </div>
                       <div className="xsmall muted">{selected.region} · {selected.confidence === "confirmed" ? "Confirmed observations" : "Unverified / incomplete"}</div>
                       <div className="big-count">{total(selected, range, tactic).toLocaleString()}<span> {isDemo ? "sample " : ""}reports · {RANGE_LABEL[range]}</span></div>

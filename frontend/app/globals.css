@@ -702,3 +702,4 @@ nav.main .menu-btn { display: none; }
 .evidence-layer::after { content: ""; position: absolute; inset: 16px -16px -16px 16px; border-radius: inherit; border: 1px solid rgba(255,255,255,.04); z-index: -2; }
 #analyze .card { background: rgba(11, 11, 17, 0.78); }
 #analyze .risk-head { background: rgba(11, 11, 17, 0.82); }
+.badge.ice { background: rgba(166,220,255,.08); color: var(--ice); border-color: rgba(166,220,255,.25); }
