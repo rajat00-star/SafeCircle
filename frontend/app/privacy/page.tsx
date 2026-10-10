@@ -2,6 +2,7 @@
 import { useState } from "react";
 import PageHeader from "@/components/PageHeader";
 import ProfileGate from "@/components/ProfileGate";
+import SpatialBackdrop from "@/components/SpatialBackdrop";
 import { api, ApiError, setToken, type Profile } from "@/lib/api";
 
 function Settings({ profile, refresh }: { profile: Profile; refresh: () => void }) {
@@ -76,7 +77,8 @@ export default function PrivacyPage() {
   return (
     <div className="container">
       <PageHeader index="04 / Privacy" eyebrow="Transparent processing" title={"Privacy"}
-        lead="What happens to what you paste, in plain language, based on how this app actually works." />
+        lead="What happens to what you paste, in plain language, based on how this app actually works."
+        scene={<SpatialBackdrop variant="privacy" />} />
       <div className="stack-lg">
         <section aria-labelledby="flow-title">
           <span className="eyebrow" id="flow-title">Where your data goes</span>

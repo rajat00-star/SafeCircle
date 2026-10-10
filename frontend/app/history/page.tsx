@@ -2,13 +2,14 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import PageHeader from "@/components/PageHeader";
 import ProfileGate from "@/components/ProfileGate";
+import SpatialBackdrop from "@/components/SpatialBackdrop";
 import { api, ApiError, CATEGORY_LABELS, type AnalysisRecord, type Profile } from "@/lib/api";
 
 const LEVELS = [["all", "All"], ["high", "High risk"], ["medium", "Suspicious"], ["low", "Low risk"]] as const;
 const KINDS = [["all", "All types"], ["message", "Messages"], ["url", "Links"]] as const;
 const LEVEL_LABEL: Record<string, string> = { high: "High risk", medium: "Suspicious", low: "Low risk" };
 
-function History({ profile }: { profile: Profile }) {
+function History({ profile, onCount }: { profile: Profile; onCount: (n: number) => void }) {
   const [items, setItems] = useState<AnalysisRecord[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [q, setQ] = useState("");
@@ -17,6 +18,7 @@ function History({ profile }: { profile: Profile }) {
   const [open, setOpen] = useState<string | null>(null);
   const load = () => api.history().then(setItems).catch((e: ApiError) => setError(e.message));
   useEffect(() => { load(); }, []);
+  useEffect(() => { onCount(items?.length ?? 0); }, [items, onCount]);
 
   async function remove(id: string) {
     try { await api.deleteAnalysis(id); load(); } catch (e) { setError((e as ApiError).message); }
@@ -121,11 +123,13 @@ function History({ profile }: { profile: Profile }) {
 }
 
 export default function HistoryPage() {
+  const [count, setCount] = useState(0);
   return (
     <div className="container">
       <PageHeader index="02 / History" eyebrow="Your saved checks" title={"History"}
-        lead="Results you chose to keep. You can delete any entry at any time." />
-      <ProfileGate purpose="History is linked to a private profile and is off until you turn it on.">{(p) => <History profile={p} />}</ProfileGate>
+        lead="Results you chose to keep. You can delete any entry at any time."
+        scene={<SpatialBackdrop variant="history" count={count} />} />
+      <ProfileGate purpose="History is linked to a private profile and is off until you turn it on.">{(p) => <History profile={p} onCount={setCount} />}</ProfileGate>
     </div>
   );
 }

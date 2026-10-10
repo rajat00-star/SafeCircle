@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import PageHeader from "@/components/PageHeader";
 import ProfileGate from "@/components/ProfileGate";
+import SpatialBackdrop from "@/components/SpatialBackdrop";
 import { api, ApiError, type Contact } from "@/lib/api";
 
 const STATUS: Record<string, { label: string; cls: string }> = {
@@ -12,7 +13,7 @@ const STATUS: Record<string, { label: string; cls: string }> = {
   expired: { label: "Invite expired", cls: "neutral" },
 };
 
-function Contacts() {
+function Contacts({ onCounts }: { onCounts: (a: number, p: number) => void }) {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [name, setName] = useState("");
   const [rel, setRel] = useState("");
@@ -22,6 +23,7 @@ function Contacts() {
 
   const load = () => api.contacts().then(setContacts).catch((e: ApiError) => setError(e.message));
   useEffect(() => { load(); }, []);
+  useEffect(() => { onCounts(contacts.filter((c) => c.status === "active").length, contacts.filter((c) => c.status === "pending").length); }, [contacts, onCounts]);
 
   async function add(e: React.FormEvent) {
     e.preventDefault();
@@ -108,11 +110,14 @@ function Contacts() {
 }
 
 export default function ContactsPage() {
+  const [counts, setCounts] = useState({ a: 0, p: 0 });
+  const onCounts = useCallback((a: number, p: number) => setCounts({ a, p }), []);
   return (
     <div className="container">
       <PageHeader index="03 / Trusted circle" eyebrow="Consent on both sides" title={"Trusted\ncontacts"}
-        lead="Choose up to five people who can give you a second opinion. They only ever see what you choose to send, and only after they agree." />
-      <ProfileGate purpose="Trusted contacts are linked to a private profile.">{() => <Contacts />}</ProfileGate>
+        lead="Choose up to five people who can give you a second opinion. They only ever see what you choose to send, and only after they agree."
+        scene={<SpatialBackdrop variant="contacts" active={counts.a} pending={counts.p} />} />
+      <ProfileGate purpose="Trusted contacts are linked to a private profile.">{() => <Contacts onCounts={onCounts} />}</ProfileGate>
     </div>
   );
 }

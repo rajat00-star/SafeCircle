@@ -4,6 +4,7 @@ import type { Analysis } from "@/lib/api";
 import AlertPanel from "./AlertPanel";
 import Gauge from "./Gauge";
 import Highlighted from "./Highlighted";
+import RiskSculpture from "./RiskSculpture";
 
 const LEVEL_LABEL = { low: "Low risk", medium: "Suspicious", high: "High risk" } as const;
 const LEVEL_WORD = { low: "Low risk", medium: "Caution", high: "High risk" } as const;
@@ -34,7 +35,7 @@ export default function ResultView({ result, input }: { result: Analysis; input:
 
   return (
     <section className="stack fade-up" aria-label="Analysis result">
-      <div className={`card risk-head ${result.risk_level}`}>
+      <div className={`card risk-head with-sculpture ${result.risk_level}`}>
         <Gauge score={result.risk_score} level={result.risk_level} />
         <div className="stack" style={{ minWidth: 0 }}>
           <div className="row">
@@ -52,6 +53,7 @@ export default function ResultView({ result, input }: { result: Analysis; input:
           )}
           {result.ai_status === "unavailable" && <p className="small muted" style={{ margin: 0 }}>The optional AI summary was unavailable; the result above is complete without it.</p>}
         </div>
+        <RiskSculpture score={result.risk_score} level={result.risk_level} />
       </div>
 
       <div className="caveat" role="note">
@@ -64,7 +66,7 @@ export default function ResultView({ result, input }: { result: Analysis; input:
       </div>
 
       {hasSpans && (
-        <div className="card">
+        <div className="card evidence-layer">
           <div className="panel-label"><h2 style={{ margin: 0 }}>Where the warning signs are</h2><span className="label-caps">Detected evidence</span></div>
           <Highlighted text={input} result={result} />
         </div>

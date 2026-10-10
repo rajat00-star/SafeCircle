@@ -677,3 +677,28 @@ nav.main .menu-btn { display: none; }
 .tactic-list .glass-card { grid-column: auto; transform: none; min-height: 0; }
 .tactic-list .glass-card h3 { margin-top: 22px; }
 @media (max-width: 700px) { .tactic-list { grid-template-columns: 1fr; } }
+
+/* V2 · Shared spatial backdrops and result sculpture */
+.spatial-backdrop { position: absolute; pointer-events: none; z-index: 0; }
+.spatial-backdrop canvas { width: 100% !important; height: 100% !important; display: block; }
+.spatial-backdrop.failed { display: none; }
+.sb-scanner { inset: 0; -webkit-mask: linear-gradient(180deg, transparent, #000 12%, #000 80%, transparent); mask: linear-gradient(180deg, transparent, #000 12%, #000 80%, transparent); }
+.page-head { position: relative; isolation: isolate; }
+.page-head > :not(.spatial-backdrop) { position: relative; z-index: 1; }
+.page-head .spatial-backdrop { right: calc(-1 * var(--gutter)); top: -110px; width: 62%; height: calc(100% + 150px); }
+@media (max-width: 760px) { .page-head .spatial-backdrop { width: 100%; opacity: .45; } }
+#analyze { position: relative; isolation: isolate; }
+#analyze > .container { position: relative; z-index: 1; }
+.risk-head.with-sculpture { grid-template-columns: auto minmax(0, 1fr) 170px; }
+.risk-sculpture { width: 170px; height: 210px; position: relative; }
+.risk-sculpture canvas { width: 100% !important; height: 100% !important; display: block; }
+.risk-sculpture.failed { display: none; }
+@media (max-width: 900px) { .risk-head.with-sculpture { grid-template-columns: auto minmax(0, 1fr); } .risk-sculpture { display: none; } }
+/* Layered depth for result panels */
+.result .stack > .card, .result .grid2 > .card { transform: translateZ(0); transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease); }
+.result .grid2 > .card:hover { transform: translateY(-3px); box-shadow: var(--shadow), 0 30px 60px -30px rgba(110,76,255,.35); }
+.evidence-layer { position: relative; }
+.evidence-layer::before { content: ""; position: absolute; inset: 8px -8px -8px 8px; border-radius: inherit; border: 1px solid var(--line); background: rgba(255,255,255,.012); z-index: -1; }
+.evidence-layer::after { content: ""; position: absolute; inset: 16px -16px -16px 16px; border-radius: inherit; border: 1px solid rgba(255,255,255,.04); z-index: -2; }
+#analyze .card { background: rgba(11, 11, 17, 0.78); }
+#analyze .risk-head { background: rgba(11, 11, 17, 0.82); }

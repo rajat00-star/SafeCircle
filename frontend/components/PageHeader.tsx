@@ -1,8 +1,9 @@
 // Shared editorial header for inner pages: index label, oversized caps title, lead copy.
-export default function PageHeader({ index, eyebrow, title, lead, aside }:
-  { index: string; eyebrow: string; title: string; lead: React.ReactNode; aside?: React.ReactNode }) {
+export default function PageHeader({ index, eyebrow, title, lead, aside, scene }:
+  { index: string; eyebrow: string; title: string; lead: React.ReactNode; aside?: React.ReactNode; scene?: React.ReactNode }) {
   return (
     <header className="page-head">
+      {scene}
       <div>
         <span className="eyebrow fade-up">{eyebrow}</span>
         <h1 className="glow">

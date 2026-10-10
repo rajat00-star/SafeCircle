@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import PageHeader from "@/components/PageHeader";
+import SpatialBackdrop from "@/components/SpatialBackdrop";
 import { api, ApiError, CATEGORY_LABELS, type AlertItem, type InviteInfo } from "@/lib/api";
 
 // The trusted contact's page. The access token lives in the URL fragment (#t=...),
@@ -41,7 +42,8 @@ export default function GuardianPage() {
   return (
     <div className="container stack">
       <PageHeader index="Trusted contact" eyebrow="Private link" title={"Trusted\ncontact"}
-        lead="This page belongs to a private SafeCircle link. It shows only what the person who invited you chooses to send." />
+        lead="This page belongs to a private SafeCircle link. It shows only what the person who invited you chooses to send."
+        scene={<SpatialBackdrop variant="contacts" active={info?.status === "active" ? 1 : 0} pending={info?.status === "pending" ? 1 : 0} />} />
       {error && <div className="alert error" role="alert">{error}</div>}
       {done && <div className="alert success" role="status">{done}</div>}
       {info && info.status === "pending" && (

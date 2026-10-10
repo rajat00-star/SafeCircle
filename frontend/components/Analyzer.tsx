@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ResultView from "@/components/ResultView";
+import SpatialBackdrop, { type ScanState } from "@/components/SpatialBackdrop";
 import { api, ApiError, type Analysis } from "@/lib/api";
 import { EXAMPLES } from "@/lib/examples";
 
@@ -85,9 +86,11 @@ export default function Analyzer() {
   }
 
   const canSubmit = mode === "message" ? text.trim().length > 0 : url.trim().length >= 3;
+  const scanState: ScanState = busy ? "scanning" : error ? "error" : result ? result.r.risk_level : "idle";
 
   return (
     <section id="analyze" ref={sectionRef} className="section tight" aria-labelledby="analyze-title" style={{ scrollMarginTop: 72 }}>
+      <SpatialBackdrop variant="scanner" state={scanState} />
       <div className="container">
         <div className="section-head">
           <div>
