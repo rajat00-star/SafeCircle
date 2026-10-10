@@ -661,3 +661,19 @@ nav.main .menu-btn { display: none; }
   .globe-hero { padding-top: 46vh; }
   .globe-hero .hero-grid { grid-template-columns: 1fr; }
 }
+
+/* V2 · Spatial tactic carousel */
+.tactic-track { position: relative; }
+.tactic-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+.tactic-canvas, .tactic-canvas canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
+.tactic-overlay { position: absolute; inset: 0; padding-top: 104px; padding-bottom: 32px; display: flex; flex-direction: column; justify-content: space-between; pointer-events: none; left: 0; right: 0; }
+.tactic-overlay .section-head { margin-bottom: 0; pointer-events: auto; }
+.tactic-overlay .section-head h2 { font-size: clamp(30px, 3.6vw, 54px); }
+.tactic-caption { pointer-events: auto; max-width: 420px; padding: 18px 20px; background: rgba(8, 8, 13, 0.6); }
+.tactic-caption h3 { font-size: 20px; margin: 10px 0 6px; }
+.tactic-caption p { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+.tactic-caption .chip-btn { font-family: var(--font-mono); font-size: 11px; padding: 5px 10px; }
+.tactic-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.tactic-list .glass-card { grid-column: auto; transform: none; min-height: 0; }
+.tactic-list .glass-card h3 { margin-top: 22px; }
+@media (max-width: 700px) { .tactic-list { grid-template-columns: 1fr; } }

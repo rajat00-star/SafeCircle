@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 import Scramble from "@/components/Scramble";
 import ScanRail from "@/components/ScanRail";
 import ScrollIndicator from "@/components/ScrollIndicator";
-import ThreatField from "@/components/ThreatField";
+import TacticSection from "@/components/TacticSection";
 import GlobeHero from "@/components/GlobeHero";
 
 const MARQUEE = ["Urgency", "Impersonation", "OTP requests", "Payment pressure", "Threats", "Secrecy", "Look-alike links", "Remote access"];
@@ -35,18 +35,7 @@ export default function Home() {
         </div>
       </div>
 
-      <section id="protection" className="section" aria-labelledby="tactics-title" style={{ scrollMarginTop: 40 }}>
-        <div className="container">
-          <div className="section-head">
-            <div>
-              <span className="eyebrow">03 / What it detects</span>
-              <h2 id="tactics-title" className="glow">Every tactic<br />has a tell.</h2>
-            </div>
-            <p>These are the social-engineering tactics the detector checks, with the weight each one carries. Loaded live from the engine&apos;s model card.</p>
-          </div>
-          <ThreatField />
-        </div>
-      </section>
+      <TacticSection />
 
       <section className="section" aria-labelledby="demo-title">
         <div className="container">

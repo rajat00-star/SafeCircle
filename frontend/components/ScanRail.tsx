@@ -11,14 +11,25 @@ export default function ScanRail() {
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
-    const targets = ["#hero", "#analyze", "footer.site"].map((s) => document.querySelector(s)).filter(Boolean) as Element[];
-    const vis = new Map<Element, boolean>();
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => vis.set(e.target, e.isIntersecting));
-      setHidden([...vis.values()].some(Boolean));
-    }, { threshold: 0.12 });
-    targets.forEach((t) => io.observe(t));
-    return () => io.disconnect();
+    // Hidden over the hero, the workspace, the tactic scene and the footer (checked on scroll, so
+    // sections that mount later are included).
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      const over = ["#hero", "#analyze", ".tactic-sticky", "footer.site"].some((sel) => {
+        const el = document.querySelector(sel);
+        if (!el) return false;
+        const r = el.getBoundingClientRect();
+        return Math.min(r.bottom, vh) - Math.max(r.top, 0) > vh * 0.12;
+      });
+      setHidden(over);
+    };
+    const on = () => { if (!raf) raf = requestAnimationFrame(check); };
+    check();
+    window.addEventListener("scroll", on, { passive: true });
+    window.addEventListener("resize", on);
+    return () => { window.removeEventListener("scroll", on); window.removeEventListener("resize", on); cancelAnimationFrame(raf); };
   }, []);
 
   function submit(e: React.FormEvent) {
