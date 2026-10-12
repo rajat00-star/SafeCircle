@@ -1,9 +1,19 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"><title>SafeCircle options</title></head>
 <body><div class="wrap">
-  <h1>SafeCircle Guardian settings</h1>
+  <h1>SafeCircle Guardian Shield settings</h1>
   <label for="server">Server address</label>
   <input id="server" type="url" placeholder="https://your-safecircle-server">
+  <label for="timeout">Give up waiting after (seconds)</label>
+  <input id="timeout" type="number" min="2" max="30" step="1">
   <button id="save">Save</button> <span id="status" class="muted" role="status"></span>
   <p class="muted">Text and links you choose to check are sent to this server for analysis. They are not stored unless you enabled history on that server's website.</p>
+
+  <h2>Link guard (optional, off by default)</h2>
+  <p class="muted">When on, a link you click that leads to another website is checked first. If it shows warning signs you see a
+    warning page with a clear "Go back" option, and you can still choose to continue. Only the clicked link's address is sent to
+    your server; page content, forms, passwords and browsing history are never read or collected. Turning it on asks Chrome for
+    access to websites, which this needs to see link clicks. If the server is offline, links open normally and the toolbar shows "?".</p>
+  <label class="ack"><input type="checkbox" id="guard"> Check links before they open</label>
+  <p id="guard-status" class="muted" role="status"></p>
 </div><script type="module" src="options.js"></script></body></html>

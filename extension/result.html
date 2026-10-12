@@ -1,8 +1,19 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"><title>SafeCircle result</title></head>
+<html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"><title>SafeCircle Guardian Shield</title></head>
 <body><div class="wrap">
-  <h1>SafeCircle Guardian</h1>
+  <h1>SafeCircle Guardian Shield</h1>
+  <div id="warning" class="warning" hidden>
+    <h2 id="warn-title">Wait before opening this link</h2>
+    <p id="warn-text"></p>
+  </div>
   <div class="subject" id="subject"></div>
   <div id="out" aria-live="polite">Checking…</div>
-  <p class="muted">Checked from the text only; links are never opened.</p>
+  <div id="actions" class="actions" hidden>
+    <label id="ack-row" class="ack" hidden><input type="checkbox" id="ack"> I understand the warning signs and still want to open this link.</label>
+    <div class="row">
+      <button id="back" type="button">Go back (recommended)</button>
+      <button id="open" type="button" class="secondary">Open link</button>
+    </div>
+  </div>
+  <p class="muted">Checked from the text only; links are never opened by SafeCircle. Nothing is opened unless you choose to.</p>
 </div><script type="module" src="result.js"></script></body></html>

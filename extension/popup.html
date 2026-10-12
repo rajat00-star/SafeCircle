@@ -1,9 +1,11 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"><title>SafeCircle</title></head>
 <body>
-  <h1>SafeCircle Guardian</h1>
+  <h1>SafeCircle Guardian Shield</h1>
+  <p class="status" id="status">Checking the server…</p>
   <div class="subject" id="subject">Reading this tab's address…</div>
   <div id="out" aria-live="polite"></div>
-  <p class="muted">Only this tab's address is checked, and only because you clicked. Right-click a link or selected text to check it.</p>
+  <p class="muted" id="guard"></p>
+  <p class="muted">Only this tab's address is checked, and only because you opened this panel. Right-click a link or selected text to check it. <a href="options.html" target="_blank">Options</a></p>
   <script type="module" src="popup.js"></script>
 </body></html>

@@ -1,11 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "SafeCircle Guardian",
-  "version": "1.0.0",
-  "description": "Right-click a link or selected text to check it for scam and phishing warning signs. Acts only when you ask.",
-  "permissions": ["contextMenus", "storage", "activeTab"],
-  "background": { "service_worker": "background.js" },
-  "action": { "default_title": "Check this page's address with SafeCircle", "default_popup": "popup.html" },
+  "name": "SafeCircle Guardian Shield",
+  "version": "1.1.0",
+  "description": "Check links and selected text for scam warning signs before you act. Acts only when you ask, or on link clicks if you turn on the link guard.",
+  "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": { "default_title": "SafeCircle Guardian Shield", "default_popup": "popup.html" },
   "options_page": "options.html",
   "icons": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" },
   "content_security_policy": { "extension_pages": "script-src 'self'; object-src 'none'" }
