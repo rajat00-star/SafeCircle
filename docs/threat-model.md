@@ -32,7 +32,14 @@ someone who obtained a user's device or link; the operator (insider) and hosting
 | T12 | **Abuse / DoS** | Per-IP rate limits (60/min analysis, 10/min profile creation, 30/min guardian endpoints); 64 KB body limit; 5,000-char text cap; bounded regex windows; limiter memory bounded | Tested (`test_rate_limit`, `test_body_size_limit`, `test_long_input_is_fast`) |
 | T13 | **Model tampering** (malicious pickle) | SHA-256 of artifacts checked against metadata before loading; artifacts produced by our own scripts | Implemented |
 | T14 | **Secret exposure** | Secrets only via environment; app refuses to start in production with the default secret; `.env` git-ignored; no secrets in logs | Implemented |
-| T15 | **Over-claiming capability** (user believes they're monitored) | UI and docs state the app only checks what the user submits; extension acts only on user gestures | Documented in UI |
+| T15 | **Over-claiming capability** (user believes they're monitored) | UI and docs state the app only checks what the user submits; extension acts only on user gestures or, with the opt-in link guard, on link clicks | Documented in UI |
+| T16 | **Malicious uploads** (polyglots, decompression bombs, oversized or corrupt images, path tricks) | MIME allow-list (PNG/JPEG/WebP) and magic-byte match; size cap enforced from `Content-Length` and again while streaming; dimensions read from the header and capped before decoding; first frame re-encoded in memory; client file names never used; nothing written to disk | Tested (`test_upload_rejections`, `test_oversized_upload_is_rejected`, `test_huge_declared_dimensions_rejected`) |
+| T17 | **OCR engine abuse** (hangs, crashes) | Tesseract runs as a subprocess with no shell, image on stdin, 20 s timeout; failures reported as "unavailable", never as a clean result | Tested (`test_ocr_unavailable_is_reported_honestly`, `test_ocr_failure_is_reported_honestly`) |
+| T18 | **Sensitive data in stored evidence** | Evidence is redacted before storage (codes near secret words, long numbers, phones, e-mails, query strings); UPI handles and phones become keyed hashes | Tested (`test_redaction_removes_secrets_and_keeps_links_without_query`, `test_case_evolves_and_explains_each_step`) |
+| T19 | **Cross-account case access** | Every case query is scoped by profile; foreign and missing ids both return 404; forensics `case_id` checked the same way | Tested (`test_other_profiles_cannot_see_or_change_cases`, `test_attach_requires_profile_and_ownership`) |
+| T20 | **Alert fatigue** (users ignore warnings) | Duplicate evidence suppressed; alerts only on level rise or new high-weight tactic; spam-model similarity alone never alerts; benign cases never cluster | Tested (`test_alert_decisions`, `test_resubmitting_unchanged_evidence_is_suppressed`, e2e) |
+| T21 | **Extension misleading the user** (offline server read as "safe") | Typed errors; "Not checked" wording for timeouts, offline, rate limits and malformed responses; unchecked links still need an acknowledgement on the warning page | Tested (`extension/tests`, `e2e/extension-pages.mjs`) |
+| T22 | **Copied safety advice hiding a request** ("Bank will never ask for your PIN. Share the OTP…") | Negation counts only within the same sentence; the safety-advice discount is cancelled by any request; such cases are flagged as conflicting | Tested (`test_safety_advice_without_a_request_halves_weights`, `test_conflicting_evidence_triggers_review`) |
 
 ## Residual risks and next steps
 - In-process rate limiting resets on restart and doesn't share state across instances (use Redis when scaling).
@@ -40,3 +47,5 @@ someone who obtained a user's device or link; the operator (insider) and hosting
 - Profile tokens live in `localStorage`; an XSS would expose them. CSP and the no-HTML rendering reduce but don't remove this.
 - No account recovery by design (no email). Losing browser data loses the profile.
 - Unverified operator: users must trust the deployment. Self-hosting is supported.
+- Scam DNA rules and the synthetic evaluation set were written by the same team; real-world accuracy is unmeasured.
+- The link guard only sees ordinary link clicks; script-driven navigation and typed addresses are not checked.

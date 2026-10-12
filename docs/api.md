@@ -29,6 +29,23 @@ Errors are JSON: `{"detail": "..."}`; validation errors add `errors: [{field, me
 | POST | `/api/v1/guardian/decline` | Decline |
 | GET | `/api/v1/guardian/alerts` | Inbox |
 | POST | `/api/v1/guardian/alerts/{alert_id}/ack` | Acknowledge |
+| GET, POST | `/api/v1/cases` 🔒 | List / start Scam DNA investigations |
+| GET, PATCH, DELETE | `/api/v1/cases/{case_id}` 🔒 | Case detail / rename or set status / delete |
+| POST | `/api/v1/cases/{case_id}/events` 🔒 | Add a message or link and re-evaluate |
+| DELETE | `/api/v1/cases/{case_id}/events/{event_id}` 🔒 | Remove evidence and re-evaluate |
+| POST | `/api/v1/forensics/text` | Investigate a message or conversation (optional `case_id` 🔒) |
+| POST | `/api/v1/forensics/url` | Investigate a link without opening it (optional `case_id` 🔒) |
+| POST | `/api/v1/forensics/screenshot` | Investigate a screenshot (raw image body; optional `case_id` 🔒) |
+| GET | `/api/v1/campaigns` 🔒 | Potentially related cases and the indicators linking them |
+| POST, DELETE | `/api/v1/campaigns/dismissals` 🔒 | Mark two cases as not related / restore |
+| GET | `/api/v1/overview` 🔒 | Metrics computed from your own cases |
+| GET | `/api/v1/demo/scenarios` | DEMO DATA scenarios with expected outcomes |
+| POST | `/api/v1/demo/scenarios/{key}/cases` 🔒 | Start a DEMO case for a scenario |
+| GET | `/api/v1/demo/scenarios/{key}/check/{case_id}` 🔒 | Compare live result with the fixture |
+| POST | `/api/v1/demo/campaigns` 🔒 | Load DEMO campaign cases |
+| DELETE | `/api/v1/demo/cases` 🔒 | Remove all DEMO cases |
+
+Details, request shapes and the alert-decision rules: [scam-dna.md](scam-dna.md).
 
 ## Example
 

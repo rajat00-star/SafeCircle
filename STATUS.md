@@ -1,6 +1,18 @@
 # Project status
 
-Last updated: 2026-10-10. Submission deadline: 2026-10-12.
+Last updated: 2026-10-12. Submission deadline: 2026-10-12.
+
+## Problem Statement 02 upgrade (2026-10-12)
+
+| Area | Evidence |
+|---|---|
+| Scam DNA case engine, alert de-duplication, Campaign Radar, Forensics with local OCR, demo fixtures | `backend/app/scamdna`; 122 backend tests pass (63 original + 59 new) |
+| Alembic migration `a336d9eb6fd1` (additive) | upgrade, downgrade and re-upgrade run on SQLite; `alembic check` clean. Not yet run on PostgreSQL (CI does) |
+| Frontend: Overview, Scam DNA, Forensics, Campaign Radar, Browser Protection | type-check and static build pass; `e2e/scamdna.mjs` 21/21 and original `e2e/e2e.mjs` 18/18 against the built site |
+| Guardian Shield extension | `extension/tests` 18/18 (3 against the live server); `e2e/extension-pages.mjs` 17/17 runs the extension pages in Chrome with a stubbed `chrome.*`. Loading it unpacked in a real extension runtime could not be automated (Chrome 137+ ignores `--load-extension`) |
+| Synthetic evaluation | `evaluation/scam_dna/` 30 scenarios; initial and post-fix results both committed |
+
+Details: [docs/scam-dna.md](docs/scam-dna.md).
 
 ## Done and verified
 
@@ -27,7 +39,7 @@ Message analysis p50 0.69 ms in-process; HTTP p50 4.8 ms on localhost. Details: 
 - **Docker image build not run**: the container registry (Docker Hub and the ECR mirror) was unreachable from the build
   environment. The same steps were verified outside Docker (clean-room install). First real build will happen on the host.
 - **Not deployed yet**: needs a hosting account (see Blockers).
-- English only; no OCR; SMS benchmark is dated spam; benign URL sample is hostnames only; final test numbers are not fully
+- English only; OCR needs a local Tesseract install; SMS benchmark is dated spam; benign URL sample is hostnames only; final test numbers are not fully
   blind (see methodology).
 - In-process rate limiter (per instance). No account recovery by design.
 

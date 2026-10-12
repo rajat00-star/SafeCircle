@@ -28,6 +28,10 @@
         PostgreSQL (prod) / SQLite (dev, tests)
 ```
 
+Since the Problem Statement 02 upgrade, a case layer sits on top of the detector: `app/scamdna` (tactics, evidence
+redaction, case assessment, alert de-duplication, campaign correlation, local OCR, demo fixtures) with routers
+`cases`, `forensics` and `demo`. The detector itself is unchanged. See [scam-dna.md](scam-dna.md).
+
 ## Design decisions
 
 | Decision | Why |
@@ -40,13 +44,19 @@
 | Contact tokens in the URL fragment (`#t=`) | Fragments are not sent to servers or in `Referer`, so access links don't leak into logs. |
 | HMAC-signed alert tickets | Lets the user forward a result without the server storing the analysis, while preventing forged alert contents. |
 | Model artifacts checked with SHA-256 before `joblib.load` | joblib unpickling can execute code; the hash pins the artifact to what training produced. |
+| Case layer reuses, never modifies, the detector | Keeps the published detector evaluation valid; financial rules live in `scamdna/tactics.py`. |
+| Assessment is a pure function of stored, redacted events | Cases can be re-evaluated at any time without the original text, and the engine is unit-testable without a database. |
+| Screenshots read with local Tesseract, image discarded | No paid vision API, nothing leaves the server, nothing sensitive is retained. |
+| Transparent correlation (exact indicators + Jaccard) | Every campaign link can be explained and dismissed; no model to justify. |
 
 ## Data model
 
 `profiles` (display name, hashed token, privacy settings) → `analyses` (only when history is on: score, level,
 category codes, content SHA-256, optional redacted excerpt) · `trusted_contacts` (status machine:
 pending → active | declined | expired; active → revoked) → `alerts` (summary, optional note/excerpt, ack time) ·
-`consent_events` (append-only audit). All child rows cascade-delete with the profile.
+`consent_events` (append-only audit) · `scam_cases` → `case_events` (redacted evidence, detection JSON, screenshot
+facts) and `case_log` (append-only: evidence, reassessments, alert decisions, status changes) ·
+`campaign_dismissals`. All child rows cascade-delete with the profile.
 
 ## Scaling path
 
