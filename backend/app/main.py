@@ -15,7 +15,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from .config import get_settings
 from .logging_config import configure_logging
-from .routers import analyze, contacts, meta, profiles
+from .routers import analyze, cases, contacts, demo, forensics, meta, profiles
 
 settings = get_settings()
 configure_logging(settings.log_level)
@@ -51,7 +51,9 @@ async def request_context(request: Request, call_next):
     request_id = request.headers.get("x-request-id", "")[:64] or uuid.uuid4().hex
     started = time.perf_counter()
     length = request.headers.get("content-length")
-    if length and length.isdigit() and int(length) > MAX_BODY_BYTES:
+    # Screenshot uploads get a larger cap, enforced again while streaming in the endpoint.
+    limit = settings.max_upload_bytes if request.url.path == forensics.SCREENSHOT_PATH else MAX_BODY_BYTES
+    if length and length.isdigit() and int(length) > limit:
         response = JSONResponse({"detail": "Request body too large"}, status_code=413)
     else:
         try:
@@ -89,7 +91,7 @@ async def http_error(_request: Request, exc: StarletteHTTPException):
 
 
 API_PREFIX = "/api/v1"
-for r in (meta.router, analyze.router, profiles.router, contacts.router):
+for r in (meta.router, analyze.router, profiles.router, contacts.router, cases.router, forensics.router, demo.router):
     app.include_router(r, prefix=API_PREFIX)
 
 if settings.static_dir and Path(settings.static_dir).is_dir():

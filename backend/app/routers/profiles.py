@@ -50,6 +50,13 @@ def export(profile: Profile = Depends(require_profile), db: Session = Depends(ge
             "alerts_sent": len(c.alerts),
             "consent_events": [{"event": e.event, "actor": e.actor, "at": e.at.isoformat()} for e in c.events],
         } for c in contacts],
+        "investigations": [{
+            "title": c.title, "status": c.status, "is_demo": c.is_demo, "created_at": c.created_at.isoformat(),
+            "risk_level": c.risk_level, "risk_score": c.risk_score,
+            "evidence": [{"seq": e.seq, "kind": e.kind, "channel": e.channel, "redacted_excerpt": e.excerpt,
+                          "media": e.media} for e in c.events],
+            "log": [{"action": x.action, "alert_action": x.alert_action, "at": x.at.isoformat()} for x in c.log],
+        } for c in profile.cases],
     }
 
 

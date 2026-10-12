@@ -28,6 +28,15 @@ class Settings(BaseSettings):
     max_contacts: int = 5
     trust_proxy_headers: bool = False    # set true behind a trusted reverse proxy (Render, Fly, etc.)
 
+    # Scam DNA / Forensics
+    case_medium_threshold: int = 30      # heuristic score thresholds for case risk levels
+    case_high_threshold: int = 60
+    max_cases: int = 200                 # per profile
+    max_case_events: int = 40            # per case
+    max_upload_bytes: int = 5_000_000    # screenshots
+    tesseract_cmd: str = ""              # empty = find "tesseract" on PATH
+    ocr_timeout_seconds: float = 20.0
+
     # Optional LLM explanation layer. Disabled unless a provider and key are configured.
     llm_provider: str = "none"           # "none" | "anthropic"
     anthropic_api_key: str = ""

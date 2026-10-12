@@ -10,3 +10,4 @@ numpy==2.5.3
 scipy==1.18.1
 joblib==1.6.0
 tldextract==5.4.0
+pillow==12.3.0

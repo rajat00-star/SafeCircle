@@ -199,3 +199,199 @@ class GuardianInbox(BaseModel):
     contact_name: str
     status: str
     alerts: list[AlertOut]
+
+
+# ---------- Scam DNA, Forensics, Campaign Radar ----------
+
+CHANNELS = ("sms", "whatsapp", "email", "call", "upi_app", "browser", "social", "other", "unknown")
+
+
+def _clean_text(v: str) -> str:
+    v = v.replace("\x00", "")
+    if not v.strip():
+        raise ValueError("must not be blank")
+    if len(v) > get_settings().max_text_chars:
+        raise ValueError(f"is longer than {get_settings().max_text_chars} characters")
+    return v
+
+
+class CaseCreate(BaseModel):
+    title: str = Field("Untitled investigation", min_length=1, max_length=120)
+
+    @field_validator("title")
+    @classmethod
+    def _t(cls, v: str) -> str:
+        v = " ".join(v.split())
+        if not v:
+            raise ValueError("title must not be blank")
+        return v
+
+
+class CaseUpdate(BaseModel):
+    title: str | None = Field(None, min_length=1, max_length=120)
+    status: Literal["open", "review", "closed"] | None = None
+
+
+class EventIn(BaseModel):
+    kind: Literal["message", "url"]
+    content: str = Field(..., min_length=1)
+    channel: Literal[CHANNELS] = "unknown"  # type: ignore[valid-type]
+    observed_at: datetime | None = Field(None, description="When the message was received, if known. Leave empty if unknown.")
+
+    @field_validator("content")
+    @classmethod
+    def _c(cls, v: str) -> str:
+        return _clean_text(v)
+
+    @field_validator("observed_at")
+    @classmethod
+    def _when(cls, v: datetime | None) -> datetime | None:
+        if v is not None and v.tzinfo is None:
+            raise ValueError("observed_at must include a timezone")
+        return v
+
+
+class AlertDecisionOut(BaseModel):
+    action: Literal["new", "escalated", "updated", "deescalated", "suppressed", "none"]
+    notify: bool
+    reason: str
+
+
+class ChangeOut(BaseModel):
+    score_before: int
+    score_after: int
+    delta: int
+    level_before: str
+    level_after: str
+    added_tactics: list[dict]
+    removed_tactics: list[dict]
+    stages_added: list[str]
+    explanation: list[str]
+    changed: bool
+
+
+class AssessmentOut(BaseModel):
+    risk_score: int = Field(..., ge=0, le=100)
+    risk_level: Literal["low", "medium", "high"]
+    score_label: str
+    thresholds: dict
+    components: list[dict]
+    tactics: list[dict]
+    stages_observed: list[str]
+    order: dict
+    chain: dict
+    uncertainty: dict
+    review_required: bool
+    review_reasons: list[str]
+    data_quality: dict
+    model_signal: dict | None
+    missing_evidence: list[str]
+    conflicts: list[str]
+    recommendations: list[str]
+    primary_action: str
+    indicators: dict
+    event_count: int
+    fingerprint: str
+
+
+class CaseEventOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: str
+    seq: int
+    kind: str
+    channel: str
+    source: str
+    observed_at: datetime | None
+    created_at: datetime
+    excerpt: str
+    media: dict | None
+    detection: dict
+
+
+class CaseLogOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    at: datetime
+    action: str
+    alert_action: str | None
+    notify: bool
+    risk_level: str | None
+    risk_score: int | None
+    detail: dict | None
+
+
+class CaseSummaryOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: str
+    title: str
+    status: str
+    is_demo: bool
+    demo_scenario: str | None
+    created_at: datetime
+    updated_at: datetime
+    risk_score: int
+    risk_level: str
+    review_required: bool
+    event_count: int = 0
+    stages: list[str] = []
+
+
+class CaseDetailOut(CaseSummaryOut):
+    events: list[CaseEventOut]
+    assessment: AssessmentOut | None
+    last_change: ChangeOut | None
+    log: list[CaseLogOut]
+
+
+class EventAdded(BaseModel):
+    event: CaseEventOut | None
+    duplicate_of: str | None
+    alert: AlertDecisionOut
+    change: ChangeOut
+    case: CaseDetailOut
+
+
+class ForensicsTextIn(BaseModel):
+    text: str = Field(..., min_length=1, description="A message or a whole conversation")
+    case_id: str | None = Field(None, max_length=36)
+    channel: Literal[CHANNELS] = "unknown"  # type: ignore[valid-type]
+
+    @field_validator("text")
+    @classmethod
+    def _c(cls, v: str) -> str:
+        return _clean_text(v)
+
+
+class ForensicsUrlIn(UrlIn):
+    case_id: str | None = Field(None, max_length=36)
+
+
+class ForensicsReport(BaseModel):
+    report_id: str
+    input_kind: Literal["message", "conversation", "url", "screenshot"]
+    analysis_status: Literal["completed", "partial", "unavailable"]
+    status_detail: str
+    original: dict
+    extracted_text: str | None
+    ocr: dict | None
+    tactics: list[dict]
+    url_indicators: list[dict]
+    risk_score: int
+    risk_level: Literal["low", "medium", "high"]
+    score_label: str
+    uncertainty: dict
+    review_required: bool
+    data_quality: dict
+    model_signal: dict | None
+    recommendations: list[str]
+    primary_action: str
+    missing_evidence: list[str]
+    conflicts: list[str]
+    case_id: str | None = None
+    case_update: dict | None = None
+    stored: bool = False
+
+
+class DismissIn(BaseModel):
+    case_a: str = Field(..., max_length=36)
+    case_b: str = Field(..., max_length=36)
