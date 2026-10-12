@@ -16,8 +16,11 @@ extension works. Work through the steps below once and record the result in the 
   you open the toolbar popup (which checks the current tab's address), or the link guard is on and you click a
   link to another site. Requests use `credentials: "omit"` and no profile token, so nothing is stored
   server-side unless that server is configured to.
-- The full link address is sent, **including its query string**. See finding M1 in
-  [validation-report.md](validation-report.md).
+- The link guard and the popup send a **minimal address** (`minimizeUrl` in `extension/shield.js`): host and
+  path unchanged, each query value replaced by `x` characters of the same length, a value that is itself a web
+  address cut to its origin, short plain lower-case words such as `login` kept, and the `#fragment` dropped. The
+  full address stays in the browser's session memory for "Open anyway". The right-click "Check this link" still
+  sends the full address, because you chose to submit it. See [hardening-report.md](hardening-report.md) (M1).
 - Links to the SafeCircle server itself, `localhost`, `127.0.0.1` and `[::1]` are never sent.
 - If the server cannot be reached, the link opens anyway, and the toolbar badge shows `?` with the reason. It
   never claims an unchecked link is safe.
@@ -72,6 +75,11 @@ never resolve, so even "Open anyway" cannot reach a real site.
     new cross-site link (repeats within 10 minutes are cached), carrying only `{"url": …}`. There should be none
     for the same-site link and no request containing page text. In the API terminal, the log lines should show
     the path and status only, not the URL.
+10b. **Minimal address.** Still in the service worker's Network tab, click **High-risk test link with a query
+    string**. Open the `analyze/url` request and check its payload is exactly
+    `{"url":"http://sbi-kyc-verify-login.example/update?session=xxxxxxxxxx&email=xxxxxxxxxxxxxxxxxxx&next=https%3A%2F%2Fpay.example"}`:
+    no `Ab12Cd34Ef`, no `asha`, no `id=77`, no `#step2`. Expect the high-risk warning page. Tick the box and
+    click **Open anyway**: the address bar should show the full original address, including `#step2`.
 11. **Server down.** Stop the API (Ctrl+C) and click **Safe link**. Expect the link to open, with a `?` badge whose
     tooltip says "Not checked: the SafeCircle server could not be reached…".
 12. **Turn it off.** In Options, untick the link guard. Expect the `ON` badge to disappear and site access to be
@@ -91,5 +99,6 @@ never resolve, so even "Open anyway" cannot reach a real site.
 | 8 New tab | NOT VERIFIED | | |
 | 9 Safe and same-site navigation | NOT VERIFIED | | |
 | 10 Network traffic | NOT VERIFIED | | |
+| 10b Minimal address | NOT VERIFIED | | |
 | 11 Server down | NOT VERIFIED | | |
 | 12 Turn off | NOT VERIFIED | | |

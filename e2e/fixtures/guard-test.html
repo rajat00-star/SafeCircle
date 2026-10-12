@@ -17,6 +17,10 @@ so even "Open anyway" cannot reach a real site. See <code>docs/extension-manual-
       (expected: warning opens in a new tab; "Go back" closes it)</li>
   <li><a id="safe" href="https://example.com/">Safe link (example.com)</a>
       (expected: opens normally with no warning)</li>
+  <li><a id="high-query" href="http://sbi-kyc-verify-login.example/update?session=Ab12Cd34Ef&amp;email=asha%40mail.example&amp;next=https%3A%2F%2Fpay.example%2Fp%3Fid%3D77#step2">High-risk test link with a query string</a>
+      (expected: warning page; the request to the server carries
+      <code>?session=xxxxxxxxxx&amp;email=xxxxxxxxxxxxxxxxxxx&amp;next=https%3A%2F%2Fpay.example</code> and no <code>#step2</code>,
+      while "Open anyway" goes to the full address)</li>
   <li><a id="same-site" href="#same-site-anchor">Same-site link</a>
       (expected: never checked, no request to the server)</li>
 </ol>

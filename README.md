@@ -134,7 +134,7 @@ paper/          research paper (.docx, editable)    slides/  presentation (.pptx
 
 ## Documentation
 
-[Scam DNA & features](docs/scam-dna.md) · [UPI Guard, report, network](docs/advanced-features.md) · [Validation report](docs/validation-report.md) · [Demo runbook](docs/demo-runbook.md) · [Extension manual check](docs/extension-manual-check.md) · [Architecture](docs/architecture.md) · [API](docs/api.md) · [Threat model](docs/threat-model.md) ·
+[Scam DNA & features](docs/scam-dna.md) · [UPI Guard, report, network](docs/advanced-features.md) · [Validation report](docs/validation-report.md) · [Hardening report](docs/hardening-report.md) · [Demo runbook](docs/demo-runbook.md) · [Extension manual check](docs/extension-manual-check.md) · [Architecture](docs/architecture.md) · [API](docs/api.md) · [Threat model](docs/threat-model.md) ·
 [Privacy](docs/privacy.md) · [Deployment](docs/deployment.md) · [Methodology & evaluation](docs/methodology.md) ·
 [Project status](STATUS.md) · [Security policy](SECURITY.md)
 
