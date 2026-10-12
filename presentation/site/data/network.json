@@ -1,0 +1,441 @@
+{
+ "meta": {
+  "label": "DEMO DATA: synthetic scenarios written by the SafeCircle team, run through the real API on a throwaway database. Not real victims, not live fraud intelligence.",
+  "generated_at": "2026-10-12T09:31:10+00:00",
+  "commit": "b8a1a65",
+  "command": "backend/.venv/bin/python presentation/scripts/snapshot.py"
+ },
+ "nodes": [
+  {
+   "id": "upi:388048669580abd7cf450c26",
+   "type": "indicator",
+   "kind": "upi",
+   "kind_label": "UPI handle",
+   "label": "sb***@ybl",
+   "note": "Masked; compared as a keyed hash.",
+   "case_count": 2
+  },
+  {
+   "id": "org:sbi",
+   "type": "indicator",
+   "kind": "org",
+   "kind_label": "Claims to be",
+   "label": "SBI",
+   "note": "Named in the evidence. A claim, not a verified sender.",
+   "case_count": 5
+  },
+  {
+   "id": "domain:sbi-kyc-update.example",
+   "type": "indicator",
+   "kind": "domain",
+   "kind_label": "Domain",
+   "label": "sbi-kyc-update.example",
+   "note": "Taken from link text; the link was never opened.",
+   "case_count": 3
+  },
+  {
+   "id": "upi:29ee06b6da59a7b0aade6884",
+   "type": "indicator",
+   "kind": "upi",
+   "kind_label": "UPI handle",
+   "label": "de***@ybl",
+   "note": "Masked; compared as a keyed hash.",
+   "case_count": 1
+  },
+  {
+   "id": "domain:sbi-kyc-renew.example",
+   "type": "indicator",
+   "kind": "domain",
+   "kind_label": "Domain",
+   "label": "sbi-kyc-renew.example",
+   "note": "Taken from link text; the link was never opened.",
+   "case_count": 1
+  },
+  {
+   "id": "upi:a3a405ef42ea0b6f4946de33",
+   "type": "indicator",
+   "kind": "upi",
+   "kind_label": "UPI handle",
+   "label": "de***@ybl",
+   "note": "Masked; compared as a keyed hash.",
+   "case_count": 2
+  },
+  {
+   "id": "org:police",
+   "type": "indicator",
+   "kind": "org",
+   "kind_label": "Claims to be",
+   "label": "POLICE",
+   "note": "Named in the evidence. A claim, not a verified sender.",
+   "case_count": 1
+  },
+  {
+   "id": "org:rbi",
+   "type": "indicator",
+   "kind": "org",
+   "kind_label": "Claims to be",
+   "label": "RBI",
+   "note": "Named in the evidence. A claim, not a verified sender.",
+   "case_count": 2
+  },
+  {
+   "id": "org:cbi",
+   "type": "indicator",
+   "kind": "org",
+   "kind_label": "Claims to be",
+   "label": "CBI",
+   "note": "Named in the evidence. A claim, not a verified sender.",
+   "case_count": 1
+  },
+  {
+   "id": "domain:parcel-redeliver.example",
+   "type": "indicator",
+   "kind": "domain",
+   "kind_label": "Domain",
+   "label": "parcel-redeliver.example",
+   "note": "Taken from link text; the link was never opened.",
+   "case_count": 1
+  },
+  {
+   "id": "org:indiapost",
+   "type": "indicator",
+   "kind": "org",
+   "kind_label": "Claims to be",
+   "label": "INDIAPOST",
+   "note": "Named in the evidence. A claim, not a verified sender.",
+   "case_count": 1
+  },
+  {
+   "id": "domain:hdfc-secure-login.example",
+   "type": "indicator",
+   "kind": "domain",
+   "kind_label": "Domain",
+   "label": "hdfc-secure-login.example",
+   "note": "Taken from link text; the link was never opened.",
+   "case_count": 1
+  },
+  {
+   "id": "org:hdfc",
+   "type": "indicator",
+   "kind": "org",
+   "kind_label": "Claims to be",
+   "label": "HDFC",
+   "note": "Named in the evidence. A claim, not a verified sender.",
+   "case_count": 1
+  },
+  {
+   "id": "case:c7ab1dc8-a034-4741-9600-134fe3168970",
+   "type": "case",
+   "case_id": "c7ab1dc8-a034-4741-9600-134fe3168970",
+   "label": "DEMO · Refund QR from 'SBI'",
+   "risk_level": "high",
+   "risk_score": 97,
+   "is_demo": false,
+   "tactic_count": 6
+  },
+  {
+   "id": "case:0313d5ab-58c0-4153-921b-d4f519ba7909",
+   "type": "case",
+   "case_id": "0313d5ab-58c0-4153-921b-d4f519ba7909",
+   "label": "DEMO · Same QR, reported by a neighbour",
+   "risk_level": "high",
+   "risk_score": 84,
+   "is_demo": false,
+   "tactic_count": 4
+  },
+  {
+   "id": "case:bde35dd4-0d06-4279-8c8c-65ddb955e41c",
+   "type": "case",
+   "case_id": "bde35dd4-0d06-4279-8c8c-65ddb955e41c",
+   "label": "DEMO · Multi-stage bank impersonation with a suspicious link",
+   "risk_level": "high",
+   "risk_score": 99,
+   "is_demo": false,
+   "tactic_count": 7
+  },
+  {
+   "id": "case:963d2ee1-31eb-44eb-a213-1b981ddf1887",
+   "type": "case",
+   "case_id": "963d2ee1-31eb-44eb-a213-1b981ddf1887",
+   "label": "DEMO · Lone OTP request, then a retraction",
+   "risk_level": "medium",
+   "risk_score": 59,
+   "is_demo": false,
+   "tactic_count": 1
+  },
+  {
+   "id": "case:38cd3c01-af97-4abf-be9d-48d58ba3a62c",
+   "type": "case",
+   "case_id": "38cd3c01-af97-4abf-be9d-48d58ba3a62c",
+   "label": "DEMO · KYC suspension SMS (A)",
+   "risk_level": "high",
+   "risk_score": 78,
+   "is_demo": true,
+   "tactic_count": 4
+  },
+  {
+   "id": "case:cf1bea66-224a-4b09-a675-1a0c53a21069",
+   "type": "case",
+   "case_id": "cf1bea66-224a-4b09-a675-1a0c53a21069",
+   "label": "DEMO · KYC suspension SMS (B)",
+   "risk_level": "high",
+   "risk_score": 74,
+   "is_demo": true,
+   "tactic_count": 3
+  },
+  {
+   "id": "case:65075afb-15fe-4338-b9a9-c26788267e9d",
+   "type": "case",
+   "case_id": "65075afb-15fe-4338-b9a9-c26788267e9d",
+   "label": "DEMO · KYC suspension SMS (C, different domain)",
+   "risk_level": "high",
+   "risk_score": 78,
+   "is_demo": true,
+   "tactic_count": 4
+  },
+  {
+   "id": "case:c42578e6-929f-47b9-b948-873954641ba2",
+   "type": "case",
+   "case_id": "c42578e6-929f-47b9-b948-873954641ba2",
+   "label": "DEMO · Digital arrest call (A)",
+   "risk_level": "high",
+   "risk_score": 88,
+   "is_demo": true,
+   "tactic_count": 3
+  },
+  {
+   "id": "case:d51e10c3-088b-444e-9606-1769ec39950c",
+   "type": "case",
+   "case_id": "d51e10c3-088b-444e-9606-1769ec39950c",
+   "label": "DEMO · Digital arrest call (B)",
+   "risk_level": "high",
+   "risk_score": 88,
+   "is_demo": true,
+   "tactic_count": 3
+  },
+  {
+   "id": "case:541645b9-0526-4557-9854-a316ae381420",
+   "type": "case",
+   "case_id": "541645b9-0526-4557-9854-a316ae381420",
+   "label": "DEMO · Cashback collect request (A)",
+   "risk_level": "high",
+   "risk_score": 92,
+   "is_demo": true,
+   "tactic_count": 3
+  },
+  {
+   "id": "case:4729102f-0daf-40af-af6b-5b48459d5821",
+   "type": "case",
+   "case_id": "4729102f-0daf-40af-af6b-5b48459d5821",
+   "label": "DEMO · Cashback collect request (B)",
+   "risk_level": "high",
+   "risk_score": 92,
+   "is_demo": true,
+   "tactic_count": 3
+  },
+  {
+   "id": "case:488b50b2-1f02-472c-b2c4-616f3d547415",
+   "type": "case",
+   "case_id": "488b50b2-1f02-472c-b2c4-616f3d547415",
+   "label": "DEMO · Parcel redelivery fee (unrelated)",
+   "risk_level": "high",
+   "risk_score": 71,
+   "is_demo": true,
+   "tactic_count": 4
+  },
+  {
+   "id": "case:6bdcb76c-8904-41f3-b0c8-1fbf7c6c9a2c",
+   "type": "case",
+   "case_id": "6bdcb76c-8904-41f3-b0c8-1fbf7c6c9a2c",
+   "label": "DEMO · HDFC login page (similar tactics, unrelated)",
+   "risk_level": "high",
+   "risk_score": 84,
+   "is_demo": true,
+   "tactic_count": 4
+  },
+  {
+   "id": "case:d769c52b-1642-4e7b-a1c0-8d52c9796cd8",
+   "type": "case",
+   "case_id": "d769c52b-1642-4e7b-a1c0-8d52c9796cd8",
+   "label": "DEMO · Genuine OTP notification",
+   "risk_level": "low",
+   "risk_score": 0,
+   "is_demo": true,
+   "tactic_count": 0
+  }
+ ],
+ "edges": [
+  {
+   "from": "case:c7ab1dc8-a034-4741-9600-134fe3168970",
+   "to": "upi:388048669580abd7cf450c26",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:c7ab1dc8-a034-4741-9600-134fe3168970",
+   "to": "org:sbi",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:0313d5ab-58c0-4153-921b-d4f519ba7909",
+   "to": "upi:388048669580abd7cf450c26",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:bde35dd4-0d06-4279-8c8c-65ddb955e41c",
+   "to": "domain:sbi-kyc-update.example",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:bde35dd4-0d06-4279-8c8c-65ddb955e41c",
+   "to": "upi:29ee06b6da59a7b0aade6884",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:bde35dd4-0d06-4279-8c8c-65ddb955e41c",
+   "to": "org:sbi",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:38cd3c01-af97-4abf-be9d-48d58ba3a62c",
+   "to": "domain:sbi-kyc-update.example",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:38cd3c01-af97-4abf-be9d-48d58ba3a62c",
+   "to": "org:sbi",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:cf1bea66-224a-4b09-a675-1a0c53a21069",
+   "to": "domain:sbi-kyc-update.example",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:cf1bea66-224a-4b09-a675-1a0c53a21069",
+   "to": "org:sbi",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:65075afb-15fe-4338-b9a9-c26788267e9d",
+   "to": "domain:sbi-kyc-renew.example",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:65075afb-15fe-4338-b9a9-c26788267e9d",
+   "to": "org:sbi",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:c42578e6-929f-47b9-b948-873954641ba2",
+   "to": "upi:a3a405ef42ea0b6f4946de33",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:c42578e6-929f-47b9-b948-873954641ba2",
+   "to": "org:police",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:c42578e6-929f-47b9-b948-873954641ba2",
+   "to": "org:rbi",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:d51e10c3-088b-444e-9606-1769ec39950c",
+   "to": "upi:a3a405ef42ea0b6f4946de33",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:d51e10c3-088b-444e-9606-1769ec39950c",
+   "to": "org:cbi",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:d51e10c3-088b-444e-9606-1769ec39950c",
+   "to": "org:rbi",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:488b50b2-1f02-472c-b2c4-616f3d547415",
+   "to": "domain:parcel-redeliver.example",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:488b50b2-1f02-472c-b2c4-616f3d547415",
+   "to": "org:indiapost",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:6bdcb76c-8904-41f3-b0c8-1fbf7c6c9a2c",
+   "to": "domain:hdfc-secure-login.example",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:6bdcb76c-8904-41f3-b0c8-1fbf7c6c9a2c",
+   "to": "org:hdfc",
+   "basis": "observed",
+   "label": "Found in this case's evidence"
+  },
+  {
+   "from": "case:38cd3c01-af97-4abf-be9d-48d58ba3a62c",
+   "to": "case:65075afb-15fe-4338-b9a9-c26788267e9d",
+   "basis": "inferred",
+   "relation": "likely",
+   "strength": 0.932,
+   "label": "Similar message wording: 100% word-sequence overlap; Same link path pattern: /kyc/verify/#; Same impersonated organisation and similar tactics: SBI; 100% tactic overlap",
+   "uncertainty": "Similarity only: no exact indicator is shared, so these may be unrelated cases using a common template."
+  },
+  {
+   "from": "case:541645b9-0526-4557-9854-a316ae381420",
+   "to": "case:4729102f-0daf-40af-af6b-5b48459d5821",
+   "basis": "inferred",
+   "relation": "likely",
+   "strength": 0.873,
+   "label": "Similar message wording: 100% word-sequence overlap; Same money-extraction method: UPI collect-request or PIN-to-receive trick",
+   "uncertainty": "Similarity only: no exact indicator is shared, so these may be unrelated cases using a common template."
+  },
+  {
+   "from": "case:cf1bea66-224a-4b09-a675-1a0c53a21069",
+   "to": "case:65075afb-15fe-4338-b9a9-c26788267e9d",
+   "basis": "inferred",
+   "relation": "possible",
+   "strength": 0.545,
+   "label": "Same link path pattern: /kyc/verify/#; Same impersonated organisation and similar tactics: SBI; 75% tactic overlap",
+   "uncertainty": "Weak similarity: shown for review, not grouped."
+  }
+ ],
+ "stats": {
+  "cases": 14,
+  "indicators": 13,
+  "shared_indicators": 5,
+  "observed_edges": 22,
+  "inferred_edges": 3
+ },
+ "dismissed_pairs": [],
+ "legend": {
+  "observed": "Solid line: the indicator was found in that case's own evidence.",
+  "inferred": "Dashed line: Campaign Radar similarity (wording, link path or tactics). Not proof of a connection."
+ },
+ "source": "Built only from your own cases. No external threat-intelligence feed is connected."
+}

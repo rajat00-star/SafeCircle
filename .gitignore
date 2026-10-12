@@ -14,3 +14,5 @@ frontend/tsconfig.tsbuildinfo
 e2e/node_modules/
 e2e/screenshots/
 .pytest_cache/
+presentation/deck/node_modules/
+presentation/assets/

@@ -1,0 +1,4224 @@
+{
+ "meta": {
+  "label": "DEMO DATA: synthetic scenarios written by the SafeCircle team, run through the real API on a throwaway database. Not real victims, not live fraud intelligence.",
+  "generated_at": "2026-10-12T09:31:10+00:00",
+  "commit": "b8a1a65",
+  "command": "backend/.venv/bin/python presentation/scripts/snapshot.py"
+ },
+ "steps": [
+  {
+   "step": "1",
+   "where": "UPI Guard",
+   "did": "Check an ordinary shop QR",
+   "kind": "upi",
+   "response": {
+    "parsed": {
+     "kind": "upi_link",
+     "handle_masked": "ra***@okicici",
+     "psp": "okicici",
+     "psp_known": true,
+     "payee_name": "Ravi Stores",
+     "amount": "120.00",
+     "currency": "INR",
+     "note": null,
+     "link_type": "pay",
+     "unknown_params": []
+    },
+    "signals": [
+     {
+      "code": "prefilled_amount",
+      "title": "Pre-filled amount: ₹120.00",
+      "detail": "Opening this link or scanning this QR asks you to PAY ₹120.00. It cannot put money into your account.",
+      "basis": "observed"
+     }
+    ],
+    "case_matches": [],
+    "tactics": [],
+    "risk_score": 0,
+    "risk_level": "low",
+    "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+    "verdict": "No warning signs found in what you provided. This does not confirm the payee is genuine.",
+    "uncertainty": {
+     "level": "low",
+     "reasons": []
+    },
+    "review_required": false,
+    "recommendations": [
+     "No scam tactics were found in this evidence. That is not proof it is safe: never share codes or PINs, and verify requests for money through a channel you already trust."
+    ],
+    "primary_action": "No scam tactics were found in this evidence. That is not proof it is safe: never share codes or PINs, and verify requests for money through a channel you already trust.",
+    "limitations": [
+     "SafeCircle cannot see who owns a UPI handle; only your bank or UPI app shows the registered name.",
+     "No bank, NPCI or fraud database is consulted. 'No warning signs' does not mean the payee is safe.",
+     "Nothing is paid, blocked or approved here. You stay in control of your UPI app."
+    ],
+    "stored": false,
+    "case_update": null,
+    "retention": "Not stored: checked in memory and discarded."
+   }
+  },
+  {
+   "step": "2",
+   "where": "Scam DNA",
+   "did": "Add the opening message to a new case",
+   "kind": "event",
+   "response": {
+    "event": {
+     "id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+     "seq": 1,
+     "kind": "message",
+     "channel": "sms",
+     "source": "user",
+     "observed_at": null,
+     "created_at": "2026-10-12T09:31:10.707102Z",
+     "excerpt": "SBI Refund Desk: your refund of Rs 4,999 has been approved and is waiting to be credited.",
+     "media": null,
+     "detection": {
+      "tactics": [
+       {
+        "code": "reward_lure",
+        "title": "Reward, refund or cashback lure",
+        "stage": "hook",
+        "severity": 0.25,
+        "basis": "text_match",
+        "evidence": [
+         {
+          "text": "refund of",
+          "rule": "rew_win"
+         }
+        ]
+       },
+       {
+        "code": "authority_impersonation",
+        "title": "Claims to be a bank, payment app or government body",
+        "stage": "hook",
+        "severity": 0.15,
+        "basis": "text_match",
+        "evidence": [
+         {
+          "text": "SBI",
+          "rule": "imp_org"
+         }
+        ]
+       }
+      ],
+      "event_score": 36,
+      "urls": [],
+      "ml_probability": 0.6291,
+      "safety_advice": [],
+      "retraction": [],
+      "mitigation": null,
+      "claimed_orgs": [
+       "sbi"
+      ],
+      "data_quality": {
+       "level": "good",
+       "notes": [],
+       "ocr_confidence": null
+      },
+      "indicators": {
+       "domains": [],
+       "links": [],
+       "path_patterns": [],
+       "shortened_links": [],
+       "upi_handles": [],
+       "upi_handles_masked": [],
+       "phones": [],
+       "orgs": [
+        "sbi"
+       ]
+      }
+     }
+    },
+    "duplicate_of": null,
+    "alert": {
+     "action": "new",
+     "notify": true,
+     "reason": "First alert: the case reached medium risk."
+    },
+    "change": {
+     "score_before": 0,
+     "score_after": 36,
+     "delta": 36,
+     "level_before": "low",
+     "level_after": "medium",
+     "added_tactics": [
+      {
+       "code": "reward_lure",
+       "title": "Reward, refund or cashback lure",
+       "severity": 0.25
+      },
+      {
+       "code": "authority_impersonation",
+       "title": "Claims to be a bank, payment app or government body",
+       "severity": 0.15
+      }
+     ],
+     "removed_tactics": [],
+     "stages_added": [
+      "hook"
+     ],
+     "explanation": [
+      "New tactics from evidence #1: Reward, refund or cashback lure (weight 0.25); Claims to be a bank, payment app or government body (weight 0.15).",
+      "The attack chain now reaches: Approach.",
+      "Risk level changed from low to medium."
+     ],
+     "changed": true
+    },
+    "case": {
+     "id": "c7ab1dc8-a034-4741-9600-134fe3168970",
+     "title": "DEMO · Refund QR from 'SBI'",
+     "status": "open",
+     "is_demo": false,
+     "demo_scenario": null,
+     "created_at": "2026-10-12T09:31:10.022356",
+     "updated_at": "2026-10-12T09:31:10.708196Z",
+     "risk_score": 36,
+     "risk_level": "medium",
+     "review_required": false,
+     "event_count": 1,
+     "stages": [
+      "hook"
+     ],
+     "events": [
+      {
+       "id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+       "seq": 1,
+       "kind": "message",
+       "channel": "sms",
+       "source": "user",
+       "observed_at": null,
+       "created_at": "2026-10-12T09:31:10.707102Z",
+       "excerpt": "SBI Refund Desk: your refund of Rs 4,999 has been approved and is waiting to be credited.",
+       "media": null,
+       "detection": {
+        "tactics": [
+         {
+          "code": "reward_lure",
+          "title": "Reward, refund or cashback lure",
+          "stage": "hook",
+          "severity": 0.25,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "refund of",
+            "rule": "rew_win"
+           }
+          ]
+         },
+         {
+          "code": "authority_impersonation",
+          "title": "Claims to be a bank, payment app or government body",
+          "stage": "hook",
+          "severity": 0.15,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "SBI",
+            "rule": "imp_org"
+           }
+          ]
+         }
+        ],
+        "event_score": 36,
+        "urls": [],
+        "ml_probability": 0.6291,
+        "safety_advice": [],
+        "retraction": [],
+        "mitigation": null,
+        "claimed_orgs": [
+         "sbi"
+        ],
+        "data_quality": {
+         "level": "good",
+         "notes": [],
+         "ocr_confidence": null
+        },
+        "indicators": {
+         "domains": [],
+         "links": [],
+         "path_patterns": [],
+         "shortened_links": [],
+         "upi_handles": [],
+         "upi_handles_masked": [],
+         "phones": [],
+         "orgs": [
+          "sbi"
+         ]
+        }
+       }
+      }
+     ],
+     "assessment": {
+      "risk_score": 36,
+      "risk_level": "medium",
+      "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+      "thresholds": {
+       "medium": 30,
+       "high": 60
+      },
+      "components": [
+       {
+        "label": "Reward, refund or cashback lure",
+        "weight": 0.25,
+        "kind": "tactic"
+       },
+       {
+        "label": "Claims to be a bank, payment app or government body",
+        "weight": 0.15,
+        "kind": "tactic"
+       }
+      ],
+      "mitigations": [],
+      "tactics": [
+       {
+        "code": "reward_lure",
+        "title": "Reward, refund or cashback lure",
+        "stage": "hook",
+        "severity": 0.25,
+        "first_event": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+        "first_position": 1,
+        "events": [
+         "09204ec8-4dae-4917-8786-4dd20e6ad41e"
+        ],
+        "evidence": [
+         {
+          "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+          "seq": 1,
+          "text": "refund of"
+         }
+        ],
+        "basis": "observed",
+        "source": "text_match"
+       },
+       {
+        "code": "authority_impersonation",
+        "title": "Claims to be a bank, payment app or government body",
+        "stage": "hook",
+        "severity": 0.15,
+        "first_event": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+        "first_position": 1,
+        "events": [
+         "09204ec8-4dae-4917-8786-4dd20e6ad41e"
+        ],
+        "evidence": [
+         {
+          "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+          "seq": 1,
+          "text": "SBI"
+         }
+        ],
+        "basis": "observed",
+        "source": "text_match"
+       }
+      ],
+      "stages_observed": [
+       "hook"
+      ],
+      "order": {
+       "basis": "submission_order",
+       "known": false,
+       "note": "Shown in the order evidence was added, which may differ from when it was received. Add the time each message arrived to confirm the sequence.",
+       "sequence": [
+        "09204ec8-4dae-4917-8786-4dd20e6ad41e"
+       ]
+      },
+      "chain": {
+       "nodes": [
+        {
+         "id": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "type": "event",
+         "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "position": 1,
+         "seq": 1,
+         "kind": "message",
+         "channel": "sms",
+         "observed_at": null,
+         "label": "Evidence #1",
+         "excerpt": "SBI Refund Desk: your refund of Rs 4,999 has been approved and is waiting to be credited.",
+         "signals": [
+          "reward_lure",
+          "authority_impersonation"
+         ],
+         "event_score": 36,
+         "data_quality": "good",
+         "basis": "observed"
+        },
+        {
+         "id": "t:reward_lure",
+         "type": "tactic",
+         "code": "reward_lure",
+         "label": "Reward, refund or cashback lure",
+         "stage": "hook",
+         "stage_title": "Approach",
+         "severity": 0.25,
+         "evidence": [
+          {
+           "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+           "seq": 1,
+           "text": "refund of"
+          }
+         ],
+         "explanation": "An unexpected prize, refund, cashback or guaranteed return is offered.",
+         "recommendation": "Do not pay a fee or enter a PIN to receive a reward. Genuine refunds never need your PIN.",
+         "basis": "observed",
+         "source": "text_match",
+         "confidence": "Direct text match"
+        },
+        {
+         "id": "t:authority_impersonation",
+         "type": "tactic",
+         "code": "authority_impersonation",
+         "label": "Claims to be a bank, payment app or government body",
+         "stage": "hook",
+         "stage_title": "Approach",
+         "severity": 0.15,
+         "evidence": [
+          {
+           "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+           "seq": 1,
+           "text": "SBI"
+          }
+         ],
+         "explanation": "The message names a bank, payment app, regulator or government body as its sender or subject. Genuine notices do this too; it matters when combined with pressure or a request.",
+         "recommendation": "Contact the organisation through its official app or the number printed on your card, never through details in the message.",
+         "basis": "observed",
+         "source": "text_match",
+         "confidence": "Direct text match"
+        }
+       ],
+       "edges": [
+        {
+         "from": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "to": "t:reward_lure",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "to": "t:authority_impersonation",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        }
+       ],
+       "stages": [
+        {
+         "code": "hook",
+         "title": "Approach",
+         "order": 1,
+         "description": "The scammer makes contact and borrows a trusted identity or a lure."
+        },
+        {
+         "code": "pressure",
+         "title": "Pressure",
+         "order": 2,
+         "description": "Fear, urgency or authority is used to stop the victim from thinking or checking."
+        },
+        {
+         "code": "harvest",
+         "title": "Harvest",
+         "order": 3,
+         "description": "The victim is pushed to reveal codes, PINs, passwords or to log in on a fake page."
+        },
+        {
+         "code": "control",
+         "title": "Control",
+         "order": 4,
+         "description": "The scammer tries to take control of the victim's device."
+        },
+        {
+         "code": "extraction",
+         "title": "Extraction",
+         "order": 5,
+         "description": "Money is moved: collect requests, transfers, fees or diverted payments."
+        },
+        {
+         "code": "evasion",
+         "title": "Evasion",
+         "order": 0,
+         "description": "Tricks used to slip past filters. Not part of the victim-facing sequence."
+        }
+       ]
+      },
+      "uncertainty": {
+       "level": "low",
+       "reasons": []
+      },
+      "review_required": false,
+      "review_reasons": [],
+      "data_quality": {
+       "level": "good",
+       "notes": []
+      },
+      "model_signal": {
+       "max_probability": 0.629,
+       "note": "Similarity of the wording to a public SMS spam dataset. Uncalibrated and not used in the score."
+      },
+      "missing_evidence": [
+       "No request for codes, log-ins, app installs or money has been seen yet. Scams usually escalate; add follow-up messages if they arrive.",
+       "The claimed sender (SBI) has not been verified through an official channel."
+      ],
+      "conflicts": [],
+      "recommendations": [
+       "Do not reply or call back on numbers in the message. Verify through the official app or website.",
+       "Contact the organisation through its official app or the number printed on your card, never through details in the message.",
+       "Do not pay a fee or enter a PIN to receive a reward. Genuine refunds never need your PIN.",
+       "Report it at cybercrime.gov.in or call 1930 (India's national cyber-crime helpline). If money moved, call your bank first."
+      ],
+      "primary_action": "Do not reply or call back on numbers in the message. Verify through the official app or website.",
+      "indicators": {
+       "domains": [],
+       "links": [],
+       "path_patterns": [],
+       "shortened_links": [],
+       "upi_handles": [],
+       "upi_handles_masked": [],
+       "phones": [],
+       "orgs": [
+        "sbi"
+       ]
+      },
+      "event_count": 1,
+      "fingerprint": "305226fcb511e32356d1871f611d8988"
+     },
+     "last_change": {
+      "score_before": 0,
+      "score_after": 36,
+      "delta": 36,
+      "level_before": "low",
+      "level_after": "medium",
+      "added_tactics": [
+       {
+        "code": "reward_lure",
+        "title": "Reward, refund or cashback lure",
+        "severity": 0.25
+       },
+       {
+        "code": "authority_impersonation",
+        "title": "Claims to be a bank, payment app or government body",
+        "severity": 0.15
+       }
+      ],
+      "removed_tactics": [],
+      "stages_added": [
+       "hook"
+      ],
+      "explanation": [
+       "New tactics from evidence #1: Reward, refund or cashback lure (weight 0.25); Claims to be a bank, payment app or government body (weight 0.15).",
+       "The attack chain now reaches: Approach.",
+       "Risk level changed from low to medium."
+      ],
+      "changed": true
+     },
+     "log": [
+      {
+       "id": 3,
+       "at": "2026-10-12T09:31:10.709023",
+       "action": "reassessed",
+       "alert_action": "new",
+       "notify": true,
+       "risk_level": "medium",
+       "risk_score": 36,
+       "detail": {
+        "reason": "First alert: the case reached medium risk.",
+        "explanation": [
+         "New tactics from evidence #1: Reward, refund or cashback lure (weight 0.25); Claims to be a bank, payment app or government body (weight 0.15).",
+         "The attack chain now reaches: Approach.",
+         "Risk level changed from low to medium."
+        ],
+        "tactics": [
+         "reward_lure",
+         "authority_impersonation"
+        ],
+        "score_before": 0
+       }
+      },
+      {
+       "id": 2,
+       "at": "2026-10-12T09:31:10.708888",
+       "action": "evidence_added",
+       "alert_action": null,
+       "notify": false,
+       "risk_level": null,
+       "risk_score": null,
+       "detail": {
+        "seq": 1,
+        "kind": "message",
+        "tactics": [
+         "reward_lure",
+         "authority_impersonation"
+        ]
+       }
+      },
+      {
+       "id": 1,
+       "at": "2026-10-12T09:31:10.022871",
+       "action": "case_created",
+       "alert_action": null,
+       "notify": false,
+       "risk_level": null,
+       "risk_score": null,
+       "detail": {
+        "title": "DEMO · Refund QR from 'SBI'",
+        "demo": false
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "step": "3",
+   "where": "UPI Guard",
+   "did": "Check the refund QR",
+   "kind": "upi",
+   "response": {
+    "parsed": {
+     "kind": "upi_link",
+     "handle_masked": "sb***@ybl",
+     "psp": "ybl",
+     "psp_known": true,
+     "payee_name": "SBI Refund Desk",
+     "amount": "4999.00",
+     "currency": "INR",
+     "note": "Scan to receive your refund",
+     "link_type": "pay",
+     "unknown_params": []
+    },
+    "signals": [
+     {
+      "code": "org_name",
+      "title": "Organisation name on a payee",
+      "detail": "The UPI ID (sb***@ybl) names SBI. Anyone can choose a display name or handle; it does not prove who receives the money.",
+      "basis": "heuristic"
+     },
+     {
+      "code": "lure_name",
+      "title": "Payee presented as a refund or reward",
+      "detail": "The payee name and UPI ID mention a refund, prize or reward. You never pay to receive money.",
+      "basis": "observed"
+     },
+     {
+      "code": "prefilled_amount",
+      "title": "Pre-filled amount: ₹4999.00",
+      "detail": "Opening this link or scanning this QR asks you to PAY ₹4999.00. It cannot put money into your account.",
+      "basis": "observed"
+     },
+     {
+      "code": "pay_to_receive",
+      "title": "Told you will receive money, but the link sends money",
+      "detail": "The request talks about 'receive', but a UPI payment link only ever takes money from you.",
+      "basis": "observed"
+     }
+    ],
+    "case_matches": [],
+    "tactics": [
+     {
+      "code": "secret_request",
+      "title": "Asks for an OTP, PIN or password",
+      "stage": "harvest",
+      "severity": 0.6,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "enter your UPI PIN"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "upi_collect",
+      "title": "UPI collect-request or PIN-to-receive trick",
+      "stage": "extraction",
+      "severity": 0.6,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "enter your UPI PIN to receive"
+       },
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "Scan the QR and enter your UPI PIN to receive"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "payment_pressure",
+      "title": "Pressure to pay or move money",
+      "stage": "extraction",
+      "severity": 0.35,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "Scan the QR"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "reward_lure",
+      "title": "Reward, refund or cashback lure",
+      "stage": "hook",
+      "severity": 0.25,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "refund of"
+       },
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "payee name: SBI Refund Desk"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "urgency",
+      "title": "Urgency or time pressure",
+      "stage": "pressure",
+      "severity": 0.15,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "within 10 minutes"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "authority_impersonation",
+      "title": "Claims to be a bank, payment app or government body",
+      "stage": "hook",
+      "severity": 0.15,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "SBI"
+       },
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "UPI ID: sb***@ybl"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     }
+    ],
+    "risk_score": 97,
+    "risk_level": "high",
+    "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+    "verdict": "Strong warning signs. Do not pay.",
+    "uncertainty": {
+     "level": "low",
+     "reasons": []
+    },
+    "review_required": false,
+    "recommendations": [
+     "Stop: do not approve any request, scan any QR code, pay or transfer money.",
+     "Never share an OTP, PIN or password. If you already did, call your bank now to block the account or card.",
+     "Decline the collect request. You never need your UPI PIN or a QR scan to receive money.",
+     "Do not pay. Check the request through a channel you find yourself.",
+     "Contact the organisation through its official app or the number printed on your card, never through details in the message.",
+     "Do not pay a fee or enter a PIN to receive a reward. Genuine refunds never need your PIN.",
+     "Slow down. Genuine organisations give you time to verify."
+    ],
+    "primary_action": "Stop: do not approve any request, scan any QR code, pay or transfer money.",
+    "limitations": [
+     "SafeCircle cannot see who owns a UPI handle; only your bank or UPI app shows the registered name.",
+     "No bank, NPCI or fraud database is consulted. 'No warning signs' does not mean the payee is safe.",
+     "Nothing is paid, blocked or approved here. You stay in control of your UPI app."
+    ],
+    "stored": false,
+    "case_update": null,
+    "retention": "Not stored: checked in memory and discarded."
+   }
+  },
+  {
+   "step": "4",
+   "where": "UPI Guard",
+   "did": "Attach the QR check to the case",
+   "kind": "upi",
+   "response": {
+    "parsed": {
+     "kind": "upi_link",
+     "handle_masked": "sb***@ybl",
+     "psp": "ybl",
+     "psp_known": true,
+     "payee_name": "SBI Refund Desk",
+     "amount": "4999.00",
+     "currency": "INR",
+     "note": "Scan to receive your refund",
+     "link_type": "pay",
+     "unknown_params": []
+    },
+    "signals": [
+     {
+      "code": "org_name",
+      "title": "Organisation name on a payee",
+      "detail": "The UPI ID (sb***@ybl) names SBI. Anyone can choose a display name or handle; it does not prove who receives the money.",
+      "basis": "heuristic"
+     },
+     {
+      "code": "lure_name",
+      "title": "Payee presented as a refund or reward",
+      "detail": "The payee name and UPI ID mention a refund, prize or reward. You never pay to receive money.",
+      "basis": "observed"
+     },
+     {
+      "code": "prefilled_amount",
+      "title": "Pre-filled amount: ₹4999.00",
+      "detail": "Opening this link or scanning this QR asks you to PAY ₹4999.00. It cannot put money into your account.",
+      "basis": "observed"
+     },
+     {
+      "code": "pay_to_receive",
+      "title": "Told you will receive money, but the link sends money",
+      "detail": "The request talks about 'receive', but a UPI payment link only ever takes money from you.",
+      "basis": "observed"
+     }
+    ],
+    "case_matches": [],
+    "tactics": [
+     {
+      "code": "secret_request",
+      "title": "Asks for an OTP, PIN or password",
+      "stage": "harvest",
+      "severity": 0.6,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "enter your UPI PIN"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "upi_collect",
+      "title": "UPI collect-request or PIN-to-receive trick",
+      "stage": "extraction",
+      "severity": 0.6,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "enter your UPI PIN to receive"
+       },
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "Scan the QR and enter your UPI PIN to receive"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "payment_pressure",
+      "title": "Pressure to pay or move money",
+      "stage": "extraction",
+      "severity": 0.35,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "Scan the QR"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "reward_lure",
+      "title": "Reward, refund or cashback lure",
+      "stage": "hook",
+      "severity": 0.25,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "refund of"
+       },
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "payee name: SBI Refund Desk"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "urgency",
+      "title": "Urgency or time pressure",
+      "stage": "pressure",
+      "severity": 0.15,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "within 10 minutes"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "authority_impersonation",
+      "title": "Claims to be a bank, payment app or government body",
+      "stage": "hook",
+      "severity": 0.15,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "SBI"
+       },
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "UPI ID: sb***@ybl"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     }
+    ],
+    "risk_score": 97,
+    "risk_level": "high",
+    "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+    "verdict": "Strong warning signs. Do not pay.",
+    "uncertainty": {
+     "level": "low",
+     "reasons": []
+    },
+    "review_required": false,
+    "recommendations": [
+     "Stop: do not approve any request, scan any QR code, pay or transfer money.",
+     "Never share an OTP, PIN or password. If you already did, call your bank now to block the account or card.",
+     "Decline the collect request. You never need your UPI PIN or a QR scan to receive money.",
+     "Do not pay. Check the request through a channel you find yourself.",
+     "Contact the organisation through its official app or the number printed on your card, never through details in the message.",
+     "Do not pay a fee or enter a PIN to receive a reward. Genuine refunds never need your PIN.",
+     "Slow down. Genuine organisations give you time to verify."
+    ],
+    "primary_action": "Stop: do not approve any request, scan any QR code, pay or transfer money.",
+    "limitations": [
+     "SafeCircle cannot see who owns a UPI handle; only your bank or UPI app shows the registered name.",
+     "No bank, NPCI or fraud database is consulted. 'No warning signs' does not mean the payee is safe.",
+     "Nothing is paid, blocked or approved here. You stay in control of your UPI app."
+    ],
+    "stored": true,
+    "case_update": {
+     "case_id": "c7ab1dc8-a034-4741-9600-134fe3168970",
+     "event_added": true,
+     "duplicate": false,
+     "alert": {
+      "action": "escalated",
+      "notify": true,
+      "reason": "Escalated from medium to high risk."
+     },
+     "change": {
+      "score_before": 36,
+      "score_after": 97,
+      "delta": 61,
+      "level_before": "medium",
+      "level_after": "high",
+      "added_tactics": [
+       {
+        "code": "secret_request",
+        "title": "Asks for an OTP, PIN or password",
+        "severity": 0.6
+       },
+       {
+        "code": "upi_collect",
+        "title": "UPI collect-request or PIN-to-receive trick",
+        "severity": 0.6
+       },
+       {
+        "code": "payment_pressure",
+        "title": "Pressure to pay or move money",
+        "severity": 0.35
+       },
+       {
+        "code": "urgency",
+        "title": "Urgency or time pressure",
+        "severity": 0.15
+       }
+      ],
+      "removed_tactics": [],
+      "stages_added": [
+       "pressure",
+       "harvest",
+       "extraction"
+      ],
+      "explanation": [
+       "New tactics from evidence #2: Asks for an OTP, PIN or password (weight 0.60); UPI collect-request or PIN-to-receive trick (weight 0.60); Pressure to pay or move money (weight 0.35); Urgency or time pressure (weight 0.15).",
+       "The attack chain now reaches: Pressure, Harvest, Extraction.",
+       "Added weight for: Attack spans 4 stages (Approach, Pressure, Harvest, Extraction) (+0.25).",
+       "Added weight for: A claimed bank or authority asks for a secret code (+0.20).",
+       "Added weight for: Promised money used to trigger a UPI collect request (+0.20).",
+       "Risk level changed from medium to high."
+      ],
+      "changed": true
+     },
+     "risk_score": 97,
+     "risk_level": "high"
+    },
+    "retention": "Added to your case as redacted text (the UPI ID is masked and kept only as a keyed hash)."
+   }
+  },
+  {
+   "step": "5a",
+   "where": "UPI Guard",
+   "did": "Run the same check again",
+   "kind": "upi",
+   "response": {
+    "parsed": {
+     "kind": "upi_link",
+     "handle_masked": "sb***@ybl",
+     "psp": "ybl",
+     "psp_known": true,
+     "payee_name": "SBI Refund Desk",
+     "amount": "4999.00",
+     "currency": "INR",
+     "note": "Scan to receive your refund",
+     "link_type": "pay",
+     "unknown_params": []
+    },
+    "signals": [
+     {
+      "code": "org_name",
+      "title": "Organisation name on a payee",
+      "detail": "The UPI ID (sb***@ybl) names SBI. Anyone can choose a display name or handle; it does not prove who receives the money.",
+      "basis": "heuristic"
+     },
+     {
+      "code": "lure_name",
+      "title": "Payee presented as a refund or reward",
+      "detail": "The payee name and UPI ID mention a refund, prize or reward. You never pay to receive money.",
+      "basis": "observed"
+     },
+     {
+      "code": "prefilled_amount",
+      "title": "Pre-filled amount: ₹4999.00",
+      "detail": "Opening this link or scanning this QR asks you to PAY ₹4999.00. It cannot put money into your account.",
+      "basis": "observed"
+     },
+     {
+      "code": "pay_to_receive",
+      "title": "Told you will receive money, but the link sends money",
+      "detail": "The request talks about 'receive', but a UPI payment link only ever takes money from you.",
+      "basis": "observed"
+     },
+     {
+      "code": "seen_in_cases",
+      "title": "This UPI ID appears in your investigations",
+      "detail": "The same UPI ID is in 1 of your cases rated medium or high risk (DEMO · Refund QR from 'SBI').",
+      "basis": "your_cases"
+     }
+    ],
+    "case_matches": [
+     {
+      "case_id": "c7ab1dc8-a034-4741-9600-134fe3168970",
+      "title": "DEMO · Refund QR from 'SBI'",
+      "risk_level": "high",
+      "is_demo": false
+     }
+    ],
+    "tactics": [
+     {
+      "code": "secret_request",
+      "title": "Asks for an OTP, PIN or password",
+      "stage": "harvest",
+      "severity": 0.6,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "enter your UPI PIN"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "upi_collect",
+      "title": "UPI collect-request or PIN-to-receive trick",
+      "stage": "extraction",
+      "severity": 0.6,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "enter your UPI PIN to receive"
+       },
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "Scan the QR and enter your UPI PIN to receive"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "payment_pressure",
+      "title": "Pressure to pay or move money",
+      "stage": "extraction",
+      "severity": 0.35,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "Scan the QR"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "reward_lure",
+      "title": "Reward, refund or cashback lure",
+      "stage": "hook",
+      "severity": 0.25,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "refund of"
+       },
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "payee name: SBI Refund Desk"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "repeated_indicator",
+      "title": "Repeated suspicious link, domain or message pattern",
+      "stage": "evasion",
+      "severity": 0.2,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "UPI ID sb***@ybl seen in: DEMO · Refund QR from 'SBI'"
+       }
+      ],
+      "basis": "observed",
+      "source": "upi_request"
+     },
+     {
+      "code": "urgency",
+      "title": "Urgency or time pressure",
+      "stage": "pressure",
+      "severity": 0.15,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "within 10 minutes"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     },
+     {
+      "code": "authority_impersonation",
+      "title": "Claims to be a bank, payment app or government body",
+      "stage": "hook",
+      "severity": 0.15,
+      "first_event": "u1",
+      "first_position": 1,
+      "events": [
+       "u1"
+      ],
+      "evidence": [
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "SBI"
+       },
+       {
+        "event_id": "u1",
+        "seq": 1,
+        "text": "UPI ID: sb***@ybl"
+       }
+      ],
+      "basis": "observed",
+      "source": "text_match"
+     }
+    ],
+    "risk_score": 98,
+    "risk_level": "high",
+    "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+    "verdict": "Strong warning signs. Do not pay.",
+    "uncertainty": {
+     "level": "low",
+     "reasons": []
+    },
+    "review_required": false,
+    "recommendations": [
+     "Stop: do not approve any request, scan any QR code, pay or transfer money.",
+     "Never share an OTP, PIN or password. If you already did, call your bank now to block the account or card.",
+     "Decline the collect request. You never need your UPI PIN or a QR scan to receive money.",
+     "Do not pay. Check the request through a channel you find yourself.",
+     "Contact the organisation through its official app or the number printed on your card, never through details in the message.",
+     "Do not pay a fee or enter a PIN to receive a reward. Genuine refunds never need your PIN.",
+     "Repeated indicators suggest an organised attempt. Block the sender and report the details."
+    ],
+    "primary_action": "Stop: do not approve any request, scan any QR code, pay or transfer money.",
+    "limitations": [
+     "SafeCircle cannot see who owns a UPI handle; only your bank or UPI app shows the registered name.",
+     "No bank, NPCI or fraud database is consulted. 'No warning signs' does not mean the payee is safe.",
+     "Nothing is paid, blocked or approved here. You stay in control of your UPI app."
+    ],
+    "stored": true,
+    "case_update": {
+     "case_id": "c7ab1dc8-a034-4741-9600-134fe3168970",
+     "event_added": false,
+     "duplicate": true,
+     "alert": {
+      "action": "suppressed",
+      "notify": false,
+      "reason": "Duplicate suppressed: identical to evidence #2; the assessment is unchanged."
+     },
+     "change": {
+      "changed": false,
+      "explanation": [
+       "Identical to evidence #2; nothing re-evaluated."
+      ],
+      "score_before": 97,
+      "score_after": 97,
+      "delta": 0,
+      "level_before": "high",
+      "level_after": "high",
+      "added_tactics": [],
+      "removed_tactics": [],
+      "stages_added": []
+     },
+     "risk_score": 97,
+     "risk_level": "high"
+    },
+    "retention": "Added to your case as redacted text (the UPI ID is masked and kept only as a keyed hash)."
+   }
+  },
+  {
+   "step": "5b",
+   "where": "Scam DNA",
+   "did": "Add the caller's OTP request",
+   "kind": "event",
+   "response": {
+    "event": {
+     "id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+     "seq": 3,
+     "kind": "message",
+     "channel": "call",
+     "source": "user",
+     "observed_at": null,
+     "created_at": "2026-10-12T09:31:10.731457Z",
+     "excerpt": "Caller from the SBI refund desk asked me to read out the OTP I just received so he can release the refund.",
+     "media": null,
+     "detection": {
+      "tactics": [
+       {
+        "code": "secret_request",
+        "title": "Asks for an OTP, PIN or password",
+        "stage": "harvest",
+        "severity": 0.6,
+        "basis": "text_match",
+        "evidence": [
+         {
+          "text": "read out the OTP",
+          "rule": "otp_share"
+         }
+        ]
+       },
+       {
+        "code": "authority_impersonation",
+        "title": "Claims to be a bank, payment app or government body",
+        "stage": "hook",
+        "severity": 0.15,
+        "basis": "text_match",
+        "evidence": [
+         {
+          "text": "SBI",
+          "rule": "imp_org"
+         }
+        ]
+       }
+      ],
+      "event_score": 66,
+      "urls": [],
+      "ml_probability": 0.0167,
+      "safety_advice": [],
+      "retraction": [],
+      "mitigation": null,
+      "claimed_orgs": [
+       "sbi"
+      ],
+      "data_quality": {
+       "level": "good",
+       "notes": [],
+       "ocr_confidence": null
+      },
+      "indicators": {
+       "domains": [],
+       "links": [],
+       "path_patterns": [],
+       "shortened_links": [],
+       "upi_handles": [],
+       "upi_handles_masked": [],
+       "phones": [],
+       "orgs": [
+        "sbi"
+       ]
+      }
+     }
+    },
+    "duplicate_of": null,
+    "alert": {
+     "action": "suppressed",
+     "notify": false,
+     "reason": "Duplicate suppressed: the evidence did not change the assessment."
+    },
+    "change": {
+     "score_before": 97,
+     "score_after": 97,
+     "delta": 0,
+     "level_before": "high",
+     "level_after": "high",
+     "added_tactics": [],
+     "removed_tactics": [],
+     "stages_added": [],
+     "explanation": [
+      "Risk unchanged: the new evidence repeats tactics already in the case."
+     ],
+     "changed": false
+    },
+    "case": {
+     "id": "c7ab1dc8-a034-4741-9600-134fe3168970",
+     "title": "DEMO · Refund QR from 'SBI'",
+     "status": "open",
+     "is_demo": false,
+     "demo_scenario": null,
+     "created_at": "2026-10-12T09:31:10.022356",
+     "updated_at": "2026-10-12T09:31:10.731968Z",
+     "risk_score": 97,
+     "risk_level": "high",
+     "review_required": false,
+     "event_count": 3,
+     "stages": [
+      "hook",
+      "pressure",
+      "harvest",
+      "extraction"
+     ],
+     "events": [
+      {
+       "id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+       "seq": 1,
+       "kind": "message",
+       "channel": "sms",
+       "source": "user",
+       "observed_at": null,
+       "created_at": "2026-10-12T09:31:10.707102",
+       "excerpt": "SBI Refund Desk: your refund of Rs 4,999 has been approved and is waiting to be credited.",
+       "media": null,
+       "detection": {
+        "tactics": [
+         {
+          "code": "reward_lure",
+          "title": "Reward, refund or cashback lure",
+          "stage": "hook",
+          "severity": 0.25,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "refund of",
+            "rule": "rew_win"
+           }
+          ]
+         },
+         {
+          "code": "authority_impersonation",
+          "title": "Claims to be a bank, payment app or government body",
+          "stage": "hook",
+          "severity": 0.15,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "SBI",
+            "rule": "imp_org"
+           }
+          ]
+         }
+        ],
+        "event_score": 36,
+        "urls": [],
+        "ml_probability": 0.6291,
+        "safety_advice": [],
+        "retraction": [],
+        "mitigation": null,
+        "claimed_orgs": [
+         "sbi"
+        ],
+        "data_quality": {
+         "level": "good",
+         "notes": [],
+         "ocr_confidence": null
+        },
+        "indicators": {
+         "domains": [],
+         "links": [],
+         "path_patterns": [],
+         "shortened_links": [],
+         "upi_handles": [],
+         "upi_handles_masked": [],
+         "phones": [],
+         "orgs": [
+          "sbi"
+         ]
+        }
+       }
+      },
+      {
+       "id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+       "seq": 2,
+       "kind": "message",
+       "channel": "upi_app",
+       "source": "user",
+       "observed_at": null,
+       "created_at": "2026-10-12T09:31:10.719466",
+       "excerpt": "UPI pay request details. Payee: sb***@ybl. Payee name: SBI Refund Desk. Amount: Rs 4999.00. Note: Scan to receive your refund. \nDear customer, SBI has approved your refund of Rs 4999. Scan the QR and enter your UPI PIN to receive it within 10 minutes.",
+       "media": null,
+       "detection": {
+        "tactics": [
+         {
+          "code": "secret_request",
+          "title": "Asks for an OTP, PIN or password",
+          "stage": "harvest",
+          "severity": 0.6,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "enter your UPI PIN",
+            "rule": "otp_share"
+           }
+          ]
+         },
+         {
+          "code": "upi_collect",
+          "title": "UPI collect-request or PIN-to-receive trick",
+          "stage": "extraction",
+          "severity": 0.6,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "enter your UPI PIN to receive",
+            "rule": "upi_pin_to_receive"
+           },
+           {
+            "text": "Scan the QR and enter your UPI PIN to receive",
+            "rule": "upi_qr_receive"
+           },
+           {
+            "text": "upi://pay link with 'receive'",
+            "rule": "upi_link_receive"
+           }
+          ]
+         },
+         {
+          "code": "payment_pressure",
+          "title": "Pressure to pay or move money",
+          "stage": "extraction",
+          "severity": 0.35,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "Scan the QR",
+            "rule": "pay_fee"
+           }
+          ]
+         },
+         {
+          "code": "reward_lure",
+          "title": "Reward, refund or cashback lure",
+          "stage": "hook",
+          "severity": 0.25,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "refund of",
+            "rule": "rew_win"
+           },
+           {
+            "text": "payee name: SBI Refund Desk",
+            "rule": "upi_payee_lure"
+           },
+           {
+            "text": "UPI ID: sb***@ybl",
+            "rule": "upi_payee_lure"
+           }
+          ]
+         },
+         {
+          "code": "urgency",
+          "title": "Urgency or time pressure",
+          "stage": "pressure",
+          "severity": 0.15,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "within 10 minutes",
+            "rule": "urg_deadline"
+           }
+          ]
+         },
+         {
+          "code": "authority_impersonation",
+          "title": "Claims to be a bank, payment app or government body",
+          "stage": "hook",
+          "severity": 0.15,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "SBI",
+            "rule": "imp_org"
+           },
+           {
+            "text": "UPI ID: sb***@ybl",
+            "rule": "upi_payee_org"
+           }
+          ]
+         }
+        ],
+        "event_score": 94,
+        "urls": [],
+        "ml_probability": 0.8798,
+        "safety_advice": [],
+        "retraction": [],
+        "mitigation": null,
+        "claimed_orgs": [
+         "sbi"
+        ],
+        "data_quality": {
+         "level": "good",
+         "notes": [],
+         "ocr_confidence": null
+        },
+        "indicators": {
+         "domains": [],
+         "links": [],
+         "path_patterns": [],
+         "shortened_links": [],
+         "upi_handles": [
+          "388048669580abd7cf450c26"
+         ],
+         "upi_handles_masked": [
+          "sb***@ybl"
+         ],
+         "phones": [],
+         "orgs": [
+          "sbi"
+         ]
+        }
+       }
+      },
+      {
+       "id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+       "seq": 3,
+       "kind": "message",
+       "channel": "call",
+       "source": "user",
+       "observed_at": null,
+       "created_at": "2026-10-12T09:31:10.731457Z",
+       "excerpt": "Caller from the SBI refund desk asked me to read out the OTP I just received so he can release the refund.",
+       "media": null,
+       "detection": {
+        "tactics": [
+         {
+          "code": "secret_request",
+          "title": "Asks for an OTP, PIN or password",
+          "stage": "harvest",
+          "severity": 0.6,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "read out the OTP",
+            "rule": "otp_share"
+           }
+          ]
+         },
+         {
+          "code": "authority_impersonation",
+          "title": "Claims to be a bank, payment app or government body",
+          "stage": "hook",
+          "severity": 0.15,
+          "basis": "text_match",
+          "evidence": [
+           {
+            "text": "SBI",
+            "rule": "imp_org"
+           }
+          ]
+         }
+        ],
+        "event_score": 66,
+        "urls": [],
+        "ml_probability": 0.0167,
+        "safety_advice": [],
+        "retraction": [],
+        "mitigation": null,
+        "claimed_orgs": [
+         "sbi"
+        ],
+        "data_quality": {
+         "level": "good",
+         "notes": [],
+         "ocr_confidence": null
+        },
+        "indicators": {
+         "domains": [],
+         "links": [],
+         "path_patterns": [],
+         "shortened_links": [],
+         "upi_handles": [],
+         "upi_handles_masked": [],
+         "phones": [],
+         "orgs": [
+          "sbi"
+         ]
+        }
+       }
+      }
+     ],
+     "assessment": {
+      "risk_score": 97,
+      "risk_level": "high",
+      "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+      "thresholds": {
+       "medium": 30,
+       "high": 60
+      },
+      "components": [
+       {
+        "label": "Asks for an OTP, PIN or password",
+        "weight": 0.6,
+        "kind": "tactic"
+       },
+       {
+        "label": "UPI collect-request or PIN-to-receive trick",
+        "weight": 0.6,
+        "kind": "tactic"
+       },
+       {
+        "label": "Pressure to pay or move money",
+        "weight": 0.35,
+        "kind": "tactic"
+       },
+       {
+        "label": "Reward, refund or cashback lure",
+        "weight": 0.25,
+        "kind": "tactic"
+       },
+       {
+        "label": "Attack spans 4 stages (Approach, Pressure, Harvest, Extraction)",
+        "weight": 0.25,
+        "kind": "stage_bonus"
+       },
+       {
+        "label": "A claimed bank or authority asks for a secret code",
+        "weight": 0.2,
+        "kind": "combination"
+       },
+       {
+        "label": "Promised money used to trigger a UPI collect request",
+        "weight": 0.2,
+        "kind": "combination"
+       },
+       {
+        "label": "Claims to be a bank, payment app or government body",
+        "weight": 0.15,
+        "kind": "tactic"
+       },
+       {
+        "label": "Urgency or time pressure",
+        "weight": 0.15,
+        "kind": "tactic"
+       }
+      ],
+      "mitigations": [],
+      "tactics": [
+       {
+        "code": "reward_lure",
+        "title": "Reward, refund or cashback lure",
+        "stage": "hook",
+        "severity": 0.25,
+        "first_event": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+        "first_position": 1,
+        "events": [
+         "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801"
+        ],
+        "evidence": [
+         {
+          "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+          "seq": 1,
+          "text": "refund of"
+         },
+         {
+          "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+          "seq": 2,
+          "text": "refund of"
+         },
+         {
+          "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+          "seq": 2,
+          "text": "payee name: SBI Refund Desk"
+         }
+        ],
+        "basis": "observed",
+        "source": "text_match"
+       },
+       {
+        "code": "authority_impersonation",
+        "title": "Claims to be a bank, payment app or government body",
+        "stage": "hook",
+        "severity": 0.15,
+        "first_event": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+        "first_position": 1,
+        "events": [
+         "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "e421b557-d3ed-4a25-9bd9-4e7440cf577d"
+        ],
+        "evidence": [
+         {
+          "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+          "seq": 1,
+          "text": "SBI"
+         },
+         {
+          "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+          "seq": 2,
+          "text": "SBI"
+         },
+         {
+          "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+          "seq": 2,
+          "text": "UPI ID: sb***@ybl"
+         },
+         {
+          "event_id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+          "seq": 3,
+          "text": "SBI"
+         }
+        ],
+        "basis": "observed",
+        "source": "text_match"
+       },
+       {
+        "code": "secret_request",
+        "title": "Asks for an OTP, PIN or password",
+        "stage": "harvest",
+        "severity": 0.6,
+        "first_event": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "first_position": 2,
+        "events": [
+         "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "e421b557-d3ed-4a25-9bd9-4e7440cf577d"
+        ],
+        "evidence": [
+         {
+          "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+          "seq": 2,
+          "text": "enter your UPI PIN"
+         },
+         {
+          "event_id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+          "seq": 3,
+          "text": "read out the OTP"
+         }
+        ],
+        "basis": "observed",
+        "source": "text_match"
+       },
+       {
+        "code": "upi_collect",
+        "title": "UPI collect-request or PIN-to-receive trick",
+        "stage": "extraction",
+        "severity": 0.6,
+        "first_event": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "first_position": 2,
+        "events": [
+         "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801"
+        ],
+        "evidence": [
+         {
+          "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+          "seq": 2,
+          "text": "enter your UPI PIN to receive"
+         },
+         {
+          "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+          "seq": 2,
+          "text": "Scan the QR and enter your UPI PIN to receive"
+         }
+        ],
+        "basis": "observed",
+        "source": "text_match"
+       },
+       {
+        "code": "payment_pressure",
+        "title": "Pressure to pay or move money",
+        "stage": "extraction",
+        "severity": 0.35,
+        "first_event": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "first_position": 2,
+        "events": [
+         "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801"
+        ],
+        "evidence": [
+         {
+          "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+          "seq": 2,
+          "text": "Scan the QR"
+         }
+        ],
+        "basis": "observed",
+        "source": "text_match"
+       },
+       {
+        "code": "urgency",
+        "title": "Urgency or time pressure",
+        "stage": "pressure",
+        "severity": 0.15,
+        "first_event": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "first_position": 2,
+        "events": [
+         "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801"
+        ],
+        "evidence": [
+         {
+          "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+          "seq": 2,
+          "text": "within 10 minutes"
+         }
+        ],
+        "basis": "observed",
+        "source": "text_match"
+       }
+      ],
+      "stages_observed": [
+       "hook",
+       "pressure",
+       "harvest",
+       "extraction"
+      ],
+      "order": {
+       "basis": "submission_order",
+       "known": false,
+       "note": "Shown in the order evidence was added, which may differ from when it was received. Add the time each message arrived to confirm the sequence.",
+       "sequence": [
+        "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+        "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "e421b557-d3ed-4a25-9bd9-4e7440cf577d"
+       ]
+      },
+      "chain": {
+       "nodes": [
+        {
+         "id": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "type": "event",
+         "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "position": 1,
+         "seq": 1,
+         "kind": "message",
+         "channel": "sms",
+         "observed_at": null,
+         "label": "Evidence #1",
+         "excerpt": "SBI Refund Desk: your refund of Rs 4,999 has been approved and is waiting to be credited.",
+         "signals": [
+          "reward_lure",
+          "authority_impersonation"
+         ],
+         "event_score": 36,
+         "data_quality": "good",
+         "basis": "observed"
+        },
+        {
+         "id": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "type": "event",
+         "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "position": 2,
+         "seq": 2,
+         "kind": "message",
+         "channel": "upi_app",
+         "observed_at": null,
+         "label": "Evidence #2",
+         "excerpt": "UPI pay request details. Payee: sb***@ybl. Payee name: SBI Refund Desk. Amount: Rs 4999.00. Note: Scan to receive your refund. \nDear customer, SBI has approved your refund of Rs 4999. Scan the QR and enter your UPI PIN t",
+         "signals": [
+          "secret_request",
+          "upi_collect",
+          "payment_pressure",
+          "reward_lure",
+          "urgency",
+          "authority_impersonation"
+         ],
+         "event_score": 94,
+         "data_quality": "good",
+         "basis": "observed"
+        },
+        {
+         "id": "e:e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+         "type": "event",
+         "event_id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+         "position": 3,
+         "seq": 3,
+         "kind": "message",
+         "channel": "call",
+         "observed_at": null,
+         "label": "Evidence #3",
+         "excerpt": "Caller from the SBI refund desk asked me to read out the OTP I just received so he can release the refund.",
+         "signals": [
+          "secret_request",
+          "authority_impersonation"
+         ],
+         "event_score": 66,
+         "data_quality": "good",
+         "basis": "observed"
+        },
+        {
+         "id": "t:reward_lure",
+         "type": "tactic",
+         "code": "reward_lure",
+         "label": "Reward, refund or cashback lure",
+         "stage": "hook",
+         "stage_title": "Approach",
+         "severity": 0.25,
+         "evidence": [
+          {
+           "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+           "seq": 1,
+           "text": "refund of"
+          },
+          {
+           "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+           "seq": 2,
+           "text": "refund of"
+          },
+          {
+           "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+           "seq": 2,
+           "text": "payee name: SBI Refund Desk"
+          }
+         ],
+         "explanation": "An unexpected prize, refund, cashback or guaranteed return is offered.",
+         "recommendation": "Do not pay a fee or enter a PIN to receive a reward. Genuine refunds never need your PIN.",
+         "basis": "observed",
+         "source": "text_match",
+         "confidence": "Direct text match"
+        },
+        {
+         "id": "t:authority_impersonation",
+         "type": "tactic",
+         "code": "authority_impersonation",
+         "label": "Claims to be a bank, payment app or government body",
+         "stage": "hook",
+         "stage_title": "Approach",
+         "severity": 0.15,
+         "evidence": [
+          {
+           "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+           "seq": 1,
+           "text": "SBI"
+          },
+          {
+           "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+           "seq": 2,
+           "text": "SBI"
+          },
+          {
+           "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+           "seq": 2,
+           "text": "UPI ID: sb***@ybl"
+          },
+          {
+           "event_id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+           "seq": 3,
+           "text": "SBI"
+          }
+         ],
+         "explanation": "The message names a bank, payment app, regulator or government body as its sender or subject. Genuine notices do this too; it matters when combined with pressure or a request.",
+         "recommendation": "Contact the organisation through its official app or the number printed on your card, never through details in the message.",
+         "basis": "observed",
+         "source": "text_match",
+         "confidence": "Direct text match"
+        },
+        {
+         "id": "t:secret_request",
+         "type": "tactic",
+         "code": "secret_request",
+         "label": "Asks for an OTP, PIN or password",
+         "stage": "harvest",
+         "stage_title": "Harvest",
+         "severity": 0.6,
+         "evidence": [
+          {
+           "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+           "seq": 2,
+           "text": "enter your UPI PIN"
+          },
+          {
+           "event_id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+           "seq": 3,
+           "text": "read out the OTP"
+          }
+         ],
+         "explanation": "The message asks you to share or enter a one-time code, UPI PIN, card PIN, CVV or password.",
+         "recommendation": "Never share an OTP, PIN or password. If you already did, call your bank now to block the account or card.",
+         "basis": "observed",
+         "source": "text_match",
+         "confidence": "Direct text match"
+        },
+        {
+         "id": "t:upi_collect",
+         "type": "tactic",
+         "code": "upi_collect",
+         "label": "UPI collect-request or PIN-to-receive trick",
+         "stage": "extraction",
+         "stage_title": "Extraction",
+         "severity": 0.6,
+         "evidence": [
+          {
+           "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+           "seq": 2,
+           "text": "enter your UPI PIN to receive"
+          },
+          {
+           "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+           "seq": 2,
+           "text": "Scan the QR and enter your UPI PIN to receive"
+          }
+         ],
+         "explanation": "You are told to approve a request, scan a QR code or enter your UPI PIN to receive money. A UPI PIN is only ever needed to send money, never to receive it.",
+         "recommendation": "Decline the collect request. You never need your UPI PIN or a QR scan to receive money.",
+         "basis": "observed",
+         "source": "text_match",
+         "confidence": "Direct text match"
+        },
+        {
+         "id": "t:payment_pressure",
+         "type": "tactic",
+         "code": "payment_pressure",
+         "label": "Pressure to pay or move money",
+         "stage": "extraction",
+         "stage_title": "Extraction",
+         "severity": 0.35,
+         "evidence": [
+          {
+           "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+           "seq": 2,
+           "text": "Scan the QR"
+          }
+         ],
+         "explanation": "You are pushed to pay a fee, fine, deposit or transfer.",
+         "recommendation": "Do not pay. Check the request through a channel you find yourself.",
+         "basis": "observed",
+         "source": "text_match",
+         "confidence": "Direct text match"
+        },
+        {
+         "id": "t:urgency",
+         "type": "tactic",
+         "code": "urgency",
+         "label": "Urgency or time pressure",
+         "stage": "pressure",
+         "stage_title": "Pressure",
+         "severity": 0.15,
+         "evidence": [
+          {
+           "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+           "seq": 2,
+           "text": "within 10 minutes"
+          }
+         ],
+         "explanation": "A deadline or 'act now' language pushes you to act before checking.",
+         "recommendation": "Slow down. Genuine organisations give you time to verify.",
+         "basis": "observed",
+         "source": "text_match",
+         "confidence": "Direct text match"
+        }
+       ],
+       "edges": [
+        {
+         "from": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "to": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "kind": "sequence",
+         "basis": "submission_order",
+         "note": "Order added, not confirmed"
+        },
+        {
+         "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "to": "e:e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+         "kind": "sequence",
+         "basis": "submission_order",
+         "note": "Order added, not confirmed"
+        },
+        {
+         "from": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "to": "t:reward_lure",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "to": "t:reward_lure",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+         "to": "t:authority_impersonation",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "to": "t:authority_impersonation",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "e:e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+         "to": "t:authority_impersonation",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "to": "t:secret_request",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "e:e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+         "to": "t:secret_request",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "to": "t:upi_collect",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "to": "t:payment_pressure",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+         "to": "t:urgency",
+         "kind": "evidence",
+         "basis": "observed",
+         "note": "Evidence for this tactic"
+        },
+        {
+         "from": "t:reward_lure",
+         "to": "t:urgency",
+         "kind": "progression",
+         "basis": "inferred",
+         "note": "Typical escalation from approach to pressure. Inferred from the stage model, not a confirmed cause."
+        },
+        {
+         "from": "t:urgency",
+         "to": "t:secret_request",
+         "kind": "progression",
+         "basis": "inferred",
+         "note": "Typical escalation from pressure to harvest. Inferred from the stage model, not a confirmed cause."
+        },
+        {
+         "from": "t:secret_request",
+         "to": "t:upi_collect",
+         "kind": "progression",
+         "basis": "inferred",
+         "note": "Typical escalation from harvest to extraction. Inferred from the stage model, not a confirmed cause."
+        }
+       ],
+       "stages": [
+        {
+         "code": "hook",
+         "title": "Approach",
+         "order": 1,
+         "description": "The scammer makes contact and borrows a trusted identity or a lure."
+        },
+        {
+         "code": "pressure",
+         "title": "Pressure",
+         "order": 2,
+         "description": "Fear, urgency or authority is used to stop the victim from thinking or checking."
+        },
+        {
+         "code": "harvest",
+         "title": "Harvest",
+         "order": 3,
+         "description": "The victim is pushed to reveal codes, PINs, passwords or to log in on a fake page."
+        },
+        {
+         "code": "control",
+         "title": "Control",
+         "order": 4,
+         "description": "The scammer tries to take control of the victim's device."
+        },
+        {
+         "code": "extraction",
+         "title": "Extraction",
+         "order": 5,
+         "description": "Money is moved: collect requests, transfers, fees or diverted payments."
+        },
+        {
+         "code": "evasion",
+         "title": "Evasion",
+         "order": 0,
+         "description": "Tricks used to slip past filters. Not part of the victim-facing sequence."
+        }
+       ]
+      },
+      "uncertainty": {
+       "level": "low",
+       "reasons": []
+      },
+      "review_required": false,
+      "review_reasons": [],
+      "data_quality": {
+       "level": "good",
+       "notes": []
+      },
+      "model_signal": {
+       "max_probability": 0.88,
+       "note": "Similarity of the wording to a public SMS spam dataset. Uncalibrated and not used in the score."
+      },
+      "missing_evidence": [
+       "It is unknown whether a code, PIN or password was already shared. If it was, call your bank now.",
+       "The claimed sender (SBI) has not been verified through an official channel.",
+       "The real order of events is not confirmed; add when each message was received."
+      ],
+      "conflicts": [],
+      "recommendations": [
+       "Stop: do not approve any request, scan any QR code, pay or transfer money.",
+       "Never share an OTP, PIN or password. If you already did, call your bank now to block the account or card.",
+       "Decline the collect request. You never need your UPI PIN or a QR scan to receive money.",
+       "Do not pay. Check the request through a channel you find yourself.",
+       "Contact the organisation through its official app or the number printed on your card, never through details in the message.",
+       "Do not pay a fee or enter a PIN to receive a reward. Genuine refunds never need your PIN.",
+       "Slow down. Genuine organisations give you time to verify."
+      ],
+      "primary_action": "Stop: do not approve any request, scan any QR code, pay or transfer money.",
+      "indicators": {
+       "domains": [],
+       "links": [],
+       "path_patterns": [],
+       "shortened_links": [],
+       "upi_handles": [
+        "388048669580abd7cf450c26"
+       ],
+       "upi_handles_masked": [
+        "sb***@ybl"
+       ],
+       "phones": [],
+       "orgs": [
+        "sbi"
+       ]
+      },
+      "event_count": 3,
+      "fingerprint": "865d34bb5d4e823333ebb76a062b4fb5"
+     },
+     "last_change": {
+      "score_before": 97,
+      "score_after": 97,
+      "delta": 0,
+      "level_before": "high",
+      "level_after": "high",
+      "added_tactics": [],
+      "removed_tactics": [],
+      "stages_added": [],
+      "explanation": [
+       "Risk unchanged: the new evidence repeats tactics already in the case."
+      ],
+      "changed": false
+     },
+     "log": [
+      {
+       "id": 8,
+       "at": "2026-10-12T09:31:10.732441",
+       "action": "reassessed",
+       "alert_action": "suppressed",
+       "notify": false,
+       "risk_level": "high",
+       "risk_score": 97,
+       "detail": {
+        "reason": "Duplicate suppressed: the evidence did not change the assessment.",
+        "explanation": [
+         "Risk unchanged: the new evidence repeats tactics already in the case."
+        ],
+        "tactics": [
+         "reward_lure",
+         "authority_impersonation",
+         "secret_request",
+         "upi_collect",
+         "payment_pressure",
+         "urgency"
+        ],
+        "score_before": 97
+       }
+      },
+      {
+       "id": 7,
+       "at": "2026-10-12T09:31:10.732397",
+       "action": "evidence_added",
+       "alert_action": null,
+       "notify": false,
+       "risk_level": null,
+       "risk_score": null,
+       "detail": {
+        "seq": 3,
+        "kind": "message",
+        "tactics": [
+         "secret_request",
+         "authority_impersonation"
+        ]
+       }
+      },
+      {
+       "id": 6,
+       "at": "2026-10-12T09:31:10.726424",
+       "action": "duplicate_evidence",
+       "alert_action": "suppressed",
+       "notify": false,
+       "risk_level": "high",
+       "risk_score": 97,
+       "detail": {
+        "duplicate_of": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "seq": 2
+       }
+      },
+      {
+       "id": 5,
+       "at": "2026-10-12T09:31:10.720334",
+       "action": "reassessed",
+       "alert_action": "escalated",
+       "notify": true,
+       "risk_level": "high",
+       "risk_score": 97,
+       "detail": {
+        "reason": "Escalated from medium to high risk.",
+        "explanation": [
+         "New tactics from evidence #2: Asks for an OTP, PIN or password (weight 0.60); UPI collect-request or PIN-to-receive trick (weight 0.60); Pressure to pay or move money (weight 0.35); Urgency or time pressure (weight 0.15).",
+         "The attack chain now reaches: Pressure, Harvest, Extraction.",
+         "Added weight for: Attack spans 4 stages (Approach, Pressure, Harvest, Extraction) (+0.25).",
+         "Added weight for: A claimed bank or authority asks for a secret code (+0.20).",
+         "Added weight for: Promised money used to trigger a UPI collect request (+0.20).",
+         "Risk level changed from medium to high."
+        ],
+        "tactics": [
+         "reward_lure",
+         "authority_impersonation",
+         "secret_request",
+         "upi_collect",
+         "payment_pressure",
+         "urgency"
+        ],
+        "score_before": 36
+       }
+      },
+      {
+       "id": 4,
+       "at": "2026-10-12T09:31:10.720291",
+       "action": "evidence_added",
+       "alert_action": null,
+       "notify": false,
+       "risk_level": null,
+       "risk_score": null,
+       "detail": {
+        "seq": 2,
+        "kind": "message",
+        "tactics": [
+         "secret_request",
+         "upi_collect",
+         "payment_pressure",
+         "reward_lure",
+         "urgency",
+         "authority_impersonation"
+        ]
+       }
+      },
+      {
+       "id": 3,
+       "at": "2026-10-12T09:31:10.709023",
+       "action": "reassessed",
+       "alert_action": "new",
+       "notify": true,
+       "risk_level": "medium",
+       "risk_score": 36,
+       "detail": {
+        "reason": "First alert: the case reached medium risk.",
+        "explanation": [
+         "New tactics from evidence #1: Reward, refund or cashback lure (weight 0.25); Claims to be a bank, payment app or government body (weight 0.15).",
+         "The attack chain now reaches: Approach.",
+         "Risk level changed from low to medium."
+        ],
+        "tactics": [
+         "reward_lure",
+         "authority_impersonation"
+        ],
+        "score_before": 0
+       }
+      },
+      {
+       "id": 2,
+       "at": "2026-10-12T09:31:10.708888",
+       "action": "evidence_added",
+       "alert_action": null,
+       "notify": false,
+       "risk_level": null,
+       "risk_score": null,
+       "detail": {
+        "seq": 1,
+        "kind": "message",
+        "tactics": [
+         "reward_lure",
+         "authority_impersonation"
+        ]
+       }
+      },
+      {
+       "id": 1,
+       "at": "2026-10-12T09:31:10.022871",
+       "action": "case_created",
+       "alert_action": null,
+       "notify": false,
+       "risk_level": null,
+       "risk_score": null,
+       "detail": {
+        "title": "DEMO · Refund QR from 'SBI'",
+        "demo": false
+       }
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "frames": [
+  {
+   "input": {
+    "source": "message",
+    "label": "SMS · opening message",
+    "text": "SBI Refund Desk: your refund of Rs 4,999 has been approved and is waiting to be credited."
+   },
+   "duplicate": false,
+   "alert": {
+    "action": "new",
+    "notify": true,
+    "reason": "First alert: the case reached medium risk."
+   },
+   "change": {
+    "score_before": 0,
+    "score_after": 36,
+    "delta": 36,
+    "level_before": "low",
+    "level_after": "medium",
+    "added_tactics": [
+     {
+      "code": "reward_lure",
+      "title": "Reward, refund or cashback lure",
+      "severity": 0.25
+     },
+     {
+      "code": "authority_impersonation",
+      "title": "Claims to be a bank, payment app or government body",
+      "severity": 0.15
+     }
+    ],
+    "removed_tactics": [],
+    "stages_added": [
+     "hook"
+    ],
+    "explanation": [
+     "New tactics from evidence #1: Reward, refund or cashback lure (weight 0.25); Claims to be a bank, payment app or government body (weight 0.15).",
+     "The attack chain now reaches: Approach.",
+     "Risk level changed from low to medium."
+    ],
+    "changed": true
+   },
+   "case": {
+    "risk_level": "medium",
+    "risk_score": 36,
+    "review_required": false,
+    "event_count": 1,
+    "tactics": [
+     {
+      "code": "reward_lure",
+      "title": "Reward, refund or cashback lure",
+      "stage": "hook",
+      "severity": 0.25,
+      "basis": "observed"
+     },
+     {
+      "code": "authority_impersonation",
+      "title": "Claims to be a bank, payment app or government body",
+      "stage": "hook",
+      "severity": 0.15,
+      "basis": "observed"
+     }
+    ],
+    "stages_observed": [
+     "hook"
+    ],
+    "components": [
+     {
+      "label": "Reward, refund or cashback lure",
+      "weight": 0.25,
+      "kind": "tactic"
+     },
+     {
+      "label": "Claims to be a bank, payment app or government body",
+      "weight": 0.15,
+      "kind": "tactic"
+     }
+    ],
+    "uncertainty": {
+     "level": "low",
+     "reasons": []
+    },
+    "review_reasons": [],
+    "conflicts": [],
+    "missing_evidence": [
+     "No request for codes, log-ins, app installs or money has been seen yet. Scams usually escalate; add follow-up messages if they arrive.",
+     "The claimed sender (SBI) has not been verified through an official channel."
+    ],
+    "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+    "thresholds": {
+     "medium": 30,
+     "high": 60
+    }
+   }
+  },
+  {
+   "input": {
+    "source": "upi",
+    "label": "UPI Guard · refund QR attached",
+    "text": "Payee sb***@ybl, Rs 4999, 'Scan to receive your refund'"
+   },
+   "duplicate": false,
+   "alert": {
+    "action": "escalated",
+    "notify": true,
+    "reason": "Escalated from medium to high risk."
+   },
+   "change": {
+    "score_before": 36,
+    "score_after": 97,
+    "delta": 61,
+    "level_before": "medium",
+    "level_after": "high",
+    "added_tactics": [
+     {
+      "code": "secret_request",
+      "title": "Asks for an OTP, PIN or password",
+      "severity": 0.6
+     },
+     {
+      "code": "upi_collect",
+      "title": "UPI collect-request or PIN-to-receive trick",
+      "severity": 0.6
+     },
+     {
+      "code": "payment_pressure",
+      "title": "Pressure to pay or move money",
+      "severity": 0.35
+     },
+     {
+      "code": "urgency",
+      "title": "Urgency or time pressure",
+      "severity": 0.15
+     }
+    ],
+    "removed_tactics": [],
+    "stages_added": [
+     "pressure",
+     "harvest",
+     "extraction"
+    ],
+    "explanation": [
+     "New tactics from evidence #2: Asks for an OTP, PIN or password (weight 0.60); UPI collect-request or PIN-to-receive trick (weight 0.60); Pressure to pay or move money (weight 0.35); Urgency or time pressure (weight 0.15).",
+     "The attack chain now reaches: Pressure, Harvest, Extraction.",
+     "Added weight for: Attack spans 4 stages (Approach, Pressure, Harvest, Extraction) (+0.25).",
+     "Added weight for: A claimed bank or authority asks for a secret code (+0.20).",
+     "Added weight for: Promised money used to trigger a UPI collect request (+0.20).",
+     "Risk level changed from medium to high."
+    ],
+    "changed": true
+   },
+   "case": {
+    "risk_level": "high",
+    "risk_score": 97,
+    "review_required": false,
+    "event_count": 2,
+    "tactics": [
+     {
+      "code": "reward_lure",
+      "title": "Reward, refund or cashback lure",
+      "stage": "hook",
+      "severity": 0.25,
+      "basis": "observed"
+     },
+     {
+      "code": "authority_impersonation",
+      "title": "Claims to be a bank, payment app or government body",
+      "stage": "hook",
+      "severity": 0.15,
+      "basis": "observed"
+     },
+     {
+      "code": "secret_request",
+      "title": "Asks for an OTP, PIN or password",
+      "stage": "harvest",
+      "severity": 0.6,
+      "basis": "observed"
+     },
+     {
+      "code": "upi_collect",
+      "title": "UPI collect-request or PIN-to-receive trick",
+      "stage": "extraction",
+      "severity": 0.6,
+      "basis": "observed"
+     },
+     {
+      "code": "payment_pressure",
+      "title": "Pressure to pay or move money",
+      "stage": "extraction",
+      "severity": 0.35,
+      "basis": "observed"
+     },
+     {
+      "code": "urgency",
+      "title": "Urgency or time pressure",
+      "stage": "pressure",
+      "severity": 0.15,
+      "basis": "observed"
+     }
+    ],
+    "stages_observed": [
+     "hook",
+     "pressure",
+     "harvest",
+     "extraction"
+    ],
+    "components": [
+     {
+      "label": "Asks for an OTP, PIN or password",
+      "weight": 0.6,
+      "kind": "tactic"
+     },
+     {
+      "label": "UPI collect-request or PIN-to-receive trick",
+      "weight": 0.6,
+      "kind": "tactic"
+     },
+     {
+      "label": "Pressure to pay or move money",
+      "weight": 0.35,
+      "kind": "tactic"
+     },
+     {
+      "label": "Reward, refund or cashback lure",
+      "weight": 0.25,
+      "kind": "tactic"
+     },
+     {
+      "label": "Attack spans 4 stages (Approach, Pressure, Harvest, Extraction)",
+      "weight": 0.25,
+      "kind": "stage_bonus"
+     },
+     {
+      "label": "A claimed bank or authority asks for a secret code",
+      "weight": 0.2,
+      "kind": "combination"
+     },
+     {
+      "label": "Promised money used to trigger a UPI collect request",
+      "weight": 0.2,
+      "kind": "combination"
+     },
+     {
+      "label": "Claims to be a bank, payment app or government body",
+      "weight": 0.15,
+      "kind": "tactic"
+     },
+     {
+      "label": "Urgency or time pressure",
+      "weight": 0.15,
+      "kind": "tactic"
+     }
+    ],
+    "uncertainty": {
+     "level": "low",
+     "reasons": []
+    },
+    "review_reasons": [],
+    "conflicts": [],
+    "missing_evidence": [
+     "It is unknown whether a code, PIN or password was already shared. If it was, call your bank now.",
+     "The claimed sender (SBI) has not been verified through an official channel.",
+     "The real order of events is not confirmed; add when each message was received."
+    ],
+    "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+    "thresholds": {
+     "medium": 30,
+     "high": 60
+    }
+   }
+  },
+  {
+   "input": {
+    "source": "upi",
+    "label": "UPI Guard · same check again",
+    "text": "The identical QR and message"
+   },
+   "duplicate": true,
+   "alert": {
+    "action": "suppressed",
+    "notify": false,
+    "reason": "Duplicate suppressed: identical to evidence #2; the assessment is unchanged."
+   },
+   "change": {
+    "changed": false,
+    "explanation": [
+     "Identical to evidence #2; nothing re-evaluated."
+    ],
+    "score_before": 97,
+    "score_after": 97,
+    "delta": 0,
+    "level_before": "high",
+    "level_after": "high",
+    "added_tactics": [],
+    "removed_tactics": [],
+    "stages_added": []
+   },
+   "case": {
+    "risk_level": "high",
+    "risk_score": 97,
+    "review_required": false,
+    "event_count": 2,
+    "tactics": [
+     {
+      "code": "reward_lure",
+      "title": "Reward, refund or cashback lure",
+      "stage": "hook",
+      "severity": 0.25,
+      "basis": "observed"
+     },
+     {
+      "code": "authority_impersonation",
+      "title": "Claims to be a bank, payment app or government body",
+      "stage": "hook",
+      "severity": 0.15,
+      "basis": "observed"
+     },
+     {
+      "code": "secret_request",
+      "title": "Asks for an OTP, PIN or password",
+      "stage": "harvest",
+      "severity": 0.6,
+      "basis": "observed"
+     },
+     {
+      "code": "upi_collect",
+      "title": "UPI collect-request or PIN-to-receive trick",
+      "stage": "extraction",
+      "severity": 0.6,
+      "basis": "observed"
+     },
+     {
+      "code": "payment_pressure",
+      "title": "Pressure to pay or move money",
+      "stage": "extraction",
+      "severity": 0.35,
+      "basis": "observed"
+     },
+     {
+      "code": "urgency",
+      "title": "Urgency or time pressure",
+      "stage": "pressure",
+      "severity": 0.15,
+      "basis": "observed"
+     }
+    ],
+    "stages_observed": [
+     "hook",
+     "pressure",
+     "harvest",
+     "extraction"
+    ],
+    "components": [
+     {
+      "label": "Asks for an OTP, PIN or password",
+      "weight": 0.6,
+      "kind": "tactic"
+     },
+     {
+      "label": "UPI collect-request or PIN-to-receive trick",
+      "weight": 0.6,
+      "kind": "tactic"
+     },
+     {
+      "label": "Pressure to pay or move money",
+      "weight": 0.35,
+      "kind": "tactic"
+     },
+     {
+      "label": "Reward, refund or cashback lure",
+      "weight": 0.25,
+      "kind": "tactic"
+     },
+     {
+      "label": "Attack spans 4 stages (Approach, Pressure, Harvest, Extraction)",
+      "weight": 0.25,
+      "kind": "stage_bonus"
+     },
+     {
+      "label": "A claimed bank or authority asks for a secret code",
+      "weight": 0.2,
+      "kind": "combination"
+     },
+     {
+      "label": "Promised money used to trigger a UPI collect request",
+      "weight": 0.2,
+      "kind": "combination"
+     },
+     {
+      "label": "Claims to be a bank, payment app or government body",
+      "weight": 0.15,
+      "kind": "tactic"
+     },
+     {
+      "label": "Urgency or time pressure",
+      "weight": 0.15,
+      "kind": "tactic"
+     }
+    ],
+    "uncertainty": {
+     "level": "low",
+     "reasons": []
+    },
+    "review_reasons": [],
+    "conflicts": [],
+    "missing_evidence": [
+     "It is unknown whether a code, PIN or password was already shared. If it was, call your bank now.",
+     "The claimed sender (SBI) has not been verified through an official channel.",
+     "The real order of events is not confirmed; add when each message was received."
+    ],
+    "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+    "thresholds": {
+     "medium": 30,
+     "high": 60
+    }
+   }
+  },
+  {
+   "input": {
+    "source": "message",
+    "label": "Call note · OTP request",
+    "text": "Caller from the SBI refund desk asked me to read out the OTP I just received so he can release the refund."
+   },
+   "duplicate": false,
+   "alert": {
+    "action": "suppressed",
+    "notify": false,
+    "reason": "Duplicate suppressed: the evidence did not change the assessment."
+   },
+   "change": {
+    "score_before": 97,
+    "score_after": 97,
+    "delta": 0,
+    "level_before": "high",
+    "level_after": "high",
+    "added_tactics": [],
+    "removed_tactics": [],
+    "stages_added": [],
+    "explanation": [
+     "Risk unchanged: the new evidence repeats tactics already in the case."
+    ],
+    "changed": false
+   },
+   "case": {
+    "risk_level": "high",
+    "risk_score": 97,
+    "review_required": false,
+    "event_count": 3,
+    "tactics": [
+     {
+      "code": "reward_lure",
+      "title": "Reward, refund or cashback lure",
+      "stage": "hook",
+      "severity": 0.25,
+      "basis": "observed"
+     },
+     {
+      "code": "authority_impersonation",
+      "title": "Claims to be a bank, payment app or government body",
+      "stage": "hook",
+      "severity": 0.15,
+      "basis": "observed"
+     },
+     {
+      "code": "secret_request",
+      "title": "Asks for an OTP, PIN or password",
+      "stage": "harvest",
+      "severity": 0.6,
+      "basis": "observed"
+     },
+     {
+      "code": "upi_collect",
+      "title": "UPI collect-request or PIN-to-receive trick",
+      "stage": "extraction",
+      "severity": 0.6,
+      "basis": "observed"
+     },
+     {
+      "code": "payment_pressure",
+      "title": "Pressure to pay or move money",
+      "stage": "extraction",
+      "severity": 0.35,
+      "basis": "observed"
+     },
+     {
+      "code": "urgency",
+      "title": "Urgency or time pressure",
+      "stage": "pressure",
+      "severity": 0.15,
+      "basis": "observed"
+     }
+    ],
+    "stages_observed": [
+     "hook",
+     "pressure",
+     "harvest",
+     "extraction"
+    ],
+    "components": [
+     {
+      "label": "Asks for an OTP, PIN or password",
+      "weight": 0.6,
+      "kind": "tactic"
+     },
+     {
+      "label": "UPI collect-request or PIN-to-receive trick",
+      "weight": 0.6,
+      "kind": "tactic"
+     },
+     {
+      "label": "Pressure to pay or move money",
+      "weight": 0.35,
+      "kind": "tactic"
+     },
+     {
+      "label": "Reward, refund or cashback lure",
+      "weight": 0.25,
+      "kind": "tactic"
+     },
+     {
+      "label": "Attack spans 4 stages (Approach, Pressure, Harvest, Extraction)",
+      "weight": 0.25,
+      "kind": "stage_bonus"
+     },
+     {
+      "label": "A claimed bank or authority asks for a secret code",
+      "weight": 0.2,
+      "kind": "combination"
+     },
+     {
+      "label": "Promised money used to trigger a UPI collect request",
+      "weight": 0.2,
+      "kind": "combination"
+     },
+     {
+      "label": "Claims to be a bank, payment app or government body",
+      "weight": 0.15,
+      "kind": "tactic"
+     },
+     {
+      "label": "Urgency or time pressure",
+      "weight": 0.15,
+      "kind": "tactic"
+     }
+    ],
+    "uncertainty": {
+     "level": "low",
+     "reasons": []
+    },
+    "review_reasons": [],
+    "conflicts": [],
+    "missing_evidence": [
+     "It is unknown whether a code, PIN or password was already shared. If it was, call your bank now.",
+     "The claimed sender (SBI) has not been verified through an official channel.",
+     "The real order of events is not confirmed; add when each message was received."
+    ],
+    "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+    "thresholds": {
+     "medium": 30,
+     "high": 60
+    }
+   }
+  }
+ ],
+ "case": {
+  "id": "c7ab1dc8-a034-4741-9600-134fe3168970",
+  "title": "DEMO · Refund QR from 'SBI'",
+  "status": "open",
+  "is_demo": false,
+  "demo_scenario": null,
+  "created_at": "2026-10-12T09:31:10.022356",
+  "updated_at": "2026-10-12T09:31:10.731968",
+  "risk_score": 97,
+  "risk_level": "high",
+  "review_required": false,
+  "event_count": 3,
+  "stages": [
+   "hook",
+   "pressure",
+   "harvest",
+   "extraction"
+  ],
+  "events": [
+   {
+    "id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+    "seq": 1,
+    "kind": "message",
+    "channel": "sms",
+    "source": "user",
+    "observed_at": null,
+    "created_at": "2026-10-12T09:31:10.707102",
+    "excerpt": "SBI Refund Desk: your refund of Rs 4,999 has been approved and is waiting to be credited.",
+    "media": null,
+    "detection": {
+     "tactics": [
+      {
+       "code": "reward_lure",
+       "title": "Reward, refund or cashback lure",
+       "stage": "hook",
+       "severity": 0.25,
+       "basis": "text_match",
+       "evidence": [
+        {
+         "text": "refund of",
+         "rule": "rew_win"
+        }
+       ]
+      },
+      {
+       "code": "authority_impersonation",
+       "title": "Claims to be a bank, payment app or government body",
+       "stage": "hook",
+       "severity": 0.15,
+       "basis": "text_match",
+       "evidence": [
+        {
+         "text": "SBI",
+         "rule": "imp_org"
+        }
+       ]
+      }
+     ],
+     "event_score": 36,
+     "urls": [],
+     "ml_probability": 0.6291,
+     "safety_advice": [],
+     "retraction": [],
+     "mitigation": null,
+     "claimed_orgs": [
+      "sbi"
+     ],
+     "data_quality": {
+      "level": "good",
+      "notes": [],
+      "ocr_confidence": null
+     },
+     "indicators": {
+      "domains": [],
+      "links": [],
+      "path_patterns": [],
+      "shortened_links": [],
+      "upi_handles": [],
+      "upi_handles_masked": [],
+      "phones": [],
+      "orgs": [
+       "sbi"
+      ]
+     }
+    }
+   },
+   {
+    "id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+    "seq": 2,
+    "kind": "message",
+    "channel": "upi_app",
+    "source": "user",
+    "observed_at": null,
+    "created_at": "2026-10-12T09:31:10.719466",
+    "excerpt": "UPI pay request details. Payee: sb***@ybl. Payee name: SBI Refund Desk. Amount: Rs 4999.00. Note: Scan to receive your refund. \nDear customer, SBI has approved your refund of Rs 4999. Scan the QR and enter your UPI PIN to receive it within 10 minutes.",
+    "media": null,
+    "detection": {
+     "tactics": [
+      {
+       "code": "secret_request",
+       "title": "Asks for an OTP, PIN or password",
+       "stage": "harvest",
+       "severity": 0.6,
+       "basis": "text_match",
+       "evidence": [
+        {
+         "text": "enter your UPI PIN",
+         "rule": "otp_share"
+        }
+       ]
+      },
+      {
+       "code": "upi_collect",
+       "title": "UPI collect-request or PIN-to-receive trick",
+       "stage": "extraction",
+       "severity": 0.6,
+       "basis": "text_match",
+       "evidence": [
+        {
+         "text": "enter your UPI PIN to receive",
+         "rule": "upi_pin_to_receive"
+        },
+        {
+         "text": "Scan the QR and enter your UPI PIN to receive",
+         "rule": "upi_qr_receive"
+        },
+        {
+         "text": "upi://pay link with 'receive'",
+         "rule": "upi_link_receive"
+        }
+       ]
+      },
+      {
+       "code": "payment_pressure",
+       "title": "Pressure to pay or move money",
+       "stage": "extraction",
+       "severity": 0.35,
+       "basis": "text_match",
+       "evidence": [
+        {
+         "text": "Scan the QR",
+         "rule": "pay_fee"
+        }
+       ]
+      },
+      {
+       "code": "reward_lure",
+       "title": "Reward, refund or cashback lure",
+       "stage": "hook",
+       "severity": 0.25,
+       "basis": "text_match",
+       "evidence": [
+        {
+         "text": "refund of",
+         "rule": "rew_win"
+        },
+        {
+         "text": "payee name: SBI Refund Desk",
+         "rule": "upi_payee_lure"
+        },
+        {
+         "text": "UPI ID: sb***@ybl",
+         "rule": "upi_payee_lure"
+        }
+       ]
+      },
+      {
+       "code": "urgency",
+       "title": "Urgency or time pressure",
+       "stage": "pressure",
+       "severity": 0.15,
+       "basis": "text_match",
+       "evidence": [
+        {
+         "text": "within 10 minutes",
+         "rule": "urg_deadline"
+        }
+       ]
+      },
+      {
+       "code": "authority_impersonation",
+       "title": "Claims to be a bank, payment app or government body",
+       "stage": "hook",
+       "severity": 0.15,
+       "basis": "text_match",
+       "evidence": [
+        {
+         "text": "SBI",
+         "rule": "imp_org"
+        },
+        {
+         "text": "UPI ID: sb***@ybl",
+         "rule": "upi_payee_org"
+        }
+       ]
+      }
+     ],
+     "event_score": 94,
+     "urls": [],
+     "ml_probability": 0.8798,
+     "safety_advice": [],
+     "retraction": [],
+     "mitigation": null,
+     "claimed_orgs": [
+      "sbi"
+     ],
+     "data_quality": {
+      "level": "good",
+      "notes": [],
+      "ocr_confidence": null
+     },
+     "indicators": {
+      "domains": [],
+      "links": [],
+      "path_patterns": [],
+      "shortened_links": [],
+      "upi_handles": [
+       "388048669580abd7cf450c26"
+      ],
+      "upi_handles_masked": [
+       "sb***@ybl"
+      ],
+      "phones": [],
+      "orgs": [
+       "sbi"
+      ]
+     }
+    }
+   },
+   {
+    "id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+    "seq": 3,
+    "kind": "message",
+    "channel": "call",
+    "source": "user",
+    "observed_at": null,
+    "created_at": "2026-10-12T09:31:10.731457",
+    "excerpt": "Caller from the SBI refund desk asked me to read out the OTP I just received so he can release the refund.",
+    "media": null,
+    "detection": {
+     "tactics": [
+      {
+       "code": "secret_request",
+       "title": "Asks for an OTP, PIN or password",
+       "stage": "harvest",
+       "severity": 0.6,
+       "basis": "text_match",
+       "evidence": [
+        {
+         "text": "read out the OTP",
+         "rule": "otp_share"
+        }
+       ]
+      },
+      {
+       "code": "authority_impersonation",
+       "title": "Claims to be a bank, payment app or government body",
+       "stage": "hook",
+       "severity": 0.15,
+       "basis": "text_match",
+       "evidence": [
+        {
+         "text": "SBI",
+         "rule": "imp_org"
+        }
+       ]
+      }
+     ],
+     "event_score": 66,
+     "urls": [],
+     "ml_probability": 0.0167,
+     "safety_advice": [],
+     "retraction": [],
+     "mitigation": null,
+     "claimed_orgs": [
+      "sbi"
+     ],
+     "data_quality": {
+      "level": "good",
+      "notes": [],
+      "ocr_confidence": null
+     },
+     "indicators": {
+      "domains": [],
+      "links": [],
+      "path_patterns": [],
+      "shortened_links": [],
+      "upi_handles": [],
+      "upi_handles_masked": [],
+      "phones": [],
+      "orgs": [
+       "sbi"
+      ]
+     }
+    }
+   }
+  ],
+  "assessment": {
+   "risk_score": 97,
+   "risk_level": "high",
+   "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+   "thresholds": {
+    "medium": 30,
+    "high": 60
+   },
+   "components": [
+    {
+     "label": "Asks for an OTP, PIN or password",
+     "weight": 0.6,
+     "kind": "tactic"
+    },
+    {
+     "label": "UPI collect-request or PIN-to-receive trick",
+     "weight": 0.6,
+     "kind": "tactic"
+    },
+    {
+     "label": "Pressure to pay or move money",
+     "weight": 0.35,
+     "kind": "tactic"
+    },
+    {
+     "label": "Reward, refund or cashback lure",
+     "weight": 0.25,
+     "kind": "tactic"
+    },
+    {
+     "label": "Attack spans 4 stages (Approach, Pressure, Harvest, Extraction)",
+     "weight": 0.25,
+     "kind": "stage_bonus"
+    },
+    {
+     "label": "A claimed bank or authority asks for a secret code",
+     "weight": 0.2,
+     "kind": "combination"
+    },
+    {
+     "label": "Promised money used to trigger a UPI collect request",
+     "weight": 0.2,
+     "kind": "combination"
+    },
+    {
+     "label": "Claims to be a bank, payment app or government body",
+     "weight": 0.15,
+     "kind": "tactic"
+    },
+    {
+     "label": "Urgency or time pressure",
+     "weight": 0.15,
+     "kind": "tactic"
+    }
+   ],
+   "mitigations": [],
+   "tactics": [
+    {
+     "code": "reward_lure",
+     "title": "Reward, refund or cashback lure",
+     "stage": "hook",
+     "severity": 0.25,
+     "first_event": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+     "first_position": 1,
+     "events": [
+      "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+      "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801"
+     ],
+     "evidence": [
+      {
+       "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+       "seq": 1,
+       "text": "refund of"
+      },
+      {
+       "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+       "seq": 2,
+       "text": "refund of"
+      },
+      {
+       "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+       "seq": 2,
+       "text": "payee name: SBI Refund Desk"
+      }
+     ],
+     "basis": "observed",
+     "source": "text_match"
+    },
+    {
+     "code": "authority_impersonation",
+     "title": "Claims to be a bank, payment app or government body",
+     "stage": "hook",
+     "severity": 0.15,
+     "first_event": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+     "first_position": 1,
+     "events": [
+      "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+      "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "e421b557-d3ed-4a25-9bd9-4e7440cf577d"
+     ],
+     "evidence": [
+      {
+       "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+       "seq": 1,
+       "text": "SBI"
+      },
+      {
+       "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+       "seq": 2,
+       "text": "SBI"
+      },
+      {
+       "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+       "seq": 2,
+       "text": "UPI ID: sb***@ybl"
+      },
+      {
+       "event_id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+       "seq": 3,
+       "text": "SBI"
+      }
+     ],
+     "basis": "observed",
+     "source": "text_match"
+    },
+    {
+     "code": "secret_request",
+     "title": "Asks for an OTP, PIN or password",
+     "stage": "harvest",
+     "severity": 0.6,
+     "first_event": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+     "first_position": 2,
+     "events": [
+      "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "e421b557-d3ed-4a25-9bd9-4e7440cf577d"
+     ],
+     "evidence": [
+      {
+       "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+       "seq": 2,
+       "text": "enter your UPI PIN"
+      },
+      {
+       "event_id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+       "seq": 3,
+       "text": "read out the OTP"
+      }
+     ],
+     "basis": "observed",
+     "source": "text_match"
+    },
+    {
+     "code": "upi_collect",
+     "title": "UPI collect-request or PIN-to-receive trick",
+     "stage": "extraction",
+     "severity": 0.6,
+     "first_event": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+     "first_position": 2,
+     "events": [
+      "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801"
+     ],
+     "evidence": [
+      {
+       "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+       "seq": 2,
+       "text": "enter your UPI PIN to receive"
+      },
+      {
+       "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+       "seq": 2,
+       "text": "Scan the QR and enter your UPI PIN to receive"
+      }
+     ],
+     "basis": "observed",
+     "source": "text_match"
+    },
+    {
+     "code": "payment_pressure",
+     "title": "Pressure to pay or move money",
+     "stage": "extraction",
+     "severity": 0.35,
+     "first_event": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+     "first_position": 2,
+     "events": [
+      "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801"
+     ],
+     "evidence": [
+      {
+       "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+       "seq": 2,
+       "text": "Scan the QR"
+      }
+     ],
+     "basis": "observed",
+     "source": "text_match"
+    },
+    {
+     "code": "urgency",
+     "title": "Urgency or time pressure",
+     "stage": "pressure",
+     "severity": 0.15,
+     "first_event": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+     "first_position": 2,
+     "events": [
+      "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801"
+     ],
+     "evidence": [
+      {
+       "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+       "seq": 2,
+       "text": "within 10 minutes"
+      }
+     ],
+     "basis": "observed",
+     "source": "text_match"
+    }
+   ],
+   "stages_observed": [
+    "hook",
+    "pressure",
+    "harvest",
+    "extraction"
+   ],
+   "order": {
+    "basis": "submission_order",
+    "known": false,
+    "note": "Shown in the order evidence was added, which may differ from when it was received. Add the time each message arrived to confirm the sequence.",
+    "sequence": [
+     "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+     "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+     "e421b557-d3ed-4a25-9bd9-4e7440cf577d"
+    ]
+   },
+   "chain": {
+    "nodes": [
+     {
+      "id": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+      "type": "event",
+      "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+      "position": 1,
+      "seq": 1,
+      "kind": "message",
+      "channel": "sms",
+      "observed_at": null,
+      "label": "Evidence #1",
+      "excerpt": "SBI Refund Desk: your refund of Rs 4,999 has been approved and is waiting to be credited.",
+      "signals": [
+       "reward_lure",
+       "authority_impersonation"
+      ],
+      "event_score": 36,
+      "data_quality": "good",
+      "basis": "observed"
+     },
+     {
+      "id": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "type": "event",
+      "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "position": 2,
+      "seq": 2,
+      "kind": "message",
+      "channel": "upi_app",
+      "observed_at": null,
+      "label": "Evidence #2",
+      "excerpt": "UPI pay request details. Payee: sb***@ybl. Payee name: SBI Refund Desk. Amount: Rs 4999.00. Note: Scan to receive your refund. \nDear customer, SBI has approved your refund of Rs 4999. Scan the QR and enter your UPI PIN t",
+      "signals": [
+       "secret_request",
+       "upi_collect",
+       "payment_pressure",
+       "reward_lure",
+       "urgency",
+       "authority_impersonation"
+      ],
+      "event_score": 94,
+      "data_quality": "good",
+      "basis": "observed"
+     },
+     {
+      "id": "e:e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+      "type": "event",
+      "event_id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+      "position": 3,
+      "seq": 3,
+      "kind": "message",
+      "channel": "call",
+      "observed_at": null,
+      "label": "Evidence #3",
+      "excerpt": "Caller from the SBI refund desk asked me to read out the OTP I just received so he can release the refund.",
+      "signals": [
+       "secret_request",
+       "authority_impersonation"
+      ],
+      "event_score": 66,
+      "data_quality": "good",
+      "basis": "observed"
+     },
+     {
+      "id": "t:reward_lure",
+      "type": "tactic",
+      "code": "reward_lure",
+      "label": "Reward, refund or cashback lure",
+      "stage": "hook",
+      "stage_title": "Approach",
+      "severity": 0.25,
+      "evidence": [
+       {
+        "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+        "seq": 1,
+        "text": "refund of"
+       },
+       {
+        "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "seq": 2,
+        "text": "refund of"
+       },
+       {
+        "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "seq": 2,
+        "text": "payee name: SBI Refund Desk"
+       }
+      ],
+      "explanation": "An unexpected prize, refund, cashback or guaranteed return is offered.",
+      "recommendation": "Do not pay a fee or enter a PIN to receive a reward. Genuine refunds never need your PIN.",
+      "basis": "observed",
+      "source": "text_match",
+      "confidence": "Direct text match"
+     },
+     {
+      "id": "t:authority_impersonation",
+      "type": "tactic",
+      "code": "authority_impersonation",
+      "label": "Claims to be a bank, payment app or government body",
+      "stage": "hook",
+      "stage_title": "Approach",
+      "severity": 0.15,
+      "evidence": [
+       {
+        "event_id": "09204ec8-4dae-4917-8786-4dd20e6ad41e",
+        "seq": 1,
+        "text": "SBI"
+       },
+       {
+        "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "seq": 2,
+        "text": "SBI"
+       },
+       {
+        "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "seq": 2,
+        "text": "UPI ID: sb***@ybl"
+       },
+       {
+        "event_id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+        "seq": 3,
+        "text": "SBI"
+       }
+      ],
+      "explanation": "The message names a bank, payment app, regulator or government body as its sender or subject. Genuine notices do this too; it matters when combined with pressure or a request.",
+      "recommendation": "Contact the organisation through its official app or the number printed on your card, never through details in the message.",
+      "basis": "observed",
+      "source": "text_match",
+      "confidence": "Direct text match"
+     },
+     {
+      "id": "t:secret_request",
+      "type": "tactic",
+      "code": "secret_request",
+      "label": "Asks for an OTP, PIN or password",
+      "stage": "harvest",
+      "stage_title": "Harvest",
+      "severity": 0.6,
+      "evidence": [
+       {
+        "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "seq": 2,
+        "text": "enter your UPI PIN"
+       },
+       {
+        "event_id": "e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+        "seq": 3,
+        "text": "read out the OTP"
+       }
+      ],
+      "explanation": "The message asks you to share or enter a one-time code, UPI PIN, card PIN, CVV or password.",
+      "recommendation": "Never share an OTP, PIN or password. If you already did, call your bank now to block the account or card.",
+      "basis": "observed",
+      "source": "text_match",
+      "confidence": "Direct text match"
+     },
+     {
+      "id": "t:upi_collect",
+      "type": "tactic",
+      "code": "upi_collect",
+      "label": "UPI collect-request or PIN-to-receive trick",
+      "stage": "extraction",
+      "stage_title": "Extraction",
+      "severity": 0.6,
+      "evidence": [
+       {
+        "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "seq": 2,
+        "text": "enter your UPI PIN to receive"
+       },
+       {
+        "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "seq": 2,
+        "text": "Scan the QR and enter your UPI PIN to receive"
+       }
+      ],
+      "explanation": "You are told to approve a request, scan a QR code or enter your UPI PIN to receive money. A UPI PIN is only ever needed to send money, never to receive it.",
+      "recommendation": "Decline the collect request. You never need your UPI PIN or a QR scan to receive money.",
+      "basis": "observed",
+      "source": "text_match",
+      "confidence": "Direct text match"
+     },
+     {
+      "id": "t:payment_pressure",
+      "type": "tactic",
+      "code": "payment_pressure",
+      "label": "Pressure to pay or move money",
+      "stage": "extraction",
+      "stage_title": "Extraction",
+      "severity": 0.35,
+      "evidence": [
+       {
+        "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "seq": 2,
+        "text": "Scan the QR"
+       }
+      ],
+      "explanation": "You are pushed to pay a fee, fine, deposit or transfer.",
+      "recommendation": "Do not pay. Check the request through a channel you find yourself.",
+      "basis": "observed",
+      "source": "text_match",
+      "confidence": "Direct text match"
+     },
+     {
+      "id": "t:urgency",
+      "type": "tactic",
+      "code": "urgency",
+      "label": "Urgency or time pressure",
+      "stage": "pressure",
+      "stage_title": "Pressure",
+      "severity": 0.15,
+      "evidence": [
+       {
+        "event_id": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+        "seq": 2,
+        "text": "within 10 minutes"
+       }
+      ],
+      "explanation": "A deadline or 'act now' language pushes you to act before checking.",
+      "recommendation": "Slow down. Genuine organisations give you time to verify.",
+      "basis": "observed",
+      "source": "text_match",
+      "confidence": "Direct text match"
+     }
+    ],
+    "edges": [
+     {
+      "from": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+      "to": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "kind": "sequence",
+      "basis": "submission_order",
+      "note": "Order added, not confirmed"
+     },
+     {
+      "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "to": "e:e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+      "kind": "sequence",
+      "basis": "submission_order",
+      "note": "Order added, not confirmed"
+     },
+     {
+      "from": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+      "to": "t:reward_lure",
+      "kind": "evidence",
+      "basis": "observed",
+      "note": "Evidence for this tactic"
+     },
+     {
+      "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "to": "t:reward_lure",
+      "kind": "evidence",
+      "basis": "observed",
+      "note": "Evidence for this tactic"
+     },
+     {
+      "from": "e:09204ec8-4dae-4917-8786-4dd20e6ad41e",
+      "to": "t:authority_impersonation",
+      "kind": "evidence",
+      "basis": "observed",
+      "note": "Evidence for this tactic"
+     },
+     {
+      "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "to": "t:authority_impersonation",
+      "kind": "evidence",
+      "basis": "observed",
+      "note": "Evidence for this tactic"
+     },
+     {
+      "from": "e:e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+      "to": "t:authority_impersonation",
+      "kind": "evidence",
+      "basis": "observed",
+      "note": "Evidence for this tactic"
+     },
+     {
+      "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "to": "t:secret_request",
+      "kind": "evidence",
+      "basis": "observed",
+      "note": "Evidence for this tactic"
+     },
+     {
+      "from": "e:e421b557-d3ed-4a25-9bd9-4e7440cf577d",
+      "to": "t:secret_request",
+      "kind": "evidence",
+      "basis": "observed",
+      "note": "Evidence for this tactic"
+     },
+     {
+      "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "to": "t:upi_collect",
+      "kind": "evidence",
+      "basis": "observed",
+      "note": "Evidence for this tactic"
+     },
+     {
+      "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "to": "t:payment_pressure",
+      "kind": "evidence",
+      "basis": "observed",
+      "note": "Evidence for this tactic"
+     },
+     {
+      "from": "e:b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+      "to": "t:urgency",
+      "kind": "evidence",
+      "basis": "observed",
+      "note": "Evidence for this tactic"
+     },
+     {
+      "from": "t:reward_lure",
+      "to": "t:urgency",
+      "kind": "progression",
+      "basis": "inferred",
+      "note": "Typical escalation from approach to pressure. Inferred from the stage model, not a confirmed cause."
+     },
+     {
+      "from": "t:urgency",
+      "to": "t:secret_request",
+      "kind": "progression",
+      "basis": "inferred",
+      "note": "Typical escalation from pressure to harvest. Inferred from the stage model, not a confirmed cause."
+     },
+     {
+      "from": "t:secret_request",
+      "to": "t:upi_collect",
+      "kind": "progression",
+      "basis": "inferred",
+      "note": "Typical escalation from harvest to extraction. Inferred from the stage model, not a confirmed cause."
+     }
+    ],
+    "stages": [
+     {
+      "code": "hook",
+      "title": "Approach",
+      "order": 1,
+      "description": "The scammer makes contact and borrows a trusted identity or a lure."
+     },
+     {
+      "code": "pressure",
+      "title": "Pressure",
+      "order": 2,
+      "description": "Fear, urgency or authority is used to stop the victim from thinking or checking."
+     },
+     {
+      "code": "harvest",
+      "title": "Harvest",
+      "order": 3,
+      "description": "The victim is pushed to reveal codes, PINs, passwords or to log in on a fake page."
+     },
+     {
+      "code": "control",
+      "title": "Control",
+      "order": 4,
+      "description": "The scammer tries to take control of the victim's device."
+     },
+     {
+      "code": "extraction",
+      "title": "Extraction",
+      "order": 5,
+      "description": "Money is moved: collect requests, transfers, fees or diverted payments."
+     },
+     {
+      "code": "evasion",
+      "title": "Evasion",
+      "order": 0,
+      "description": "Tricks used to slip past filters. Not part of the victim-facing sequence."
+     }
+    ]
+   },
+   "uncertainty": {
+    "level": "low",
+    "reasons": []
+   },
+   "review_required": false,
+   "review_reasons": [],
+   "data_quality": {
+    "level": "good",
+    "notes": []
+   },
+   "model_signal": {
+    "max_probability": 0.88,
+    "note": "Similarity of the wording to a public SMS spam dataset. Uncalibrated and not used in the score."
+   },
+   "missing_evidence": [
+    "It is unknown whether a code, PIN or password was already shared. If it was, call your bank now.",
+    "The claimed sender (SBI) has not been verified through an official channel.",
+    "The real order of events is not confirmed; add when each message was received."
+   ],
+   "conflicts": [],
+   "recommendations": [
+    "Stop: do not approve any request, scan any QR code, pay or transfer money.",
+    "Never share an OTP, PIN or password. If you already did, call your bank now to block the account or card.",
+    "Decline the collect request. You never need your UPI PIN or a QR scan to receive money.",
+    "Do not pay. Check the request through a channel you find yourself.",
+    "Contact the organisation through its official app or the number printed on your card, never through details in the message.",
+    "Do not pay a fee or enter a PIN to receive a reward. Genuine refunds never need your PIN.",
+    "Slow down. Genuine organisations give you time to verify."
+   ],
+   "primary_action": "Stop: do not approve any request, scan any QR code, pay or transfer money.",
+   "indicators": {
+    "domains": [],
+    "links": [],
+    "path_patterns": [],
+    "shortened_links": [],
+    "upi_handles": [
+     "388048669580abd7cf450c26"
+    ],
+    "upi_handles_masked": [
+     "sb***@ybl"
+    ],
+    "phones": [],
+    "orgs": [
+     "sbi"
+    ]
+   },
+   "event_count": 3,
+   "fingerprint": "865d34bb5d4e823333ebb76a062b4fb5"
+  },
+  "last_change": {
+   "score_before": 97,
+   "score_after": 97,
+   "delta": 0,
+   "level_before": "high",
+   "level_after": "high",
+   "added_tactics": [],
+   "removed_tactics": [],
+   "stages_added": [],
+   "explanation": [
+    "Risk unchanged: the new evidence repeats tactics already in the case."
+   ],
+   "changed": false
+  },
+  "log": [
+   {
+    "id": 8,
+    "at": "2026-10-12T09:31:10.732441",
+    "action": "reassessed",
+    "alert_action": "suppressed",
+    "notify": false,
+    "risk_level": "high",
+    "risk_score": 97,
+    "detail": {
+     "reason": "Duplicate suppressed: the evidence did not change the assessment.",
+     "explanation": [
+      "Risk unchanged: the new evidence repeats tactics already in the case."
+     ],
+     "tactics": [
+      "reward_lure",
+      "authority_impersonation",
+      "secret_request",
+      "upi_collect",
+      "payment_pressure",
+      "urgency"
+     ],
+     "score_before": 97
+    }
+   },
+   {
+    "id": 7,
+    "at": "2026-10-12T09:31:10.732397",
+    "action": "evidence_added",
+    "alert_action": null,
+    "notify": false,
+    "risk_level": null,
+    "risk_score": null,
+    "detail": {
+     "seq": 3,
+     "kind": "message",
+     "tactics": [
+      "secret_request",
+      "authority_impersonation"
+     ]
+    }
+   },
+   {
+    "id": 6,
+    "at": "2026-10-12T09:31:10.726424",
+    "action": "duplicate_evidence",
+    "alert_action": "suppressed",
+    "notify": false,
+    "risk_level": "high",
+    "risk_score": 97,
+    "detail": {
+     "duplicate_of": "b60f60d5-b4f3-4f7b-ad6d-4b15f45d8801",
+     "seq": 2
+    }
+   },
+   {
+    "id": 5,
+    "at": "2026-10-12T09:31:10.720334",
+    "action": "reassessed",
+    "alert_action": "escalated",
+    "notify": true,
+    "risk_level": "high",
+    "risk_score": 97,
+    "detail": {
+     "reason": "Escalated from medium to high risk.",
+     "explanation": [
+      "New tactics from evidence #2: Asks for an OTP, PIN or password (weight 0.60); UPI collect-request or PIN-to-receive trick (weight 0.60); Pressure to pay or move money (weight 0.35); Urgency or time pressure (weight 0.15).",
+      "The attack chain now reaches: Pressure, Harvest, Extraction.",
+      "Added weight for: Attack spans 4 stages (Approach, Pressure, Harvest, Extraction) (+0.25).",
+      "Added weight for: A claimed bank or authority asks for a secret code (+0.20).",
+      "Added weight for: Promised money used to trigger a UPI collect request (+0.20).",
+      "Risk level changed from medium to high."
+     ],
+     "tactics": [
+      "reward_lure",
+      "authority_impersonation",
+      "secret_request",
+      "upi_collect",
+      "payment_pressure",
+      "urgency"
+     ],
+     "score_before": 36
+    }
+   },
+   {
+    "id": 4,
+    "at": "2026-10-12T09:31:10.720291",
+    "action": "evidence_added",
+    "alert_action": null,
+    "notify": false,
+    "risk_level": null,
+    "risk_score": null,
+    "detail": {
+     "seq": 2,
+     "kind": "message",
+     "tactics": [
+      "secret_request",
+      "upi_collect",
+      "payment_pressure",
+      "reward_lure",
+      "urgency",
+      "authority_impersonation"
+     ]
+    }
+   },
+   {
+    "id": 3,
+    "at": "2026-10-12T09:31:10.709023",
+    "action": "reassessed",
+    "alert_action": "new",
+    "notify": true,
+    "risk_level": "medium",
+    "risk_score": 36,
+    "detail": {
+     "reason": "First alert: the case reached medium risk.",
+     "explanation": [
+      "New tactics from evidence #1: Reward, refund or cashback lure (weight 0.25); Claims to be a bank, payment app or government body (weight 0.15).",
+      "The attack chain now reaches: Approach.",
+      "Risk level changed from low to medium."
+     ],
+     "tactics": [
+      "reward_lure",
+      "authority_impersonation"
+     ],
+     "score_before": 0
+    }
+   },
+   {
+    "id": 2,
+    "at": "2026-10-12T09:31:10.708888",
+    "action": "evidence_added",
+    "alert_action": null,
+    "notify": false,
+    "risk_level": null,
+    "risk_score": null,
+    "detail": {
+     "seq": 1,
+     "kind": "message",
+     "tactics": [
+      "reward_lure",
+      "authority_impersonation"
+     ]
+    }
+   },
+   {
+    "id": 1,
+    "at": "2026-10-12T09:31:10.022871",
+    "action": "case_created",
+    "alert_action": null,
+    "notify": false,
+    "risk_level": null,
+    "risk_score": null,
+    "detail": {
+     "title": "DEMO · Refund QR from 'SBI'",
+     "demo": false
+    }
+   }
+  ]
+ }
+}

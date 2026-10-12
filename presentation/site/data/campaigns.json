@@ -1,0 +1,408 @@
+{
+ "meta": {
+  "label": "DEMO DATA: synthetic scenarios written by the SafeCircle team, run through the real API on a throwaway database. Not real victims, not live fraud intelligence.",
+  "generated_at": "2026-10-12T09:31:10+00:00",
+  "commit": "b8a1a65",
+  "command": "backend/.venv/bin/python presentation/scripts/snapshot.py"
+ },
+ "campaigns": [
+  {
+   "id": "f6c16cecad88",
+   "label": "SBI · Suspicious login or credential-harvesting link",
+   "member_ids": [
+    "38cd3c01-af97-4abf-be9d-48d58ba3a62c",
+    "cf1bea66-224a-4b09-a675-1a0c53a21069",
+    "65075afb-15fe-4338-b9a9-c26788267e9d",
+    "bde35dd4-0d06-4279-8c8c-65ddb955e41c"
+   ],
+   "members": [
+    {
+     "id": "38cd3c01-af97-4abf-be9d-48d58ba3a62c",
+     "title": "DEMO · KYC suspension SMS (A)",
+     "risk_level": "high",
+     "risk_score": 78,
+     "is_demo": true
+    },
+    {
+     "id": "cf1bea66-224a-4b09-a675-1a0c53a21069",
+     "title": "DEMO · KYC suspension SMS (B)",
+     "risk_level": "high",
+     "risk_score": 74,
+     "is_demo": true
+    },
+    {
+     "id": "65075afb-15fe-4338-b9a9-c26788267e9d",
+     "title": "DEMO · KYC suspension SMS (C, different domain)",
+     "risk_level": "high",
+     "risk_score": 78,
+     "is_demo": true
+    },
+    {
+     "id": "bde35dd4-0d06-4279-8c8c-65ddb955e41c",
+     "title": "DEMO · Multi-stage bank impersonation with a suspicious link",
+     "risk_level": "high",
+     "risk_score": 99,
+     "is_demo": false
+    }
+   ],
+   "links": [
+    {
+     "pair": "38cd3c01-af97-4abf-be9d-48d58ba3a62c|bde35dd4-0d06-4279-8c8c-65ddb955e41c",
+     "a": "bde35dd4-0d06-4279-8c8c-65ddb955e41c",
+     "b": "38cd3c01-af97-4abf-be9d-48d58ba3a62c",
+     "strength": 0.9,
+     "relation": "strong",
+     "exact": [
+      {
+       "type": "domains",
+       "label": "Same domain",
+       "value": "sbi-kyc-update.example",
+       "basis": "exact",
+       "weight": 0.9
+      }
+     ],
+     "heuristic": [],
+     "uncertainty": "Exact shared indicator."
+    },
+    {
+     "pair": "bde35dd4-0d06-4279-8c8c-65ddb955e41c|cf1bea66-224a-4b09-a675-1a0c53a21069",
+     "a": "bde35dd4-0d06-4279-8c8c-65ddb955e41c",
+     "b": "cf1bea66-224a-4b09-a675-1a0c53a21069",
+     "strength": 0.9,
+     "relation": "strong",
+     "exact": [
+      {
+       "type": "domains",
+       "label": "Same domain",
+       "value": "sbi-kyc-update.example",
+       "basis": "exact",
+       "weight": 0.9
+      }
+     ],
+     "heuristic": [],
+     "uncertainty": "Exact shared indicator."
+    },
+    {
+     "pair": "38cd3c01-af97-4abf-be9d-48d58ba3a62c|cf1bea66-224a-4b09-a675-1a0c53a21069",
+     "a": "38cd3c01-af97-4abf-be9d-48d58ba3a62c",
+     "b": "cf1bea66-224a-4b09-a675-1a0c53a21069",
+     "strength": 0.955,
+     "relation": "strong",
+     "exact": [
+      {
+       "type": "domains",
+       "label": "Same domain",
+       "value": "sbi-kyc-update.example",
+       "basis": "exact",
+       "weight": 0.9
+      }
+     ],
+     "heuristic": [
+      {
+       "type": "path",
+       "label": "Same link path pattern",
+       "value": "/kyc/verify/#",
+       "basis": "heuristic",
+       "weight": 0.35
+      },
+      {
+       "type": "org_tactics",
+       "label": "Same impersonated organisation and similar tactics",
+       "value": "SBI; 75% tactic overlap",
+       "basis": "heuristic",
+       "weight": 0.3
+      }
+     ],
+     "uncertainty": "Exact shared indicator."
+    },
+    {
+     "pair": "38cd3c01-af97-4abf-be9d-48d58ba3a62c|65075afb-15fe-4338-b9a9-c26788267e9d",
+     "a": "38cd3c01-af97-4abf-be9d-48d58ba3a62c",
+     "b": "65075afb-15fe-4338-b9a9-c26788267e9d",
+     "strength": 0.932,
+     "relation": "likely",
+     "exact": [],
+     "heuristic": [
+      {
+       "type": "wording",
+       "label": "Similar message wording",
+       "value": "100% word-sequence overlap",
+       "basis": "heuristic",
+       "weight": 0.85
+      },
+      {
+       "type": "path",
+       "label": "Same link path pattern",
+       "value": "/kyc/verify/#",
+       "basis": "heuristic",
+       "weight": 0.35
+      },
+      {
+       "type": "org_tactics",
+       "label": "Same impersonated organisation and similar tactics",
+       "value": "SBI; 100% tactic overlap",
+       "basis": "heuristic",
+       "weight": 0.3
+      }
+     ],
+     "uncertainty": "Similarity only: no exact indicator is shared, so these may be unrelated cases using a common template."
+    }
+   ],
+   "exact_indicators": [
+    "Same domain: sbi-kyc-update.example"
+   ],
+   "heuristic_indicators": [
+    "Same impersonated organisation and similar tactics: SBI; 75% tactic overlap",
+    "Same link path pattern: /kyc/verify/#",
+    "Similar message wording: 100% word-sequence overlap"
+   ],
+   "common_tactics": [
+    "credential_link",
+    "kyc_suspension",
+    "urgency"
+   ],
+   "confidence": "exact indicators shared",
+   "is_demo": false,
+   "external_matches": [],
+   "disclaimer": "Related by shared indicators only. This does not establish that the same people are behind these cases; that would need verified investigation."
+  },
+  {
+   "id": "2979556c5e62",
+   "label": "CBI / POLICE · Payment diversion or transfer to a 'safe' account",
+   "member_ids": [
+    "c42578e6-929f-47b9-b948-873954641ba2",
+    "d51e10c3-088b-444e-9606-1769ec39950c"
+   ],
+   "members": [
+    {
+     "id": "c42578e6-929f-47b9-b948-873954641ba2",
+     "title": "DEMO · Digital arrest call (A)",
+     "risk_level": "high",
+     "risk_score": 88,
+     "is_demo": true
+    },
+    {
+     "id": "d51e10c3-088b-444e-9606-1769ec39950c",
+     "title": "DEMO · Digital arrest call (B)",
+     "risk_level": "high",
+     "risk_score": 88,
+     "is_demo": true
+    }
+   ],
+   "links": [
+    {
+     "pair": "c42578e6-929f-47b9-b948-873954641ba2|d51e10c3-088b-444e-9606-1769ec39950c",
+     "a": "c42578e6-929f-47b9-b948-873954641ba2",
+     "b": "d51e10c3-088b-444e-9606-1769ec39950c",
+     "strength": 0.941,
+     "relation": "strong",
+     "exact": [
+      {
+       "type": "upi_handles",
+       "label": "Same UPI handle",
+       "value": "(masked) de***@ybl",
+       "basis": "exact",
+       "weight": 0.9
+      }
+     ],
+     "heuristic": [
+      {
+       "type": "org_tactics",
+       "label": "Same impersonated organisation and similar tactics",
+       "value": "RBI; 100% tactic overlap",
+       "basis": "heuristic",
+       "weight": 0.3
+      },
+      {
+       "type": "extraction",
+       "label": "Same money-extraction method",
+       "value": "Payment diversion or transfer to a 'safe' account",
+       "basis": "heuristic",
+       "weight": 0.15
+      }
+     ],
+     "uncertainty": "Exact shared indicator."
+    }
+   ],
+   "exact_indicators": [
+    "Same UPI handle: (masked) de***@ybl"
+   ],
+   "heuristic_indicators": [
+    "Same impersonated organisation and similar tactics: RBI; 100% tactic overlap",
+    "Same money-extraction method: Payment diversion or transfer to a 'safe' account"
+   ],
+   "common_tactics": [
+    "payment_diversion",
+    "digital_arrest"
+   ],
+   "confidence": "exact indicators shared",
+   "is_demo": true,
+   "external_matches": [],
+   "disclaimer": "Related by shared indicators only. This does not establish that the same people are behind these cases; that would need verified investigation."
+  },
+  {
+   "id": "4910e01b4580",
+   "label": "SBI · UPI collect-request or PIN-to-receive trick",
+   "member_ids": [
+    "c7ab1dc8-a034-4741-9600-134fe3168970",
+    "0313d5ab-58c0-4153-921b-d4f519ba7909"
+   ],
+   "members": [
+    {
+     "id": "c7ab1dc8-a034-4741-9600-134fe3168970",
+     "title": "DEMO · Refund QR from 'SBI'",
+     "risk_level": "high",
+     "risk_score": 97,
+     "is_demo": false
+    },
+    {
+     "id": "0313d5ab-58c0-4153-921b-d4f519ba7909",
+     "title": "DEMO · Same QR, reported by a neighbour",
+     "risk_level": "high",
+     "risk_score": 84,
+     "is_demo": false
+    }
+   ],
+   "links": [
+    {
+     "pair": "0313d5ab-58c0-4153-921b-d4f519ba7909|c7ab1dc8-a034-4741-9600-134fe3168970",
+     "a": "c7ab1dc8-a034-4741-9600-134fe3168970",
+     "b": "0313d5ab-58c0-4153-921b-d4f519ba7909",
+     "strength": 0.915,
+     "relation": "strong",
+     "exact": [
+      {
+       "type": "upi_handles",
+       "label": "Same UPI handle",
+       "value": "(masked) sb***@ybl",
+       "basis": "exact",
+       "weight": 0.9
+      }
+     ],
+     "heuristic": [
+      {
+       "type": "extraction",
+       "label": "Same money-extraction method",
+       "value": "UPI collect-request or PIN-to-receive trick",
+       "basis": "heuristic",
+       "weight": 0.15
+      }
+     ],
+     "uncertainty": "Exact shared indicator."
+    }
+   ],
+   "exact_indicators": [
+    "Same UPI handle: (masked) sb***@ybl"
+   ],
+   "heuristic_indicators": [
+    "Same money-extraction method: UPI collect-request or PIN-to-receive trick"
+   ],
+   "common_tactics": [
+    "upi_collect",
+    "reward_lure"
+   ],
+   "confidence": "exact indicators shared",
+   "is_demo": false,
+   "external_matches": [],
+   "disclaimer": "Related by shared indicators only. This does not establish that the same people are behind these cases; that would need verified investigation."
+  },
+  {
+   "id": "ac56d737c98a",
+   "label": "UPI collect-request or PIN-to-receive trick",
+   "member_ids": [
+    "541645b9-0526-4557-9854-a316ae381420",
+    "4729102f-0daf-40af-af6b-5b48459d5821"
+   ],
+   "members": [
+    {
+     "id": "541645b9-0526-4557-9854-a316ae381420",
+     "title": "DEMO · Cashback collect request (A)",
+     "risk_level": "high",
+     "risk_score": 92,
+     "is_demo": true
+    },
+    {
+     "id": "4729102f-0daf-40af-af6b-5b48459d5821",
+     "title": "DEMO · Cashback collect request (B)",
+     "risk_level": "high",
+     "risk_score": 92,
+     "is_demo": true
+    }
+   ],
+   "links": [
+    {
+     "pair": "4729102f-0daf-40af-af6b-5b48459d5821|541645b9-0526-4557-9854-a316ae381420",
+     "a": "541645b9-0526-4557-9854-a316ae381420",
+     "b": "4729102f-0daf-40af-af6b-5b48459d5821",
+     "strength": 0.873,
+     "relation": "likely",
+     "exact": [],
+     "heuristic": [
+      {
+       "type": "wording",
+       "label": "Similar message wording",
+       "value": "100% word-sequence overlap",
+       "basis": "heuristic",
+       "weight": 0.85
+      },
+      {
+       "type": "extraction",
+       "label": "Same money-extraction method",
+       "value": "UPI collect-request or PIN-to-receive trick",
+       "basis": "heuristic",
+       "weight": 0.15
+      }
+     ],
+     "uncertainty": "Similarity only: no exact indicator is shared, so these may be unrelated cases using a common template."
+    }
+   ],
+   "exact_indicators": [],
+   "heuristic_indicators": [
+    "Same money-extraction method: UPI collect-request or PIN-to-receive trick",
+    "Similar message wording: 100% word-sequence overlap"
+   ],
+   "common_tactics": [
+    "upi_collect",
+    "secret_request",
+    "reward_lure"
+   ],
+   "confidence": "similarity only",
+   "is_demo": true,
+   "external_matches": [],
+   "disclaimer": "Related by shared indicators only. This does not establish that the same people are behind these cases; that would need verified investigation."
+  }
+ ],
+ "uncertain_links": [
+  {
+   "pair": "65075afb-15fe-4338-b9a9-c26788267e9d|cf1bea66-224a-4b09-a675-1a0c53a21069",
+   "a": "cf1bea66-224a-4b09-a675-1a0c53a21069",
+   "b": "65075afb-15fe-4338-b9a9-c26788267e9d",
+   "strength": 0.545,
+   "relation": "possible",
+   "exact": [],
+   "heuristic": [
+    {
+     "type": "path",
+     "label": "Same link path pattern",
+     "value": "/kyc/verify/#",
+     "basis": "heuristic",
+     "weight": 0.35
+    },
+    {
+     "type": "org_tactics",
+     "label": "Same impersonated organisation and similar tactics",
+     "value": "SBI; 75% tactic overlap",
+     "basis": "heuristic",
+     "weight": 0.3
+    }
+   ],
+   "uncertainty": "Weak similarity: shown for review, not grouped."
+  }
+ ],
+ "dismissed_links": [],
+ "cases_considered": 13,
+ "cases_excluded_low_risk": 1,
+ "method": "Exact indicator matching plus word 3-gram Jaccard similarity, path patterns and tactic overlap. No machine-learned model.",
+ "external_sources": [],
+ "external_note": "No verified threat-intelligence feed is connected; only your own cases are compared."
+}

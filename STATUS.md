@@ -2,6 +2,17 @@
 
 Last updated: 2026-10-12. Submission deadline: 2026-10-12.
 
+## Presentation deliverables (2026-10-12, branch `presentation`)
+
+| Area | Evidence |
+|---|---|
+| PS02 pitch deck `presentation/SafeCircle-Guardian-PS02.pptx` (10 slides + 4 appendix slides) | Built by `presentation/deck/build_deck.js` from committed result files; skill validator passes. Visual check was approximate (no PowerPoint, Keynote or LibreOffice on this Mac) |
+| 3D walkthrough `presentation/site` (pitch + scenes A, B, C, 2D fallback) | `presentation/scripts/check-site.mjs` 69/69 in Chrome |
+| Whole suite re-run on this branch | backend 176/176; extension 25/25; e2e 18/18, 21/21, 17/17, 30/30, `demo.mjs` 12/12; `demo_story_check.py` 10/10 (scratch database) |
+| Not verified | Installed extension in real Chrome; Docker image build; hosted deployment. Submission format: the brief asks for one PDF, which was not generated |
+
+Report: [presentation/REPORT.md](presentation/REPORT.md).
+
 ## Independent validation (2026-10-12, branch `validation`)
 
 | Area | Evidence |
@@ -50,7 +61,7 @@ Details: [docs/scam-dna.md](docs/scam-dna.md).
 | Clean-room install | Fresh venv from `requirements.txt` + `npm ci` + build + migrate + run: works |
 | Docs | README, architecture, API (+ OpenAPI), threat model, privacy, deployment, methodology |
 | Research paper | `paper/SafeCircle-Guardian-Paper.docx` (8 pages, 19 references, measured results only) |
-| Presentation | `slides/SafeCircle-Guardian.pptx` (11 slides, real screenshots, native chart) |
+| Presentation | `slides/SafeCircle-Guardian.pptx` (11 slides, real screenshots, native chart). Superseded on 2026-10-12 by `presentation/SafeCircle-Guardian-PS02.pptx` |
 | Idea document | `docs/submission/SafeCircle-Guardian-Idea.docx` |
 
 ## Measured results

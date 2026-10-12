@@ -105,9 +105,9 @@ With Docker: `SAFECIRCLE_SECRET_KEY=$(openssl rand -hex 32) docker compose up --
 ## Tests
 
 ```bash
-cd backend && python -m pytest -q                      # 152 unit/API tests (SQLite); OCR tests skip without Tesseract
+cd backend && python -m pytest -q                      # 176 unit/API tests (SQLite); OCR tests skip without Tesseract
 SAFECIRCLE_TEST_DATABASE_URL=postgresql+psycopg2://... python -m pytest -q   # same suite on PostgreSQL
-node --test extension/tests/                           # 18 extension tests (3 need a running server)
+node --test extension/tests/                           # 25 extension tests (3 need a running server)
 cd e2e && npm i
 BASE_URL=http://127.0.0.1:8000 CHROMIUM=/path/to/chrome node e2e.mjs              # 18 original browser checks
 BASE_URL=http://127.0.0.1:8000 CHROMIUM=/path/to/chrome node scamdna.mjs          # 21 Scam DNA / Forensics / Radar checks
@@ -129,8 +129,17 @@ extension/      Chrome/Edge Manifest V3 extension
 evaluation/     training + evaluation scripts, datasets, results; scam_dna/ synthetic scenario evaluation
 e2e/            Playwright end-to-end and extension tests
 docs/           architecture, API, threat model, privacy, deployment, methodology, screenshots
-paper/          research paper (.docx, editable)    slides/  presentation (.pptx, editable)
+paper/          research paper (.docx, editable; see its 2026-10-12 addendum)
+slides/         original 11-slide deck from 2026-10-10 (superseded by presentation/)
+presentation/   PS02 pitch deck (.pptx, 10 slides + appendix) and the interactive 3D architecture site
 ```
+
+## Presentation
+
+The PS02 pitch deck is [presentation/SafeCircle-Guardian-PS02.pptx](presentation/SafeCircle-Guardian-PS02.pptx) (10 pitch slides
+plus a separated appendix). The interactive 3D walkthrough (pitch narrative and three architecture scenes) is in
+[presentation/site](presentation/site). Launch instructions, the demo workflow and the test report:
+[presentation/README.md](presentation/README.md).
 
 ## Documentation
 

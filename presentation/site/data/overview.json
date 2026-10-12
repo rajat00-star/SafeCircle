@@ -1,0 +1,150 @@
+{
+ "meta": {
+  "label": "DEMO DATA: synthetic scenarios written by the SafeCircle team, run through the real API on a throwaway database. Not real victims, not live fraud intelligence.",
+  "generated_at": "2026-10-12T09:31:10+00:00",
+  "commit": "b8a1a65",
+  "command": "backend/.venv/bin/python presentation/scripts/snapshot.py"
+ },
+ "source": "Computed from the cases stored in your profile. Cases marked DEMO are synthetic demo data.",
+ "investigations": {
+  "total": 14,
+  "demo": 10
+ },
+ "evidence_items": 22,
+ "open_cases": {
+  "total": 14,
+  "demo": 10
+ },
+ "review_required": {
+  "total": 1,
+  "demo": 0
+ },
+ "high_risk": {
+  "total": 12,
+  "demo": 9
+ },
+ "campaigns": {
+  "total": 4,
+  "demo": 2
+ },
+ "alerts_raised": {
+  "total": 19,
+  "demo": 11
+ },
+ "duplicates_suppressed": {
+  "total": 3,
+  "demo": 0
+ },
+ "recent_activity": [
+  {
+   "case_id": "d769c52b-1642-4e7b-a1c0-8d52c9796cd8",
+   "case_title": "DEMO · Genuine OTP notification",
+   "is_demo": true,
+   "at": "2026-10-12T09:31:10.924470",
+   "action": "reassessed",
+   "alert_action": "none",
+   "risk_level": "low",
+   "risk_score": 0,
+   "reason": "Low risk; no alert."
+  },
+  {
+   "case_id": "6bdcb76c-8904-41f3-b0c8-1fbf7c6c9a2c",
+   "case_title": "DEMO · HDFC login page (similar tactics, unrelated)",
+   "is_demo": true,
+   "at": "2026-10-12T09:31:10.922497",
+   "action": "reassessed",
+   "alert_action": "new",
+   "risk_level": "high",
+   "risk_score": 84,
+   "reason": "First alert: the case reached high risk."
+  },
+  {
+   "case_id": "488b50b2-1f02-472c-b2c4-616f3d547415",
+   "case_title": "DEMO · Parcel redelivery fee (unrelated)",
+   "is_demo": true,
+   "at": "2026-10-12T09:31:10.920222",
+   "action": "reassessed",
+   "alert_action": "new",
+   "risk_level": "high",
+   "risk_score": 71,
+   "reason": "First alert: the case reached high risk."
+  },
+  {
+   "case_id": "4729102f-0daf-40af-af6b-5b48459d5821",
+   "case_title": "DEMO · Cashback collect request (B)",
+   "is_demo": true,
+   "at": "2026-10-12T09:31:10.917255",
+   "action": "reassessed",
+   "alert_action": "new",
+   "risk_level": "high",
+   "risk_score": 92,
+   "reason": "First alert: the case reached high risk."
+  },
+  {
+   "case_id": "541645b9-0526-4557-9854-a316ae381420",
+   "case_title": "DEMO · Cashback collect request (A)",
+   "is_demo": true,
+   "at": "2026-10-12T09:31:10.915128",
+   "action": "reassessed",
+   "alert_action": "new",
+   "risk_level": "high",
+   "risk_score": 92,
+   "reason": "First alert: the case reached high risk."
+  },
+  {
+   "case_id": "d51e10c3-088b-444e-9606-1769ec39950c",
+   "case_title": "DEMO · Digital arrest call (B)",
+   "is_demo": true,
+   "at": "2026-10-12T09:31:10.913242",
+   "action": "reassessed",
+   "alert_action": "escalated",
+   "risk_level": "high",
+   "risk_score": 88,
+   "reason": "Escalated from medium to high risk."
+  },
+  {
+   "case_id": "d51e10c3-088b-444e-9606-1769ec39950c",
+   "case_title": "DEMO · Digital arrest call (B)",
+   "is_demo": true,
+   "at": "2026-10-12T09:31:10.911763",
+   "action": "reassessed",
+   "alert_action": "new",
+   "risk_level": "medium",
+   "risk_score": 55,
+   "reason": "First alert: the case reached medium risk."
+  },
+  {
+   "case_id": "c42578e6-929f-47b9-b948-873954641ba2",
+   "case_title": "DEMO · Digital arrest call (A)",
+   "is_demo": true,
+   "at": "2026-10-12T09:31:10.909873",
+   "action": "reassessed",
+   "alert_action": "escalated",
+   "risk_level": "high",
+   "risk_score": 88,
+   "reason": "Escalated from medium to high risk."
+  },
+  {
+   "case_id": "c42578e6-929f-47b9-b948-873954641ba2",
+   "case_title": "DEMO · Digital arrest call (A)",
+   "is_demo": true,
+   "at": "2026-10-12T09:31:10.908141",
+   "action": "reassessed",
+   "alert_action": "new",
+   "risk_level": "medium",
+   "risk_score": 55,
+   "reason": "First alert: the case reached medium risk."
+  },
+  {
+   "case_id": "65075afb-15fe-4338-b9a9-c26788267e9d",
+   "case_title": "DEMO · KYC suspension SMS (C, different domain)",
+   "is_demo": true,
+   "at": "2026-10-12T09:31:10.905976",
+   "action": "reassessed",
+   "alert_action": "new",
+   "risk_level": "high",
+   "risk_score": 78,
+   "reason": "First alert: the case reached high risk."
+  }
+ ]
+}

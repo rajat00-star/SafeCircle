@@ -1,0 +1,173 @@
+{
+ "meta": {
+  "label": "DEMO DATA: synthetic scenarios written by the SafeCircle team, run through the real API on a throwaway database. Not real victims, not live fraud intelligence.",
+  "generated_at": "2026-10-12T09:31:10+00:00",
+  "commit": "b8a1a65",
+  "command": "backend/.venv/bin/python presentation/scripts/snapshot.py"
+ },
+ "frames": [
+  {
+   "input": {
+    "source": "message",
+    "label": "SMS · unknown sender",
+    "text": "Hi, I sent a code to your phone by mistake. Please share the OTP you just received."
+   },
+   "duplicate": false,
+   "alert": {
+    "action": "new",
+    "notify": true,
+    "reason": "First alert: the case reached medium risk."
+   },
+   "change": {
+    "score_before": 0,
+    "score_after": 59,
+    "delta": 59,
+    "level_before": "low",
+    "level_after": "medium",
+    "added_tactics": [
+     {
+      "code": "secret_request",
+      "title": "Asks for an OTP, PIN or password",
+      "severity": 0.6
+     }
+    ],
+    "removed_tactics": [],
+    "stages_added": [
+     "harvest"
+    ],
+    "explanation": [
+     "New tactics from evidence #1: Asks for an OTP, PIN or password (weight 0.60).",
+     "The attack chain now reaches: Harvest.",
+     "Risk level changed from low to medium.",
+     "The case now needs review: high uncertainty."
+    ],
+    "changed": true
+   },
+   "case": {
+    "risk_level": "medium",
+    "risk_score": 59,
+    "review_required": true,
+    "event_count": 1,
+    "tactics": [
+     {
+      "code": "secret_request",
+      "title": "Asks for an OTP, PIN or password",
+      "stage": "harvest",
+      "severity": 0.6,
+      "basis": "observed"
+     }
+    ],
+    "stages_observed": [
+     "harvest"
+    ],
+    "components": [
+     {
+      "label": "Asks for an OTP, PIN or password",
+      "weight": 0.6,
+      "kind": "tactic"
+     }
+    ],
+    "uncertainty": {
+     "level": "high",
+     "reasons": [
+      "The score is close to a risk threshold.",
+      "The assessment rests on a single tactic.",
+      "A single tactic cannot make a case high on its own: the score was held below the high threshold until other evidence supports it."
+     ]
+    },
+    "review_reasons": [
+     "High uncertainty"
+    ],
+    "conflicts": [],
+    "missing_evidence": [
+     "No payment step has been observed. Whether any money was requested by phone is unknown.",
+     "It is unknown whether a code, PIN or password was already shared. If it was, call your bank now."
+    ],
+    "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+    "thresholds": {
+     "medium": 30,
+     "high": 60
+    }
+   }
+  },
+  {
+   "input": {
+    "source": "message",
+    "label": "SMS · same sender, later",
+    "text": "Please ignore the earlier message. We will never ask for your OTP."
+   },
+   "duplicate": false,
+   "alert": {
+    "action": "suppressed",
+    "notify": false,
+    "reason": "Duplicate suppressed: the evidence did not change the assessment."
+   },
+   "change": {
+    "score_before": 59,
+    "score_after": 59,
+    "delta": 0,
+    "level_before": "medium",
+    "level_after": "medium",
+    "added_tactics": [],
+    "removed_tactics": [],
+    "stages_added": [],
+    "explanation": [
+     "Risk unchanged: the new evidence repeats tactics already in the case."
+    ],
+    "changed": false
+   },
+   "case": {
+    "risk_level": "medium",
+    "risk_score": 59,
+    "review_required": true,
+    "event_count": 2,
+    "tactics": [
+     {
+      "code": "secret_request",
+      "title": "Asks for an OTP, PIN or password",
+      "stage": "harvest",
+      "severity": 0.6,
+      "basis": "observed"
+     }
+    ],
+    "stages_observed": [
+     "harvest"
+    ],
+    "components": [
+     {
+      "label": "Asks for an OTP, PIN or password",
+      "weight": 0.6,
+      "kind": "tactic"
+     }
+    ],
+    "uncertainty": {
+     "level": "high",
+     "reasons": [
+      "Some evidence points in different directions (see conflicts).",
+      "The score is close to a risk threshold.",
+      "The assessment rests on a single tactic.",
+      "A single tactic cannot make a case high on its own: the score was held below the high threshold until other evidence supports it."
+     ]
+    },
+    "review_reasons": [
+     "Conflicting evidence",
+     "High uncertainty"
+    ],
+    "conflicts": [
+     "Event #2 reads like a genuine safety notice, while event #1 asks for a code or PIN. Check that both really belong to the same conversation; a genuine bank message does not make a later request genuine.",
+     "Event #2 tells you to ignore an earlier message after event #1 made a risky request (asks for an otp, pin or password). A newer message is not more trustworthy because it is newer: both are kept, the earlier request still counts, and the sender should be verified through a channel you already trust."
+    ],
+    "missing_evidence": [
+     "No payment step has been observed. Whether any money was requested by phone is unknown.",
+     "It is unknown whether a code, PIN or password was already shared. If it was, call your bank now.",
+     "The real order of events is not confirmed; add when each message was received."
+    ],
+    "score_label": "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud.",
+    "thresholds": {
+     "medium": 30,
+     "high": 60
+    }
+   }
+  }
+ ]
+}

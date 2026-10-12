@@ -1,0 +1,16 @@
+{
+  "run_on": "2026-10-12",
+  "branch": "presentation",
+  "summary": "backend 176/176, extension 25/25, browser suites 18/18, 21/21, 17/17, 30/30 and demo 12/12, all run on 2026-10-12 against a scratch database",
+  "results": [
+    {"suite": "backend pytest", "command": "cd backend && .venv/bin/python -m pytest -q", "passed": 176, "total": 176},
+    {"suite": "extension node tests", "command": "cd extension && BACKEND_URL=http://127.0.0.1:8010 node --test", "passed": 25, "total": 25},
+    {"suite": "demo story dry run", "command": "cd backend && .venv/bin/python scripts/demo_story_check.py", "passed": 10, "total": 10},
+    {"suite": "e2e.mjs", "passed": 18, "total": 18},
+    {"suite": "scamdna.mjs", "passed": 21, "total": 21},
+    {"suite": "extension-pages.mjs", "passed": 17, "total": 17},
+    {"suite": "advanced.mjs", "passed": 30, "total": 30},
+    {"suite": "demo.mjs", "passed": 12, "total": 12}
+  ],
+  "note": "Browser suites ran in Google Chrome against a scratch build of frontend/ served by the API on 127.0.0.1:8010 with a temporary SQLite database. The installed extension in a real Chrome profile was not tested."
+}
