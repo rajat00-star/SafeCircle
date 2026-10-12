@@ -15,7 +15,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from .config import get_settings
 from .logging_config import configure_logging
-from .routers import analyze, cases, contacts, demo, forensics, meta, profiles
+from .routers import analyze, cases, contacts, demo, forensics, meta, profiles, upi
 
 settings = get_settings()
 configure_logging(settings.log_level)
@@ -91,7 +91,8 @@ async def http_error(_request: Request, exc: StarletteHTTPException):
 
 
 API_PREFIX = "/api/v1"
-for r in (meta.router, analyze.router, profiles.router, contacts.router, cases.router, forensics.router, demo.router):
+for r in (meta.router, analyze.router, profiles.router, contacts.router, cases.router, forensics.router, demo.router,
+          upi.router):
     app.include_router(r, prefix=API_PREFIX)
 
 if settings.static_dir and Path(settings.static_dir).is_dir():

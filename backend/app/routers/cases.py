@@ -4,7 +4,8 @@ All endpoints require a profile and only ever touch that profile's cases.
 """
 from collections import Counter
 
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
+from fastapi.responses import PlainTextResponse
 from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
@@ -12,6 +13,8 @@ from ..db import get_db
 from ..models import CampaignDismissal, CaseEvent, CaseLogEntry, Profile, ScamCase
 from ..schemas import (CaseCreate, CaseDetailOut, CaseSummaryOut, CaseUpdate, DismissIn, EventAdded, EventIn)
 from ..scamdna.campaigns import pair_key
+from ..scamdna.network import build_network
+from ..scamdna.report import build_report, to_markdown
 from ..security import rate_limit, require_profile
 from ..services import cases as svc
 
@@ -93,6 +96,36 @@ def remove_event(case_id: str, event_id: str, profile: Profile = Depends(require
     case = svc.get_case(db, profile, case_id)
     svc.remove_event(db, case, event_id)
     return detail_out(case)
+
+
+# ---------- Evidence report ----------
+
+@router.get("/cases/{case_id}/report", summary="Evidence report for review and export (JSON). Nothing is sent anywhere.")
+def report(case_id: str, include_excerpts: bool = True, include_related: bool = True,
+           profile: Profile = Depends(require_profile), db: Session = Depends(get_db)):
+    case = svc.get_case(db, profile, case_id)
+    camp = svc.campaign_view(db, profile) if include_related else {"campaigns": []}
+    return build_report(case, camp, include_excerpts, include_related)
+
+
+@router.get("/cases/{case_id}/report.md", response_class=PlainTextResponse, summary="The same report as Markdown")
+def report_md(case_id: str, include_excerpts: bool = True, include_related: bool = True,
+              profile: Profile = Depends(require_profile), db: Session = Depends(get_db)):
+    case = svc.get_case(db, profile, case_id)
+    camp = svc.campaign_view(db, profile) if include_related else {"campaigns": []}
+    return PlainTextResponse(to_markdown(build_report(case, camp, include_excerpts, include_related)),
+                             media_type="text/markdown; charset=utf-8")
+
+
+# ---------- Scam Network Graph ----------
+
+@router.get("/network", summary="Cases and the indicators they share (observed) plus similarity links (inferred)")
+def network(shared_only: bool = Query(False, description="Only indicators that appear in two or more cases"),
+            profile: Profile = Depends(require_profile), db: Session = Depends(get_db)):
+    svc.purge_expired_cases(db, profile)
+    cases = db.scalars(select(ScamCase).where(ScamCase.profile_id == profile.id)).all()
+    per_event = {c.id: [(e.detection or {}).get("indicators", {}) for e in c.events] for c in cases}
+    return build_network(svc.summaries(list(cases)), svc.campaign_view(db, profile), per_event, shared_only)
 
 
 # ---------- Campaign Radar ----------

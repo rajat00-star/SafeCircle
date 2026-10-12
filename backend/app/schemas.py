@@ -396,3 +396,35 @@ class ForensicsReport(BaseModel):
 class DismissIn(BaseModel):
     case_a: str = Field(..., max_length=36)
     case_b: str = Field(..., max_length=36)
+
+
+# ---------- UPI Scam Guard ----------
+
+class UpiCheckIn(BaseModel):
+    input: str = Field(..., min_length=3, max_length=2048, description="A UPI ID (name@bank) or a upi://pay link, e.g. decoded from a QR code")
+    context: str | None = Field(None, max_length=5000, description="Optional: the message that came with the request")
+    case_id: str | None = Field(None, max_length=36)
+
+    @field_validator("input", "context")
+    @classmethod
+    def _nul(cls, v: str | None) -> str | None:
+        return v.replace("\x00", "") if v is not None else v
+
+
+class UpiCheckOut(BaseModel):
+    parsed: dict
+    signals: list[dict]
+    case_matches: list[dict]
+    tactics: list[dict]
+    risk_score: int
+    risk_level: Literal["low", "medium", "high"]
+    score_label: str
+    verdict: str
+    uncertainty: dict
+    review_required: bool
+    recommendations: list[str]
+    primary_action: str
+    limitations: list[str]
+    stored: bool
+    case_update: dict | None
+    retention: str
