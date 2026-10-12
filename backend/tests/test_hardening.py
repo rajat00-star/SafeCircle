@@ -74,3 +74,64 @@ def test_retraction_conflict_survives_storage_through_the_api(client, profile):
     assert c["review_required"] and c["risk_level"] == "high"
     assert any("ignore an earlier message" in x for x in c["assessment"]["conflicts"])
     assert len(c["events"]) == 2
+
+
+# ---------- M2: a single tactic cannot reach high on its own ----------
+
+COURIER_OTP = ("Your Bluedart shipment 88123 arrives today. Please share OTP 7731 with the delivery executive "
+               "at the time of delivery.")
+NEW_LOGIN = ("New login to your Axis Mobile app on a Samsung phone at 10:05 today. If it was not you, call the "
+             "number on the back of your card to lock your account.")
+LPG = "Your Indane LPG refill booking no 22871 is confirmed. Delivery expected in 48 hours. Pay Rs 903 to the delivery person."
+CLEAR_SCAM = ("Your PhonePe wallet is suspended due to incomplete KYC. Verify immediately at "
+              "http://phonepe-kyc-help.example/verify and share the OTP to restore it.")
+MULTI_STAGE = ["Dear customer, you have won a cashback of Rs 5,000 from Paytm.",
+               "To claim the cashback scan the QR and enter your UPI PIN to receive the amount.",
+               "Hurry, offer expires in 10 minutes. Do not tell anyone."]
+
+
+def test_legitimate_courier_otp_is_not_high_and_is_sent_for_review():
+    a = case(COURIER_OTP)
+    assert codes(a) == {"secret_request"}
+    assert a["risk_level"] == "medium" and a["risk_score"] == 59
+    assert a["review_required"]
+    assert any("single tactic cannot make a case high" in r for r in a["uncertainty"]["reasons"])
+
+
+def test_new_login_notification_is_not_high():
+    a = case(NEW_LOGIN)
+    assert a["risk_level"] != "high"
+    assert a["risk_score"] < 60
+
+
+def test_lpg_booking_is_low():
+    a = case(LPG)
+    assert a["risk_level"] == "low" and not a["review_required"]
+
+
+def test_clear_scam_stays_high():
+    a = case(CLEAR_SCAM)
+    assert a["risk_level"] == "high" and a["risk_score"] >= 80
+    assert {"secret_request", "credential_link", "kyc_suspension"} <= codes(a)
+
+
+def test_multi_stage_scam_stays_high():
+    a = case(*MULTI_STAGE)
+    assert a["risk_level"] == "high" and a["risk_score"] >= 90
+    assert len(a["stages_observed"]) >= 3
+    assert not any("single tactic cannot" in r for r in a["uncertainty"]["reasons"])
+
+
+def test_corroboration_restores_high():
+    # The same bare OTP request is medium alone, and high once a second tactic supports it.
+    alone = case("Send me the OTP you just received, it came to you by mistake.")
+    assert alone["risk_level"] == "medium" and alone["review_required"]
+    backed = case("Send me the OTP you just received, it came to you by mistake. Do not tell anyone about this.")
+    assert backed["risk_level"] == "high"
+
+
+def test_cap_never_raises_and_never_drops_below_medium():
+    a = case("Approve the collect request in your UPI app to receive your refund.")
+    assert len(a["tactics"]) == 1 and a["risk_level"] == "medium"
+    b = case("Urgent: act now.")
+    assert b["risk_level"] == "low" and not any("single tactic cannot" in r for r in b["uncertainty"]["reasons"])

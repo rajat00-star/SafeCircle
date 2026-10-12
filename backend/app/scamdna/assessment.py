@@ -211,6 +211,12 @@ def assess_case(events: list[dict], t: Thresholds = Thresholds()) -> dict:
         components.append({"label": f"Attack spans {len(stages)} stages ({', '.join(STAGES[s].title for s in stages)})",
                            "weight": bonus, "kind": "stage_bonus"})
     score = int(round(noisy_or([c["weight"] for c in components]) * 100))
+    # One tactic with nothing corroborating it (no second tactic, combination or cross-event repeat) is not
+    # enough for high, however strong the tactic: genuine courier or ride codes say "share this OTP" too.
+    # It stays medium, so the user is still warned, and the case is sent for review.
+    capped = len(agg) == 1 and len(components) == 1 and score >= t.high
+    if capped:
+        score = t.high - 1
     level = level_for(score, t)
 
     conflicts = _conflicts(ordered)
@@ -234,6 +240,9 @@ def assess_case(events: list[dict], t: Thresholds = Thresholds()) -> dict:
         reasons.append("Only link addresses were checked; there is no message wording.")
     if len(agg) == 1 and level != "low":
         reasons.append("The assessment rests on a single tactic.")
+    if capped:
+        reasons.append("A single tactic cannot make a case high on its own: the score was held below the high "
+                       "threshold until other evidence supports it.")
     poor = [e for e in ordered if e["detection"].get("data_quality", {}).get("level") == "poor"]
     if poor:
         reasons.append("Some evidence was hard to read, so tactics may have been missed.")
