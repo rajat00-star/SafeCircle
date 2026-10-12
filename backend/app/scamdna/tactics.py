@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 
 from ..detector.engine import analyze_message, analyze_single_url
 from ..detector.normalize import normalize
-from ..detector.rules import _is_negated
+from ..detector.rules import _NEGATION_BEFORE
 from ..detector.url_analyzer import BRANDS
 
 
@@ -133,12 +133,17 @@ _UPI_HANDLE = r"[a-z0-9][a-z0-9._-]{1,48}@(?:ybl|ibl|axl|okaxis|oksbi|okhdfcbank
 FINANCIAL_RULES: list[tuple[str, str, re.Pattern[str]]] = [
     ("upi_collect_request", "upi_collect", re.compile(
         r"\b" + _p(r"collect request", r"payment request (?:sent|from|on your)", r"(?:approve|accept|authori[sz]e) (?:the |this |my )?(?:payment |collect |upi )?request",
-                   r"request money", r"money request") + r"\b")),
+                   r"request money", r"money request", r"sent (?:you )?a (?:payment|collect|money|upi) request",
+                   r"approve (?:it|this|the payment) to (?:return|refund|receive|get)") + r"\b")),
     ("upi_pin_to_receive", "upi_collect", re.compile(
         r"\b(?:enter|type|put|use)\b[^.!?\n]{0,30}?\b(?:upi )?(?:pin|mpin)\b[^.!?\n]{0,40}?\b(?:receive|get|credit|claim|refund|cashback)"
         r"|\b(?:to )?(?:receive|get|claim)\b[^.!?\n]{0,40}?\b(?:enter|type|share)\b[^.!?\n]{0,20}?\b(?:upi )?(?:pin|mpin)\b")),
     ("upi_qr_receive", "upi_collect", re.compile(
         r"\bscan\b[^.!?\n]{0,30}?\bqr\b[^.!?\n]{0,40}?\b(?:receive|get|credit|claim|refund|cashback|prize)")),
+    # Same idea as the base OTP rule, but negation is only honoured inside the same sentence, so copied
+    # safety advice ("Bank will never ask for your PIN.") cannot hide the request that follows it.
+    ("secret_share_code", "secret_request", re.compile(
+        r"\b(?:share|send|tell|give|forward|enter|type|read out)\b[^.!?\n]{0,30}?\b(?:otp|one[- ]time (?:password|code)|verification code|security code|cvv|code (?:we|i) sent|code you (?:just )?received)\b")),
     ("secret_upi_pin", "secret_request", re.compile(
         r"\b(?:share|send|tell|give|enter|type|confirm)\b[^.!?\n]{0,30}?\b(?:upi pin|mpin|atm pin|card pin|net ?banking password|transaction password)\b")),
     ("div_new_account", "payment_diversion", re.compile(
@@ -156,7 +161,7 @@ FINANCIAL_RULES: list[tuple[str, str, re.Pattern[str]]] = [
                    r"(?:video|skype) (?:call )?(?:statement|interrogation|verification)",
                    r"aadhaa?r (?:has been |is |was )?(?:misused|used in|linked to)") + r"\b")),
     ("kyc_expired", "kyc_suspension", re.compile(
-        r"\bkyc\b[^.!?\n]{0,30}?\b(?:expired?|pending|incomplete|update|suspend|block|not updated|verification)"
+        r"\bkyc\b[^.!?\n]{0,30}?\b(?:expired?|pending|incomplete|suspend|block|not updated|deactivat)"
         r"|\b(?:account|card|wallet|upi|sim|pan)\b[^.!?\n]{0,30}?\b(?:will be |has been |is |to be )?(?:suspended|blocked|deactivated|frozen|closed|restricted|locked)\b")),
     ("remote_screen_call", "remote_access", re.compile(
         r"\bshare (?:your )?screen\b|\bscreen ?share\b|\bremote (?:app|control)\b")),
@@ -188,7 +193,9 @@ ORG_TO_BRAND = {"sbi": "sbi", "hdfc": "hdfc", "icici": "icici", "axisbank": "axi
 # ("UPI" alone is not payment pressure; "KYC" alone is not an organisation).
 _WEAK_BASE_EVIDENCE = {"payment_pressure": ("upi",), "impersonation": ("kyc",)}
 _DIGITAL_ARREST_BASE =re.compile(r"arrest|laundering|drug|narcotic")
-_KYC_BASE = re.compile(r"kyc")
+# Tactics that ask the victim to do something risky. Their presence cancels the safety-advice discount.
+REQUEST_TACTICS = {"secret_request", "upi_collect", "payment_diversion", "payment_pressure", "credential_link",
+                   "suspicious_link", "remote_access", "digital_arrest", "family_impersonation"}
 _CREDENTIAL_URL_SIGNALS = {"brand_in_host", "brand_in_path", "typosquat", "sensitive_path", "userinfo_trick",
                            "punycode", "confusable_chars"}
 
@@ -219,6 +226,7 @@ class EventDetection:
     safety_advice: list[str]
     claimed_orgs: list[str]
     text_length: int
+    mitigation: str | None = None
 
     @property
     def score(self) -> float:
@@ -226,6 +234,13 @@ class EventDetection:
         for h in self.tactics.values():
             p *= 1.0 - h.severity
         return 1.0 - p
+
+
+def _negated_in_sentence(text: str, start: int) -> bool:
+    """Negation ("never share your OTP") counts only within the sentence that contains the match."""
+    window = text[max(0, start - 40):start]
+    window = re.split(r"[.!?\n]", window)[-1]
+    return bool(_NEGATION_BEFORE.search(window))
 
 
 def _hit(tactics: dict[str, TacticHit], code: str, basis: str = "text_match") -> TacticHit:
@@ -246,8 +261,6 @@ def detect_text(text: str) -> EventDetection:
                 continue
             if cat.code == "threat" and _DIGITAL_ARREST_BASE.search(ev["text"].lower()):
                 code = "digital_arrest"
-            elif cat.code == "credential_request" and _KYC_BASE.search(ev["text"].lower()):
-                code = "kyc_suspension"
             _hit(tactics, code).add(ev["text"], ev["start"], ev["end"], ev["rule"])
 
     nt = normalize(text)
@@ -255,7 +268,7 @@ def detect_text(text: str) -> EventDetection:
         for m in pattern.finditer(nt.text):
             if m.end() == m.start():
                 continue
-            if code in ("secret_request", "upi_collect") and _is_negated(nt.text, m.start()):
+            if code in ("secret_request", "upi_collect") and _negated_in_sentence(nt.text, m.start()):
                 continue
             s, e = nt.span_to_original(m.start(), m.end())
             _hit(tactics, code).add(nt.original[s:e], s, e, rule_id)
@@ -271,11 +284,18 @@ def detect_text(text: str) -> EventDetection:
     _add_link_tactics(tactics, base.urls, credential_context=bool({"credential_request", "kyc_suspension",
                                                                     "secret_request"} & set(tactics)))
     advice = [m.group(0) for m in _SAFETY_ADVICE.finditer(nt.text)][:3]
+    mitigation = None
+    if advice and tactics and not (set(tactics) & REQUEST_TACTICS):
+        # Genuine notices name the bank and give safety advice but ask for nothing. Halve the weights
+        # in that case; any request (code, link, payment, app) cancels the discount.
+        for h in tactics.values():
+            h.strength *= 0.5
+        mitigation = "Contains safety advice and makes no request, so its signal weights are halved."
     return EventDetection(
         tactics=tactics, urls=base.urls,
         ml_probability=base.ml["probability"] if base.ml else None,
         base_score=base.risk_score, safety_advice=advice,
-        claimed_orgs=claimed_orgs(nt.text), text_length=len(text.strip()),
+        claimed_orgs=claimed_orgs(nt.text), text_length=len(text.strip()), mitigation=mitigation,
     )
 
 

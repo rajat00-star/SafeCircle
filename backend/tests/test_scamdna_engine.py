@@ -114,13 +114,14 @@ def test_observed_and_inferred_are_distinguished():
     assert all(n["basis"] == "observed" and n["observed_at"] is None for n in events)  # no invented timestamps
 
 
-def test_model_only_signal_requests_review_without_changing_score():
+def test_model_only_signal_is_uncertainty_not_an_alert():
     det = {"tactics": [], "event_score": 0, "urls": [], "ml_probability": 0.97, "safety_advice": [],
            "claimed_orgs": [], "data_quality": {"level": "good", "notes": []}, "indicators": {}}
     a = assess_case([{"id": "x", "seq": 1, "kind": "message", "channel": "sms", "observed_at": None,
                       "excerpt": "free entry win tkts txt now", "detection": det}])
     assert a["risk_score"] == 0
-    assert a["review_required"] and a["uncertainty"]["level"] == "high"
+    assert not a["review_required"]          # avoids alert fatigue: the spam model also flags genuine bank SMS
+    assert a["uncertainty"]["level"] == "medium" and "rules do not cover" in a["uncertainty"]["reasons"][0]
     assert a["model_signal"]["max_probability"] == 0.97
 
 
@@ -168,3 +169,20 @@ def test_alert_decisions():
     assert decide_alert(last, a("high", [("secret_request", 0.6)], "f4")).action == "escalated"
     assert decide_alert({**last, "risk_level": "high"}, a("medium", [], "f5")).action == "deescalated"
     assert decide_alert(None, a("low", [], "f6", review=True)).action == "new"
+
+
+def test_safety_advice_without_a_request_halves_weights():
+    genuine = detect_text("Reminder from your bank: please complete your periodic KYC update in the official app. "
+                          "We never ask for OTP or PIN by call or SMS.")
+    assert genuine.mitigation and all(h.strength == 0.5 for h in genuine.tactics.values())
+    a = assess_case([ev(1, "Reminder from your bank: please complete your periodic KYC update in the official app. "
+                           "We never ask for OTP or PIN by call or SMS.")])
+    assert a["risk_level"] == "low" and a["mitigations"]
+    # Scammers copy the advice too: a request cancels the discount.
+    copied = detect_text("Bank will never ask for your PIN. Share the OTP sent to your phone to verify your account.")
+    assert copied.mitigation is None and "secret_request" in copied.tactics
+
+
+def test_accidental_credit_return_request():
+    d = detect_text("Sorry, I sent Rs 5,000 to your number by mistake. I have sent a payment request, please approve it to return my money.")
+    assert "upi_collect" in d.tactics

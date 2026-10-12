@@ -195,7 +195,7 @@ export type ChainEdge = { from: string; to: string; kind: "sequence" | "evidence
 export type Stage = { code: string; title: string; order: number; description: string };
 export type Assessment = {
   risk_score: number; risk_level: Level; score_label: string; thresholds: { medium: number; high: number };
-  components: { label: string; weight: number; kind: string }[];
+  components: { label: string; weight: number; kind: string }[]; mitigations?: string[];
   tactics: CaseTactic[]; stages_observed: string[];
   order: { basis: string; known: boolean; note: string; sequence: string[] };
   chain: { nodes: ChainNode[]; edges: ChainEdge[]; stages: Stage[] };

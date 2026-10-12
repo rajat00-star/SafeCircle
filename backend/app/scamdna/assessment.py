@@ -80,6 +80,7 @@ def serialize_detection(det: EventDetection, redact, data_quality: dict, indicat
                  for u in det.urls],
         "ml_probability": det.ml_probability,
         "safety_advice": det.safety_advice,
+        "mitigation": det.mitigation,
         "claimed_orgs": det.claimed_orgs,
         "data_quality": data_quality,
         "indicators": indicators,
@@ -198,6 +199,7 @@ def assess_case(events: list[dict], t: Thresholds = Thresholds()) -> dict:
         }
 
     components = [{"label": a["title"], "weight": round(a["severity"], 3), "kind": "tactic"} for a in agg.values()]
+    mitigations = [f"Evidence #{e['seq']}: {e['detection']['mitigation']}" for e in ordered if e["detection"].get("mitigation")]
     codes = set(agg)
     for combo, bonus, label in CASE_COMBINATIONS:
         if combo <= codes:
@@ -239,12 +241,12 @@ def assess_case(events: list[dict], t: Thresholds = Thresholds()) -> dict:
     if model_only:
         reasons.append("No known tactic matched, but the wording resembles spam or scam texts. "
                        "This may be a tactic the rules do not cover yet.")
-    unc_level = "high" if len(reasons) >= 2 or conflicts or model_only else "medium" if reasons else "low"
+    # A model-only signal is reported as uncertainty but does not trigger review: the spam model also
+    # rates many genuine bank notifications as spam-like, and reviewing them all would cause alert fatigue.
+    unc_level = "high" if len(reasons) >= 2 or conflicts else "medium" if reasons else "low"
     review_reasons = []
     if conflicts:
         review_reasons.append("Conflicting evidence")
-    if model_only:
-        review_reasons.append("Possible unseen tactic (statistical signal only)")
     if unc_level == "high" and level != "low":
         review_reasons.append("High uncertainty")
     if poor and level != "low":
@@ -261,6 +263,7 @@ def assess_case(events: list[dict], t: Thresholds = Thresholds()) -> dict:
         "risk_score": score, "risk_level": level, "score_label": SCORE_LABEL,
         "thresholds": {"medium": t.medium, "high": t.high},
         "components": sorted(components, key=lambda c: -c["weight"]),
+        "mitigations": mitigations,
         "tactics": sorted(agg.values(), key=lambda a: (a["first_position"], -a["severity"])),
         "stages_observed": stages,
         "order": {**order, "sequence": [e["id"] for e in ordered]},

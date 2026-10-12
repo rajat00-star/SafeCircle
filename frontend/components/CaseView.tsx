@@ -108,6 +108,7 @@ export default function CaseView({ id, onDeleted }: { id: string; onDeleted: () 
               {a.components.map((x, i) => <li key={i} className="row" style={{ justifyContent: "space-between" }}>
                 <span>{x.label} <span className="faint">({x.kind.replace("_", " ")})</span></span><span className="mono">{x.weight.toFixed(2)}</span></li>)}
             </ul>
+            {a.mitigations?.map((m, i) => <p key={i} className="xsmall" style={{ margin: "8px 0 0" }}>{m}</p>)}
             <p className="xsmall faint">Weights combine with a noisy-OR: each one closes part of the remaining gap to 100. The language-model similarity is shown separately and never changes the score.</p>
           </details>
         </div>

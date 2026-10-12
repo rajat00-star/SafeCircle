@@ -1,0 +1,677 @@
+{
+  "dataset": "scenarios_v1.json",
+  "dataset_version": "1.0.0",
+  "label": "DEMO DATA: synthetic scenarios written by the SafeCircle team. Not real messages, victims or attacks.",
+  "positive_definition": "A scenario counts as flagged when the case reaches medium or high risk, or is marked for review.",
+  "caveat": "Written after the Scam DNA rules, by the same team, without re-tuning the rules afterwards. Results are therefore an optimistic sanity check, not a measure of real-world accuracy. Domains use the reserved .example TLD; UPI handles start with 'demo'.",
+  "metrics": {
+    "scenarios": 30,
+    "scam": 18,
+    "benign": 12,
+    "confusion_matrix": {
+      "tp": 17,
+      "fp": 1,
+      "tn": 11,
+      "fn": 1
+    },
+    "precision": 0.944,
+    "recall": 0.944,
+    "false_positive_rate": 0.083,
+    "accuracy": 0.933,
+    "expected_level_agreement": 0.867,
+    "expected_tactic_recall": 1.0,
+    "thresholds": {
+      "medium": 30,
+      "high": 60
+    }
+  },
+  "rows": [
+    {
+      "id": "B01",
+      "label": "benign",
+      "description": "Debit alert with safety advice",
+      "expected": "low",
+      "got_level": "low",
+      "score": 7,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation"
+      ],
+      "stages": [
+        "hook"
+      ]
+    },
+    {
+      "id": "B02",
+      "label": "benign",
+      "description": "Credit alert",
+      "expected": "low",
+      "got_level": "low",
+      "score": 0,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [],
+      "stages": []
+    },
+    {
+      "id": "B03",
+      "label": "benign",
+      "description": "OTP with safety advice",
+      "expected": "low",
+      "got_level": "low",
+      "score": 15,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [
+        "credential_request"
+      ],
+      "stages": [
+        "harvest"
+      ]
+    },
+    {
+      "id": "B04",
+      "label": "benign",
+      "description": "UPI money received",
+      "expected": "low",
+      "got_level": "low",
+      "score": 15,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation"
+      ],
+      "stages": [
+        "hook"
+      ]
+    },
+    {
+      "id": "B05",
+      "label": "benign",
+      "description": "Genuine-style KYC reminder pointing to the official app (false-positive test)",
+      "expected": "low",
+      "got_level": "low",
+      "score": 21,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation",
+        "credential_request"
+      ],
+      "stages": [
+        "hook",
+        "harvest"
+      ]
+    },
+    {
+      "id": "B06",
+      "label": "benign",
+      "description": "Electricity bill reminder",
+      "expected": "low",
+      "got_level": "low",
+      "score": 0,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [],
+      "stages": []
+    },
+    {
+      "id": "B07",
+      "label": "benign",
+      "description": "Friend splitting a dinner bill",
+      "expected": "low",
+      "got_level": "low",
+      "score": 0,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [],
+      "stages": []
+    },
+    {
+      "id": "B08",
+      "label": "benign",
+      "description": "Merchant collect request for an order the user placed (false-positive test)",
+      "expected": "low",
+      "got_level": "high",
+      "score": 60,
+      "review_required": true,
+      "flagged": true,
+      "correct": false,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [
+        "upi_collect"
+      ],
+      "stages": [
+        "extraction"
+      ]
+    },
+    {
+      "id": "B09",
+      "label": "benign",
+      "description": "Order shipped",
+      "expected": "low",
+      "got_level": "low",
+      "score": 0,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [],
+      "stages": []
+    },
+    {
+      "id": "B10",
+      "label": "benign",
+      "description": "Two-message everyday conversation",
+      "expected": "low",
+      "got_level": "low",
+      "score": 0,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [],
+      "stages": []
+    },
+    {
+      "id": "B11",
+      "label": "benign",
+      "description": "Password changed notice",
+      "expected": "low",
+      "got_level": "low",
+      "score": 7,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation"
+      ],
+      "stages": [
+        "hook"
+      ]
+    },
+    {
+      "id": "B12",
+      "label": "benign",
+      "description": "Official link only",
+      "expected": "low",
+      "got_level": "low",
+      "score": 0,
+      "review_required": false,
+      "flagged": false,
+      "correct": true,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [],
+      "stages": []
+    },
+    {
+      "id": "S01",
+      "label": "scam",
+      "description": "KYC suspension then look-alike link",
+      "expected": "high",
+      "got_level": "high",
+      "score": 77,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "kyc_suspension",
+        "credential_link"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation",
+        "credential_link",
+        "kyc_suspension"
+      ],
+      "stages": [
+        "hook",
+        "pressure",
+        "harvest"
+      ]
+    },
+    {
+      "id": "S02",
+      "label": "scam",
+      "description": "Fake fraud team asks for OTP",
+      "expected": "high",
+      "got_level": "high",
+      "score": 73,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "secret_request"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation",
+        "secret_request"
+      ],
+      "stages": [
+        "hook",
+        "harvest"
+      ]
+    },
+    {
+      "id": "S03",
+      "label": "scam",
+      "description": "Refund via UPI PIN",
+      "expected": "high",
+      "got_level": "high",
+      "score": 92,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "upi_collect"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "reward_lure",
+        "secret_request",
+        "upi_collect"
+      ],
+      "stages": [
+        "hook",
+        "harvest",
+        "extraction"
+      ]
+    },
+    {
+      "id": "S04",
+      "label": "scam",
+      "description": "Scan QR to receive prize money",
+      "expected": "high",
+      "got_level": "high",
+      "score": 84,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "upi_collect",
+        "reward_lure"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "payment_pressure",
+        "reward_lure",
+        "upi_collect"
+      ],
+      "stages": [
+        "hook",
+        "extraction"
+      ]
+    },
+    {
+      "id": "S05",
+      "label": "scam",
+      "description": "Digital arrest with safe-account transfer",
+      "expected": "high",
+      "got_level": "high",
+      "score": 88,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "digital_arrest",
+        "payment_diversion"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation",
+        "digital_arrest",
+        "payment_diversion"
+      ],
+      "stages": [
+        "hook",
+        "pressure",
+        "extraction"
+      ]
+    },
+    {
+      "id": "S06",
+      "label": "scam",
+      "description": "Tech support remote access refund",
+      "expected": "high",
+      "got_level": "high",
+      "score": 98,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "remote_access"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation",
+        "remote_access",
+        "secret_request",
+        "upi_collect"
+      ],
+      "stages": [
+        "hook",
+        "harvest",
+        "control",
+        "extraction"
+      ]
+    },
+    {
+      "id": "S07",
+      "label": "scam",
+      "description": "'New number' family transfer",
+      "expected": "high",
+      "got_level": "high",
+      "score": 82,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "family_impersonation",
+        "payment_pressure"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "family_impersonation",
+        "payment_pressure",
+        "secrecy",
+        "urgency"
+      ],
+      "stages": [
+        "hook",
+        "pressure",
+        "extraction"
+      ]
+    },
+    {
+      "id": "S08",
+      "label": "scam",
+      "description": "Electricity disconnection threat and payment",
+      "expected": "high",
+      "got_level": "medium",
+      "score": 59,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "threat",
+        "urgency"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "payment_pressure",
+        "threat",
+        "urgency"
+      ],
+      "stages": [
+        "pressure",
+        "extraction"
+      ]
+    },
+    {
+      "id": "S09",
+      "label": "scam",
+      "description": "Task job with deposit",
+      "expected": "high",
+      "got_level": "high",
+      "score": 76,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "reward_lure",
+        "payment_diversion"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "payment_diversion",
+        "payment_pressure",
+        "reward_lure"
+      ],
+      "stages": [
+        "hook",
+        "extraction"
+      ]
+    },
+    {
+      "id": "S10",
+      "label": "scam",
+      "description": "Customs parcel fee with short link",
+      "expected": "high",
+      "got_level": "high",
+      "score": 60,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "payment_pressure",
+        "urgency"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation",
+        "payment_pressure",
+        "urgency"
+      ],
+      "stages": [
+        "hook",
+        "pressure",
+        "extraction"
+      ]
+    },
+    {
+      "id": "S11",
+      "label": "scam",
+      "description": "Fake loan app APK",
+      "expected": "high",
+      "got_level": "high",
+      "score": 65,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "remote_access"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "remote_access",
+        "suspicious_link"
+      ],
+      "stages": [
+        "harvest",
+        "control"
+      ]
+    },
+    {
+      "id": "S12",
+      "label": "scam",
+      "description": "Reward points link asks for card details",
+      "expected": "high",
+      "got_level": "high",
+      "score": 79,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "credential_link"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation",
+        "credential_link",
+        "credential_request",
+        "reward_lure",
+        "urgency"
+      ],
+      "stages": [
+        "hook",
+        "pressure",
+        "harvest"
+      ]
+    },
+    {
+      "id": "S13",
+      "label": "scam",
+      "description": "eSIM activation code request",
+      "expected": "high",
+      "got_level": "high",
+      "score": 74,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "secret_request"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "kyc_suspension",
+        "secret_request"
+      ],
+      "stages": [
+        "pressure",
+        "harvest"
+      ]
+    },
+    {
+      "id": "S14",
+      "label": "scam",
+      "description": "Investment doubling",
+      "expected": "medium",
+      "got_level": "high",
+      "score": 65,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "reward_lure"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "payment_pressure",
+        "reward_lure",
+        "urgency"
+      ],
+      "stages": [
+        "hook",
+        "pressure",
+        "extraction"
+      ]
+    },
+    {
+      "id": "S15",
+      "label": "scam",
+      "description": "Landlord payment diversion",
+      "expected": "high",
+      "got_level": "high",
+      "score": 81,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "payment_diversion"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation",
+        "credential_request",
+        "payment_diversion",
+        "urgency"
+      ],
+      "stages": [
+        "hook",
+        "pressure",
+        "harvest",
+        "extraction"
+      ]
+    },
+    {
+      "id": "S16",
+      "label": "scam",
+      "description": "Accidental credit return request",
+      "expected": "high",
+      "got_level": "high",
+      "score": 60,
+      "review_required": true,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "upi_collect"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "upi_collect"
+      ],
+      "stages": [
+        "extraction"
+      ]
+    },
+    {
+      "id": "S17",
+      "label": "scam",
+      "description": "Link-only credential phishing, then OTP",
+      "expected": "high",
+      "got_level": "high",
+      "score": 84,
+      "review_required": false,
+      "flagged": true,
+      "correct": true,
+      "expected_tactics": [
+        "credential_link",
+        "secret_request"
+      ],
+      "missed_tactics": [],
+      "tactics": [
+        "authority_impersonation",
+        "credential_link",
+        "secret_request"
+      ],
+      "stages": [
+        "hook",
+        "harvest"
+      ]
+    },
+    {
+      "id": "S18",
+      "label": "scam",
+      "description": "Novel job-recruitment hook with no request yet (expected to be hard)",
+      "expected": "medium",
+      "got_level": "low",
+      "score": 0,
+      "review_required": false,
+      "flagged": false,
+      "correct": false,
+      "expected_tactics": [],
+      "missed_tactics": [],
+      "tactics": [],
+      "stages": []
+    }
+  ]
+}

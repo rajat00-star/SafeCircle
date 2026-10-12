@@ -276,6 +276,7 @@ class AssessmentOut(BaseModel):
     score_label: str
     thresholds: dict
     components: list[dict]
+    mitigations: list[str] = []
     tactics: list[dict]
     stages_observed: list[str]
     order: dict
