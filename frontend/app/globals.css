@@ -844,3 +844,6 @@ ul.clean.scenario-list li + li { margin-top: 0; }
 .ind-text { flex: 1; min-width: 0; word-break: break-word; }
 ul.clean.indicator-list li + li { margin-top: 6px; }
 .link-row { border-top: 1px solid var(--line); padding: 12px 0; }
+.panel-label { flex-wrap: wrap; }
+@media (max-width: 520px) { nav.main .nav-cta { display: none; } }
+@media (max-width: 600px) { .tabs { max-width: 100%; overflow-x: auto; } .chain-detail { order: 2; } }

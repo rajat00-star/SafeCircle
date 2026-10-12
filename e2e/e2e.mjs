@@ -44,7 +44,7 @@ ok(await page.isVisible("text=on a domain it doesn't own"), "look-alike link exp
 await shot(page, "04-link-result", true);
 
 // Trusted contacts
-await page.click("nav >> text=Trusted contacts");
+await page.click(`footer a:text-is("Trusted contacts")`);
 await page.fill("#dn", "Asha");
 await page.click("text=Create profile");
 await page.fill("#cn", "Ravi");
@@ -66,7 +66,7 @@ await page.reload();
 await page.waitForSelector(".badge.low");
 ok(await page.isVisible("text=Active"), "user sees contact as Active");
 
-await page.click("nav >> text=Analyze");
+await page.click(`footer a:text-is("Quick check")`);
 await page.selectOption('select[aria-label="Load an example"]', { label: "'Hi Mum' new number" });
 await page.click("text=Analyze now");
 await page.waitForSelector(".risk-head");
@@ -89,13 +89,13 @@ await cpage.waitForSelector("text=Seen");
 await shot(cpage, "08-guardian-inbox", true);
 
 // Privacy + history
-await page.click("nav >> text=Privacy");
+await page.click(`footer a:text-is("Privacy")`);
 await page.check("#h");
 await page.waitForSelector("text=Saved.");
 await page.check("#x");
 await page.waitForSelector("#x:checked");
 await shot(page, "09-privacy", true);
-await page.click("nav >> text=Analyze");
+await page.click(`footer a:text-is("Quick check")`);
 await page.selectOption('select[aria-label="Load an example"]', { label: "Delivery fee + link" });
 await page.click("text=Analyze now");
 await page.waitForSelector("text=Saved to your history");
@@ -103,18 +103,18 @@ await page.click("nav >> text=History");
 await page.waitForSelector("table");
 ok((await page.locator("tbody tr").count()) === 1, "history shows the saved check");
 await shot(page, "10-history");
-await page.click("nav >> text=Privacy");
+await page.click(`footer a:text-is("Privacy")`);
 const [download] = await Promise.all([page.waitForEvent("download"), page.click("text=Download my data")]);
 const exported = JSON.parse(fs.readFileSync(await download.path(), "utf8"));
 ok(exported.trusted_contacts[0].consent_events.length >= 2, "data export includes consent audit trail");
 
-await page.click("nav >> text=How it works");
+await page.click(`footer a:text-is("How it works")`);
 await page.waitForSelector("text=Measured results");
 await page.waitForSelector("table");
 ok(await page.isVisible("text=Messages: full detector"), "real metrics table rendered");
 await shot(page, "11-how-it-works", true);
 
-await page.click("nav >> text=Privacy");
+await page.click(`footer a:text-is("Privacy")`);
 page.once("dialog", (d) => d.accept());
 await page.click("text=Delete everything");
 await page.waitForSelector("text=Create your private profile");
