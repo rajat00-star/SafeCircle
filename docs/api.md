@@ -39,13 +39,17 @@ Errors are JSON: `{"detail": "..."}`; validation errors add `errors: [{field, me
 | GET | `/api/v1/campaigns` 🔒 | Potentially related cases and the indicators linking them |
 | POST, DELETE | `/api/v1/campaigns/dismissals` 🔒 | Mark two cases as not related / restore |
 | GET | `/api/v1/overview` 🔒 | Metrics computed from your own cases |
+| POST | `/api/v1/upi/check` | Check a UPI ID or `upi://pay` link before paying (optional `case_id` 🔒; profile enables matching against your cases) |
+| GET | `/api/v1/cases/{case_id}/report` 🔒 | Evidence report for review and export (`include_excerpts`, `include_related`) |
+| GET | `/api/v1/cases/{case_id}/report.md` 🔒 | The same report as Markdown |
+| GET | `/api/v1/network` 🔒 | Cases and shared indicators (observed) plus similarity links (inferred); `shared_only` |
 | GET | `/api/v1/demo/scenarios` | DEMO DATA scenarios with expected outcomes |
 | POST | `/api/v1/demo/scenarios/{key}/cases` 🔒 | Start a DEMO case for a scenario |
 | GET | `/api/v1/demo/scenarios/{key}/check/{case_id}` 🔒 | Compare live result with the fixture |
 | POST | `/api/v1/demo/campaigns` 🔒 | Load DEMO campaign cases |
 | DELETE | `/api/v1/demo/cases` 🔒 | Remove all DEMO cases |
 
-Details, request shapes and the alert-decision rules: [scam-dna.md](scam-dna.md).
+Details, request shapes and the alert-decision rules: [scam-dna.md](scam-dna.md). UPI Guard, evidence report and network graph: [advanced-features.md](advanced-features.md).
 
 ## Example
 

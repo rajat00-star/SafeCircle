@@ -2,6 +2,18 @@
 
 Last updated: 2026-10-12. Submission deadline: 2026-10-12.
 
+## Advanced features: UPI Scam Guard, evidence report, scam network (2026-10-12)
+
+| Area | Evidence |
+|---|---|
+| UPI Scam Guard (`/upi/`, `POST /upi/check`), in-browser QR decoding | `tests/test_upi_guard.py` 22/22; e2e decodes a demo QR image in Chrome |
+| Evidence report (`/cases/report/`, `/cases/{id}/report[.md]`) | `tests/test_report_network.py` (report part); e2e checks review gating, Markdown/JSON downloads and the print view |
+| Scam network graph (`/network/`, `GET /network`) | `tests/test_report_network.py` (graph part); e2e checks the graph, the filters and node details |
+| Whole suite | backend 152/152; extension 18/18 (extension code unchanged); type-check and static build pass; e2e `advanced.mjs` 30/30, `e2e.mjs` 18/18, `scamdna.mjs` 21/21, `extension-pages.mjs` 17/17, run against a scratch database |
+| Not done | Voice analyzer (needs a speech-to-text model); adaptive risk engine already existed. No migration or new dependency. `next lint` has no ESLint config in the repo, so it was not run |
+
+Details and the feature-gap assessment: [docs/advanced-features.md](docs/advanced-features.md).
+
 ## Problem Statement 02 upgrade (2026-10-12)
 
 | Area | Evidence |

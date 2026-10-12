@@ -114,7 +114,8 @@ function CampaignRadar() {
           </dl>
           <p className="xsmall faint" style={{ margin: 0 }}>{view.external_note} A shared indicator means the cases look related; it does not prove the same people are behind them.</p>
           {anyDemo && <p className="xsmall" style={{ margin: 0 }}><span className="badge medium">DEMO DATA</span> Some cases are synthetic demo cases, not real reports.</p>}
-          <div className="row"><button className="btn secondary small" onClick={loadDemo} disabled={busy}>{busy ? "Loading…" : "Load demo campaign cases"}</button></div>
+          <div className="row"><button className="btn secondary small" onClick={loadDemo} disabled={busy}>{busy ? "Loading…" : "Load demo campaign cases"}</button>
+            <a href="/network/" className="btn ghost small">See the indicator network →</a></div>
         </div>
       </div>
       {error && <div className="alert error" role="alert">{error}</div>}

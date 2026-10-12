@@ -172,6 +172,80 @@ export const api = {
       `/demo/scenarios/${encodeURIComponent(key)}/check/${encodeURIComponent(caseId)}`),
   loadDemoCampaigns: () => request<{ label: string; cases_created: number }>("/demo/campaigns", { method: "POST" }),
   clearDemo: () => request<void>("/demo/cases", { method: "DELETE" }),
+
+  // UPI Scam Guard
+  upiCheck: (input: string, context?: string, case_id?: string | null) =>
+    request<UpiCheck>("/upi/check", { method: "POST", body: JSON.stringify({ input, context: context || null, case_id: case_id || null }) }),
+
+  // Evidence report (reviewed in the app, exported by the user; never sent anywhere)
+  caseReport: (id: string, opts: ReportOptions) =>
+    request<EvidenceReport>(`/cases/${encodeURIComponent(id)}/report?${reportQuery(opts)}`),
+  caseReportMarkdown: async (id: string, opts: ReportOptions): Promise<string> => {
+    const token = getToken();
+    let res: Response;
+    try {
+      res = await fetch(`${API_BASE}/cases/${encodeURIComponent(id)}/report.md?${reportQuery(opts)}`,
+        { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+    } catch {
+      throw new ApiError(0, "Can't reach the SafeCircle server. Check your connection and try again.");
+    }
+    if (!res.ok) throw new ApiError(res.status, res.status === 404 ? "Case not found" : "Could not build the report");
+    return res.text();
+  },
+
+  // Scam Network Graph
+  network: (sharedOnly = false) => request<NetworkGraph>(`/network?shared_only=${sharedOnly}`),
+};
+
+export type ReportOptions = { include_excerpts: boolean; include_related: boolean };
+function reportQuery(o: ReportOptions) {
+  return new URLSearchParams({ include_excerpts: String(o.include_excerpts), include_related: String(o.include_related) }).toString();
+}
+
+// ---------- UPI Scam Guard ----------
+export type UpiSignal = { code: string; title: string; detail: string; basis: "observed" | "heuristic" | "your_cases" };
+export type UpiCheck = {
+  parsed: { kind: "handle" | "upi_link"; handle_masked: string; psp: string; psp_known: boolean; payee_name: string | null;
+    amount: string | null; currency: string | null; note: string | null; link_type: string | null; unknown_params: string[] };
+  signals: UpiSignal[];
+  case_matches: { case_id: string; title: string; risk_level: Level; is_demo: boolean }[];
+  tactics: CaseTactic[]; risk_score: number; risk_level: Level; score_label: string; verdict: string;
+  uncertainty: { level: Level; reasons: string[] }; review_required: boolean; recommendations: string[]; primary_action: string;
+  limitations: string[]; stored: boolean; retention: string;
+  case_update: { case_id: string; event_added: boolean; duplicate: boolean; alert: AlertDecision; change: Change; risk_score: number; risk_level: Level } | null;
+};
+
+// ---------- Evidence report ----------
+export type EvidenceReport = {
+  report_version: number; generated_at: string; generator: string; submission_status: string; content_sha256: string;
+  title: string; case_status: string; is_demo: boolean; demo_notice: string | null; created_at: string; updated_at: string;
+  assessment: { risk_score: number; risk_level: Level; score_label: string; thresholds: { medium: number; high: number } | null;
+    components: { label: string; weight: number; kind: string }[]; stages_observed: string[]; order_note: string | null;
+    uncertainty: { level?: string; reasons?: string[] }; review_required: boolean; review_reasons: string[];
+    conflicts: string[]; missing_evidence: string[] };
+  tactics: { title: string; stage: string; basis: string; severity: number; evidence: string[] }[];
+  timeline: { seq: number; kind: string; channel: string; received_at: string | null; received_at_note: string | null; added_at: string;
+    source: string; excerpt: string; content_sha256: string; tactics: { title: string; basis: string; evidence: string[] }[];
+    links: { url: string; domain: string | null; signals: string[] }[];
+    screenshot: { mime: string; size_bytes: number; width: number; height: number; sha256: string; ocr_confidence: number | null } | null;
+    data_quality: string | null }[];
+  indicators: { domains: string[]; links: string[]; shortened_links: string[]; upi_handles_masked: string[];
+    phone_numbers: string | null; claimed_organisations: string[] };
+  related_cases: { case_title: string; is_demo: boolean; relation: string; exact: string[]; heuristic: string[]; uncertainty: string }[];
+  related_note: string;
+  alert_history: { at: string; decision: string; notified: boolean; risk_level: string | null; risk_score: number | null; reason: string | null }[];
+  recommendations: string[]; how_to_report: string; excluded_by_design: string[]; options: ReportOptions;
+};
+
+// ---------- Scam Network Graph ----------
+export type NetNode =
+  | { id: string; type: "case"; case_id: string; label: string; risk_level: Level; risk_score: number; is_demo: boolean; tactic_count: number }
+  | { id: string; type: "indicator"; kind: "domain" | "short_link" | "upi" | "phone" | "org"; kind_label: string; label: string; note: string; case_count: number };
+export type NetEdge = { from: string; to: string; basis: "observed" | "inferred"; label: string; relation?: string; strength?: number; uncertainty?: string };
+export type NetworkGraph = {
+  nodes: NetNode[]; edges: NetEdge[];
+  stats: { cases: number; indicators: number; shared_indicators: number; observed_edges: number; inferred_edges: number };
+  dismissed_pairs: string[]; legend: { observed: string; inferred: string }; source: string;
 };
 
 // ---------- Scam DNA types ----------

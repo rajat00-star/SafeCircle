@@ -20,6 +20,13 @@ HackBriven 2026 · IIT Delhi Problem Statement 02: AI-driven scam pattern recogn
 - **Campaign Radar** (`/campaigns/`): groups your cases that share a domain, link, UPI handle or phone (compared as
   hashes), a link-path pattern or near-identical wording. Exact matches and similarity are shown separately, with
   uncertainty, and any relationship can be dismissed.
+- **UPI Scam Guard** (`/upi/`): check a UPI ID or a payment QR before paying. The QR is decoded in the browser.
+  It flags pay-to-receive tricks, refund/KYC/"customer care" payees and handles already seen in your risky cases.
+  It never sees, blocks or approves a real payment, and it consults no bank or NPCI data.
+- **Evidence report** (case → *Evidence report*): a reviewable report of the redacted evidence, timeline, reasoning,
+  indicators, related cases and uncertainty, exported as PDF (print), Markdown or JSON. It is never sent anywhere.
+- **Scam network** (`/network/`): graph of cases and the domains, UPI IDs, hashed phones and claimed organisations
+  they share. Observed links are solid; Campaign Radar similarity is dashed.
 - **Alert de-duplication**: unchanged evidence is suppressed; alerts fire only when risk rises or a new high-weight
   tactic appears; every decision (including suppressions) is in the case's audit trail.
 - **Guardian Shield** (Chrome MV3 extension): check links and selected text; risky links get a warning page with
@@ -33,7 +40,8 @@ HackBriven 2026 · IIT Delhi Problem Statement 02: AI-driven scam pattern recogn
   trusted contacts with two-sided consent, opt-in history, export and delete-everything, optional AI summary that
   never changes the score.
 
-No paid API, API key or external model is needed. Full description: [docs/scam-dna.md](docs/scam-dna.md).
+No paid API, API key or external model is needed. Full description: [docs/scam-dna.md](docs/scam-dna.md) and
+[docs/advanced-features.md](docs/advanced-features.md) (including the feature-gap assessment).
 
 ## Measured results
 
@@ -90,13 +98,14 @@ With Docker: `SAFECIRCLE_SECRET_KEY=$(openssl rand -hex 32) docker compose up --
 ## Tests
 
 ```bash
-cd backend && python -m pytest -q                      # 122 unit/API tests (SQLite); OCR tests skip without Tesseract
+cd backend && python -m pytest -q                      # 152 unit/API tests (SQLite); OCR tests skip without Tesseract
 SAFECIRCLE_TEST_DATABASE_URL=postgresql+psycopg2://... python -m pytest -q   # same suite on PostgreSQL
 node --test extension/tests/                           # 18 extension tests (3 need a running server)
 cd e2e && npm i
 BASE_URL=http://127.0.0.1:8000 CHROMIUM=/path/to/chrome node e2e.mjs              # 18 original browser checks
 BASE_URL=http://127.0.0.1:8000 CHROMIUM=/path/to/chrome node scamdna.mjs          # 21 Scam DNA / Forensics / Radar checks
 BASE_URL=http://127.0.0.1:8000 CHROMIUM=/path/to/chrome node extension-pages.mjs  # 17 Guardian Shield page checks
+BASE_URL=http://127.0.0.1:8000 CHROMIUM=/path/to/chrome node advanced.mjs         # 30 UPI Guard / report / network checks
 python evaluation/scam_dna/evaluate_scam_dna.py         # synthetic scenario evaluation
 python evaluation/evaluate.py --benign-hosts <file>   # detector evaluation, see evaluation/README.md
 ```
@@ -106,7 +115,8 @@ python evaluation/evaluate.py --benign-hosts <file>   # detector evaluation, see
 ```
 backend/        FastAPI app, detector, models, Alembic migrations, tests
   app/detector/ normalize.py, rules.py, url_analyzer.py, ml.py, engine.py, models/ (trained artifacts)
-  app/scamdna/  tactics, evidence redaction, case assessment, alerts, campaigns, OCR, demo fixtures
+  app/scamdna/  tactics, evidence redaction, case assessment, alerts, campaigns, OCR, demo fixtures,
+                upi (UPI Guard), report (evidence report), network (graph)
 frontend/       Next.js 15 + TypeScript dashboard (static export served by the API)
 extension/      Chrome/Edge Manifest V3 extension
 evaluation/     training + evaluation scripts, datasets, results; scam_dna/ synthetic scenario evaluation
@@ -117,7 +127,7 @@ paper/          research paper (.docx, editable)    slides/  presentation (.pptx
 
 ## Documentation
 
-[Scam DNA & features](docs/scam-dna.md) · [Architecture](docs/architecture.md) · [API](docs/api.md) · [Threat model](docs/threat-model.md) ·
+[Scam DNA & features](docs/scam-dna.md) · [UPI Guard, report, network](docs/advanced-features.md) · [Architecture](docs/architecture.md) · [API](docs/api.md) · [Threat model](docs/threat-model.md) ·
 [Privacy](docs/privacy.md) · [Deployment](docs/deployment.md) · [Methodology & evaluation](docs/methodology.md) ·
 [Project status](STATUS.md) · [Security policy](SECURITY.md)
 

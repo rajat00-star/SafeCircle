@@ -40,7 +40,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <ul>
                   <li><a href="/cases/">Scam DNA</a></li>
                   <li><a href="/forensics/">Forensics</a></li>
+                  <li><a href="/upi/">UPI Guard</a></li>
                   <li><a href="/campaigns/">Campaign Radar</a></li>
+                  <li><a href="/network/">Scam network</a></li>
                   <li><a href="/#analyze">Quick check</a></li>
                   <li><a href="/history/">History</a></li>
                   <li><a href="/contacts/">Trusted contacts</a></li>

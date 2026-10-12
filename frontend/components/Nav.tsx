@@ -6,6 +6,7 @@ const LINKS = [
   ["/", "Overview"],
   ["/cases/", "Scam DNA"],
   ["/forensics/", "Forensics"],
+  ["/upi/", "UPI Guard"],
   ["/campaigns/", "Campaign Radar"],
   ["/history/", "History"],
   ["/extension/", "Browser Protection"],

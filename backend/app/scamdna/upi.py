@@ -118,6 +118,8 @@ def upi_signals(p: ParsedUpi, context: str) -> tuple[list[dict], dict[str, Tacti
         hits.setdefault(code, TacticHit(code, basis="upi_request")).add(text, None, None, rule)
 
     user_words = _readable(p.user)
+    lure: list[str] = []
+    kyc: list[str] = []
     for label, value in (("payee name", p.payee_name), ("UPI ID", user_words)):
         if not value:
             continue
@@ -135,15 +137,19 @@ def upi_signals(p: ParsedUpi, context: str) -> tuple[list[dict], dict[str, Tacti
             signals.append({"code": "org_name", "title": "Organisation name on a payee", "detail": detail, "basis": "heuristic"})
             hit("authority_impersonation", f"{label}: {shown}", "upi_payee_org")
         if _LURE_WORDS.search(value):
-            signals.append({"code": "lure_name", "title": "Payee presented as a refund or reward",
-                            "detail": f"The {label} mentions a refund, prize or reward. You never pay to receive money.",
-                            "basis": "observed"})
+            lure.append(label)
             hit("reward_lure", f"{label}: {p.payee_name if label == 'payee name' else p.masked}", "upi_payee_lure")
         if _KYC_WORDS.search(value):
-            signals.append({"code": "kyc_name", "title": "Payee presented as KYC, verification or a penalty",
-                            "detail": f"The {label} refers to KYC, verification or a fine. Banks do not collect these by UPI request.",
-                            "basis": "observed"})
+            kyc.append(label)
             hit("kyc_suspension", f"{label}: {p.payee_name if label == 'payee name' else p.masked}", "upi_payee_kyc")
+    if lure:
+        signals.append({"code": "lure_name", "title": "Payee presented as a refund or reward",
+                        "detail": f"The {' and '.join(lure)} mention{'s' if len(lure) == 1 else ''} a refund, prize or reward. "
+                                  "You never pay to receive money.", "basis": "observed"})
+    if kyc:
+        signals.append({"code": "kyc_name", "title": "Payee presented as KYC, verification or a penalty",
+                        "detail": f"The {' and '.join(kyc)} refer{'s' if len(kyc) == 1 else ''} to KYC, verification or a fine. "
+                                  "Banks do not collect these by UPI request.", "basis": "observed"})
 
     receive_text = " ".join(x for x in (p.note, context) if x)
     if p.kind == "upi_link":

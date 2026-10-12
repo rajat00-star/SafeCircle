@@ -1425,6 +1425,219 @@
         }
       }
     },
+    "/api/v1/cases/{case_id}/report": {
+      "get": {
+        "tags": [
+          "scam dna"
+        ],
+        "summary": "Evidence report for review and export (JSON). Nothing is sent anywhere.",
+        "operationId": "report_api_v1_cases__case_id__report_get",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "include_excerpts",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Include Excerpts"
+            }
+          },
+          {
+            "name": "include_related",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Include Related"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/report.md": {
+      "get": {
+        "tags": [
+          "scam dna"
+        ],
+        "summary": "The same report as Markdown",
+        "operationId": "report_md_api_v1_cases__case_id__report_md_get",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "include_excerpts",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Include Excerpts"
+            }
+          },
+          {
+            "name": "include_related",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Include Related"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/network": {
+      "get": {
+        "tags": [
+          "scam dna"
+        ],
+        "summary": "Cases and the indicators they share (observed) plus similarity links (inferred)",
+        "operationId": "network_api_v1_network_get",
+        "parameters": [
+          {
+            "name": "shared_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Only indicators that appear in two or more cases",
+              "default": false,
+              "title": "Shared Only"
+            },
+            "description": "Only indicators that appear in two or more cases"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/campaigns": {
       "get": {
         "tags": [
@@ -2060,6 +2273,65 @@
         "responses": {
           "204": {
             "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/upi/check": {
+      "post": {
+        "tags": [
+          "upi guard"
+        ],
+        "summary": "Check a UPI ID or upi:// payment link (for example from a QR code) before paying",
+        "operationId": "check_api_v1_upi_check_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpiCheckIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpiCheckOut"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -4000,6 +4272,168 @@
         },
         "type": "object",
         "title": "SettingsIn"
+      },
+      "UpiCheckIn": {
+        "properties": {
+          "input": {
+            "type": "string",
+            "maxLength": 2048,
+            "minLength": 3,
+            "title": "Input",
+            "description": "A UPI ID (name@bank) or a upi://pay link, e.g. decoded from a QR code"
+          },
+          "context": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Context",
+            "description": "Optional: the message that came with the request"
+          },
+          "case_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 36
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Case Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "input"
+        ],
+        "title": "UpiCheckIn"
+      },
+      "UpiCheckOut": {
+        "properties": {
+          "parsed": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Parsed"
+          },
+          "signals": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Signals"
+          },
+          "case_matches": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Case Matches"
+          },
+          "tactics": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Tactics"
+          },
+          "risk_score": {
+            "type": "integer",
+            "title": "Risk Score"
+          },
+          "risk_level": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Risk Level"
+          },
+          "score_label": {
+            "type": "string",
+            "title": "Score Label"
+          },
+          "verdict": {
+            "type": "string",
+            "title": "Verdict"
+          },
+          "uncertainty": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Uncertainty"
+          },
+          "review_required": {
+            "type": "boolean",
+            "title": "Review Required"
+          },
+          "recommendations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Recommendations"
+          },
+          "primary_action": {
+            "type": "string",
+            "title": "Primary Action"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Limitations"
+          },
+          "stored": {
+            "type": "boolean",
+            "title": "Stored"
+          },
+          "case_update": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Case Update"
+          },
+          "retention": {
+            "type": "string",
+            "title": "Retention"
+          }
+        },
+        "type": "object",
+        "required": [
+          "parsed",
+          "signals",
+          "case_matches",
+          "tactics",
+          "risk_score",
+          "risk_level",
+          "score_label",
+          "verdict",
+          "uncertainty",
+          "review_required",
+          "recommendations",
+          "primary_action",
+          "limitations",
+          "stored",
+          "case_update",
+          "retention"
+        ],
+        "title": "UpiCheckOut"
       },
       "UrlIn": {
         "properties": {

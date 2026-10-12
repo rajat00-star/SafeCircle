@@ -847,3 +847,48 @@ ul.clean.indicator-list li + li { margin-top: 6px; }
 .panel-label { flex-wrap: wrap; }
 @media (max-width: 520px) { nav.main .nav-cta { display: none; } }
 @media (max-width: 600px) { .tabs { max-width: 100%; overflow-x: auto; } .chain-detail { order: 2; } }
+
+/* ---------- Checkbox rows, UPI Guard, evidence report, scam network ---------- */
+label.check { display: inline-flex; align-items: flex-start; gap: 8px; margin: 0; font-size: 13.5px; color: var(--muted); cursor: pointer; }
+label.check input { width: 16px; height: 16px; margin-top: 2px; flex: none; }
+.linklike { background: none; border: 0; padding: 0; color: var(--ice); cursor: pointer; text-align: left; word-break: break-all; }
+.linklike:hover { text-decoration: underline; }
+
+.report-doc h3 { margin: 26px 0 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+.report-doc h4 { margin: 14px 0 6px; }
+.report-doc ul, .report-doc ol { padding-left: 20px; }
+.report-doc li + li { margin-top: 4px; }
+.report-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0; }
+.report-table th, .report-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.report-table th { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); font-weight: 500; }
+.report-event { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 10px 0; }
+.report-excerpt { white-space: pre-wrap; word-break: break-word; font-family: var(--font-mono); font-size: 12.5px; background: rgba(255,255,255,.035); border-radius: 8px; padding: 10px; margin: 8px 0; }
+
+.netgraph { width: 100%; height: auto; display: block; touch-action: manipulation; }
+.netgraph .edge { stroke-width: 1.2; transition: opacity var(--t-fast); }
+.netgraph .edge.observed { stroke: rgba(207, 207, 220, .38); }
+.netgraph .edge.inferred { stroke: var(--violet); stroke-dasharray: 5 5; opacity: .7; }
+.netgraph .dim { opacity: .14; }
+.netgraph .node { cursor: pointer; outline: none; transition: opacity var(--t-fast); }
+.netgraph .node:focus-visible circle, .netgraph .node:focus-visible rect, .netgraph .node.sel circle, .netgraph .node.sel rect { stroke: #fff; stroke-width: 2.5; }
+.netgraph .case-dot { stroke: rgba(0,0,0,.4); stroke-width: 1; }
+.netgraph .case-dot.low { fill: var(--low); }
+.netgraph .case-dot.medium { fill: var(--medium); }
+.netgraph .case-dot.high { fill: var(--high); }
+.netgraph .ind-dot { fill: rgba(166, 220, 255, .12); stroke: rgba(166, 220, 255, .45); stroke-width: 1; }
+.netgraph .ind-dot.shared { fill: rgba(174, 149, 255, .28); stroke: var(--violet); }
+.netgraph .ind-icon { font-size: 10px; fill: var(--silver); pointer-events: none; }
+.netgraph .demo-d { font-family: var(--font-mono); font-size: 10px; font-weight: 700; fill: #111; pointer-events: none; }
+.netgraph .nlabel { font-family: var(--font-mono); font-size: 10.5px; fill: var(--muted); pointer-events: none; }
+.netgraph .nlabel.ind { fill: var(--ice); }
+
+@media print {
+  header.site, footer.site, .no-print, .grain, canvas { display: none !important; }
+  html, body, main { background: #fff !important; color: #111 !important; padding: 0 !important; }
+  .report-doc { border: 0 !important; box-shadow: none !important; background: #fff !important; color: #111 !important; padding: 0 !important; }
+  .report-doc * { color: #111 !important; text-shadow: none !important; }
+  .report-doc .badge, .report-doc .chip, .report-doc .alert { background: #fff !important; border: 1px solid #999 !important; }
+  .report-doc .badge::before { display: none; }
+  .report-excerpt { background: #f4f4f4 !important; }
+  .report-event { break-inside: avoid; border-color: #ccc !important; }
+}

@@ -56,6 +56,7 @@ export default function CaseView({ id, onDeleted }: { id: string; onDeleted: () 
         <select id="case-status" value={c.status} onChange={(e) => setStatus(e.target.value as CaseStatus)} style={{ width: "auto" }}>
           <option value="open">Open</option><option value="review">Needs review</option><option value="closed">Closed</option>
         </select>
+        <a href={`/cases/report/?id=${encodeURIComponent(c.id)}`} className="btn secondary small">Evidence report</a>
         <button className="btn danger small" onClick={remove}>Delete</button>
       </div>
 
