@@ -71,6 +71,47 @@ export function shouldGuard(target, pageOrigin, server) {
   return true;
 }
 
+// What the link guard and popup send to the server: scheme, host, port and path unchanged; each query
+// value replaced by "x" characters of the same length (keeps the "very long link" check); a value that is
+// itself a web address cut down to its origin (keeps the "redirects to another site" check); short plain
+// lower-case words such as "login" kept (keeps the login/verify-word check); the #fragment dropped.
+// Tokens, e-mail addresses and IDs in the query therefore never leave the browser. Returns null for
+// addresses that may not be opened at all.
+const EMBEDDED_URL = /^(?:https?:)?\/\//i;
+const PLAIN_WORD = /^[a-z][a-z-]{0,23}$/;
+const PLAIN_KEY = /^[A-Za-z_][\w.\-[\]]{0,31}$/;
+
+function decodePart(s) {
+  try { return decodeURIComponent(s.replace(/\+/g, " ")); } catch { return null; }
+}
+
+export function minimizeUrl(raw) {
+  const v = validateNavigableUrl(raw);
+  if (!v.ok) return null;
+  const u = new URL(v.url);
+  const query = u.search.slice(1);
+  const parts = !query ? [] : query.split("&").map((seg) => {
+    const i = seg.indexOf("=");
+    let key = i < 0 ? seg : seg.slice(0, i);
+    let value = i < 0 ? null : seg.slice(i + 1);
+    if (value !== null) {
+      const d = decodePart(value);
+      if (d !== null && EMBEDDED_URL.test(d)) {
+        try {
+          const e = new URL(d.startsWith("//") ? "https:" + d : d);
+          value = encodeURIComponent(`${e.protocol}//${e.host}`);
+        } catch { value = "x".repeat(value.length); }
+      } else if (d === null || !PLAIN_WORD.test(d)) {
+        value = "x".repeat(value.length);
+      }
+    }
+    const dk = decodePart(key);
+    if (dk === null || !PLAIN_KEY.test(dk)) key = "x".repeat(key.length);
+    return value === null ? key : `${key}=${value}`;
+  });
+  return `${u.protocol}//${u.host}${u.pathname}${parts.length ? "?" + parts.join("&") : ""}`;
+}
+
 // Small in-memory cache so the same link is not re-sent within a short window.
 export function cacheKey(kind, value) { return `${kind}:${value}`; }
 export function isFresh(entry, now, ttlMs) { return !!entry && now - entry.at < ttlMs; }

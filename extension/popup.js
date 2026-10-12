@@ -1,5 +1,5 @@
 import { analyze, getSettings, health, render, renderUnavailable } from "./common.js";
-import { describeError } from "./shield.js";
+import { describeError, minimizeUrl } from "./shield.js";
 
 const out = document.getElementById("out");
 const status = document.getElementById("status");
@@ -21,7 +21,10 @@ if (!/^https?:/i.test(url)) {
   out.textContent = "This page isn't a website address that can be checked.";
 } else if (!h.reachable) {
   renderUnavailable(out, "Not checked: the SafeCircle server could not be reached. Check the address in Options.");
+} else if (!minimizeUrl(url)) {
+  out.textContent = "This address is too long or hides sign-in details, so it was not sent for checking.";
 } else {
-  try { render(out, await analyze("url", url)); }
+  // The tab's address is sent in minimal form: query values and the #fragment stay in the browser.
+  try { render(out, await analyze("url", minimizeUrl(url))); }
   catch (e) { renderUnavailable(out, describeError(e)); }
 }

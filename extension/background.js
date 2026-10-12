@@ -2,7 +2,7 @@
 // The extension never reads page content. The link guard (off by default) only sees the
 // address of a link the user clicks, and only after they granted site access in Options.
 import { analyze, getSettings } from "./common.js";
-import { cacheKey, decide, decideUnavailable, describeError, isFresh, shouldGuard } from "./shield.js";
+import { cacheKey, decide, decideUnavailable, describeError, isFresh, minimizeUrl, shouldGuard } from "./shield.js";
 
 const GUARD_ID = "sc-link-guard";
 const ORIGINS = ["http://*/*", "https://*/*"];
@@ -58,11 +58,14 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 export async function handleGuard(msg, tab) {
   const { server } = await getSettings();
   if (!shouldGuard(msg.url, msg.pageOrigin, server)) return openAllowed(msg, tab);
-  const key = cacheKey("url", msg.url);
+  // Only a minimal form of the address is sent (see minimizeUrl). The full address stays in this browser,
+  // in session memory, so "Open anyway" can still go to the exact link the user clicked.
+  const sent = minimizeUrl(msg.url);
+  const key = cacheKey("url", sent);
   let entry = cache.get(key);
   if (!isFresh(entry, Date.now(), CACHE_TTL_MS)) {
     try {
-      entry = { at: Date.now(), result: await analyze("url", msg.url) };
+      entry = { at: Date.now(), result: await analyze("url", sent) };
       cache.set(key, entry);
     } catch (e) {
       // Fail open, but say so: the toolbar shows "?" and the reason until the next check.
@@ -74,7 +77,7 @@ export async function handleGuard(msg, tab) {
   const d = decide(entry.result);
   if (d.action === "allow") return openAllowed(msg, tab);
   const id = crypto.randomUUID();
-  await chrome.storage.session.set({ ["guard:" + id]: { kind: "url", value: msg.url, result: entry.result, decision: d } });
+  await chrome.storage.session.set({ ["guard:" + id]: { kind: "url", value: msg.url, sent, result: entry.result, decision: d } });
   const warnUrl = chrome.runtime.getURL(`result.html#guard=${id}`);
   if (msg.newTab) await chrome.tabs.create({ url: warnUrl, openerTabId: tab.id });
   else await chrome.tabs.update(tab.id, { url: warnUrl });

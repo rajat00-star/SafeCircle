@@ -1,0 +1,40 @@
+{
+    "phishing_urls_dev": {
+        "urls": 20000,
+        "with_query_or_fragment": 3635,
+        "not_sendable": 0,
+        "level_transitions": {
+            "high->high": 540,
+            "high->medium": 19,
+            "low->low": 1319,
+            "medium->low": 51,
+            "medium->medium": 1706
+        },
+        "signal_changes": {
+            "lost sensitive_path": 133,
+            "lost brand_in_path": 26,
+            "lost long_url": 8,
+            "gained sensitive_path": 1
+        }
+    },
+    "phishing_urls_sample": {
+        "urls": 5000,
+        "with_query_or_fragment": 928,
+        "not_sendable": 0,
+        "level_transitions": {
+            "high->high": 136,
+            "high->medium": 5,
+            "low->low": 371,
+            "low->medium": 1,
+            "medium->low": 10,
+            "medium->medium": 405
+        },
+        "signal_changes": {
+            "lost sensitive_path": 29,
+            "lost long_url": 4,
+            "lost brand_in_path": 6,
+            "gained long_url": 1,
+            "gained sensitive_path": 1
+        }
+    }
+}
