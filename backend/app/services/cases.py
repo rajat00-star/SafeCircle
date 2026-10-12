@@ -139,8 +139,6 @@ def _reassess(db: Session, case: ScamCase, new_event: CaseEvent | None) -> dict:
     decision = decide_alert(last_alert, new)
     case.assessment, case.last_change = new, change
     case.risk_score, case.risk_level, case.review_required = new["risk_score"], new["risk_level"], new["review_required"]
-    if new["review_required"] and case.status == "open":
-        case.status = "review"
     case.updated_at = utcnow()
     if new_event is not None:
         log(db, case, "evidence_added", {"seq": new_event.seq, "kind": new_event.kind,

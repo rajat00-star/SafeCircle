@@ -147,7 +147,9 @@ def overview(profile: Profile = Depends(require_profile), db: Session = Depends(
     recent = []
     if ids:
         titles = {c.id: (c.title, c.is_demo) for c in cases}
-        for e in db.scalars(select(CaseLogEntry).where(CaseLogEntry.case_id.in_(ids))
+        # Decisions only (alerts, suppressions, status changes), not every bookkeeping entry.
+        shown = ("reassessed", "duplicate_evidence", "status_changed", "relationship_dismissed")
+        for e in db.scalars(select(CaseLogEntry).where(CaseLogEntry.case_id.in_(ids), CaseLogEntry.action.in_(shown))
                             .order_by(CaseLogEntry.id.desc()).limit(10)):
             recent.append({"case_id": e.case_id, "case_title": titles[e.case_id][0], "is_demo": titles[e.case_id][1],
                            "at": e.at, "action": e.action, "alert_action": e.alert_action,

@@ -60,7 +60,7 @@ export default function GlobeHero() {
       <div className="container" style={{ width: "100%" }}>
         <div className="hero-grid">
           <div>
-            <span className="eyebrow fade-up" style={{ ["--d" as string]: 200 }}>SafeCircle Guardian · Scam &amp; phishing intelligence</span>
+            <span className="eyebrow fade-up" style={{ ["--d" as string]: 200 }}>SafeCircle Guardian · UPI, banking &amp; wallet scam patterns</span>
             <h1 id="hero-title" className="display" aria-label="The world is connected. So are scams.">
               {HEADLINE.map((line, i) => (
                 <span className="line" key={line} aria-hidden="true">
@@ -71,11 +71,11 @@ export default function GlobeHero() {
               ))}
             </h1>
             <p className="label-caps fade-up" style={{ ["--d" as string]: 1000, color: "var(--silver)", lineHeight: 1.9, margin: "22px 0 22px" }}>
-              See the signals. Understand the threats.<br />Protect your next move.
+              See how a scam unfolds. Know why it&apos;s risky.<br />Get warned once, at the right moment.
             </p>
             <div className="row fade-up" style={{ ["--d" as string]: 1200 }}>
-              <a href="#analyze" className="btn primary">Analyze a message <span className="arrow" aria-hidden="true">→</span></a>
-              <a href="#protection" className="btn glass">Explore threat intelligence</a>
+              <a href="/cases/" className="btn primary">Investigate a scam <span className="arrow" aria-hidden="true">→</span></a>
+              <a href="#overview" className="btn glass">Overview</a>
             </div>
           </div>
 

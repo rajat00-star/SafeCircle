@@ -11,7 +11,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variab
 
 export const metadata: Metadata = {
   title: "SafeCircle Guardian",
-  description: "Check messages and links for scams, see the evidence in plain language, and loop in someone you trust.",
+  description: "Detect how UPI, banking and wallet scams unfold across messages, links and screenshots, with evidence for every step.",
 };
 export const viewport: Viewport = { themeColor: "#060609", colorScheme: "dark" };
 
@@ -31,17 +31,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <span className="word">SafeCircle<span>Guardian</span></span>
                 </a>
                 <p className="small" style={{ maxWidth: 340, marginTop: 18 }}>
-                  Explainable scam and phishing checks with consent-based trusted contacts. Built for HackBriven 2026,
-                  Cybersecurity &amp; Digital Trust track.
+                  Explainable detection of multi-stage UPI, banking and wallet scams, with consent-based trusted contacts.
+                  Built for HackBriven 2026 and Problem Statement 02: AI-driven scam pattern recognition.
                 </p>
               </div>
               <div>
                 <h4>Product</h4>
                 <ul>
-                  <li><a href="/#analyze">Analyze</a></li>
+                  <li><a href="/cases/">Scam DNA</a></li>
+                  <li><a href="/forensics/">Forensics</a></li>
+                  <li><a href="/campaigns/">Campaign Radar</a></li>
+                  <li><a href="/#analyze">Quick check</a></li>
                   <li><a href="/history/">History</a></li>
                   <li><a href="/contacts/">Trusted contacts</a></li>
-                  <li><a href="/extension/">Browser extension</a></li>
+                  <li><a href="/extension/">Browser protection</a></li>
                 </ul>
               </div>
               <div>

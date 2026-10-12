@@ -142,7 +142,12 @@ def correlate(cases: list[CaseSummary], dismissed: set[str] | None = None,
         ids = {m.id for m in members}
         clinks = [r for r in links if r["a"] in ids and r["b"] in ids]
         exact = sorted({f"{e['label']}: {e['value']}" for r in clinks for e in r["exact"]})
-        heur = sorted({f"{e['label']}: {e['value']}" for r in clinks for e in r["heuristic"]})
+        # One line per kind of similarity, showing its strongest instance.
+        best: dict[str, dict] = {}
+        for e in (e for r in clinks for e in r["heuristic"]):
+            if e["label"] not in best or e["weight"] > best[e["label"]]["weight"]:
+                best[e["label"]] = e
+        heur = sorted(f"{e['label']}: {e['value']}" for e in best.values())
         orgs = sorted({o for m in members for o in m.indicators.get("orgs", [])})
         tac_count: dict[str, int] = {}
         for m in members:

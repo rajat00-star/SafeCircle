@@ -6,6 +6,7 @@ import ScanRail from "@/components/ScanRail";
 import ScrollIndicator from "@/components/ScrollIndicator";
 import TacticSection from "@/components/TacticSection";
 import GlobeHero from "@/components/GlobeHero";
+import OverviewDashboard from "@/components/OverviewDashboard";
 
 const MARQUEE = ["Urgency", "Impersonation", "OTP requests", "Payment pressure", "Threats", "Secrecy", "Look-alike links", "Remote access"];
 
@@ -14,6 +15,8 @@ export default function Home() {
     <>
       <ScrollIndicator />
       <GlobeHero />
+
+      <OverviewDashboard />
 
       <Analyzer />
 
