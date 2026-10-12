@@ -52,6 +52,13 @@ false-positive rate 0.333. After fixing the four issues that run exposed: precis
 The second figure is not independent (the fixes were informed by the same set) and both were written by the team
 that wrote the rules. Details and remaining errors: [evaluation/scam_dna/README.md](evaluation/scam_dna/README.md).
 
+### Holdout v2 (synthetic, frozen before the first run, not used for tuning)
+
+65 synthetic scenarios run through the real API with the rules unchanged. On the 51 labelled scam/benign scenarios:
+precision 0.885 (23/26), recall 0.958 (23/24), false-positive rate 0.111 (3/27); keyword baseline 0.826 / 0.792 /
+0.148. Synthetic results do not show real-world accuracy. Details, leakage analysis and errors:
+[evaluation/holdout_v2/README.md](evaluation/holdout_v2/README.md); full validation: [docs/validation-report.md](docs/validation-report.md).
+
 ### Message and link detector (held-out public data, reproducible; detector unchanged by the upgrade)
 
 | Setting | Precision | Recall | F1 | FPR |
@@ -127,7 +134,7 @@ paper/          research paper (.docx, editable)    slides/  presentation (.pptx
 
 ## Documentation
 
-[Scam DNA & features](docs/scam-dna.md) · [UPI Guard, report, network](docs/advanced-features.md) · [Architecture](docs/architecture.md) · [API](docs/api.md) · [Threat model](docs/threat-model.md) ·
+[Scam DNA & features](docs/scam-dna.md) · [UPI Guard, report, network](docs/advanced-features.md) · [Validation report](docs/validation-report.md) · [Demo runbook](docs/demo-runbook.md) · [Extension manual check](docs/extension-manual-check.md) · [Architecture](docs/architecture.md) · [API](docs/api.md) · [Threat model](docs/threat-model.md) ·
 [Privacy](docs/privacy.md) · [Deployment](docs/deployment.md) · [Methodology & evaluation](docs/methodology.md) ·
 [Project status](STATUS.md) · [Security policy](SECURITY.md)
 

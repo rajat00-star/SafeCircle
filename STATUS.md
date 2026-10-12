@@ -2,6 +2,16 @@
 
 Last updated: 2026-10-12. Submission deadline: 2026-10-12.
 
+## Independent validation (2026-10-12, branch `validation`)
+
+| Area | Evidence |
+|---|---|
+| Frozen synthetic holdout v2 (65 scenarios, labels committed before the run) | Rules unchanged: P 0.885 (23/26), R 0.958 (23/24), FPR 0.111 (3/27); keyword baseline 0.826 / 0.792 / 0.148. `evaluation/holdout_v2/` |
+| Cross-feature integration | `tests/test_validation_integration.py` 10/10; no integration defect found, no product code changed |
+| Whole suite | backend 162/162; extension 18/18 (with API); type-check and build pass (scratch copy); e2e 18/18, 21/21, 17/17, 30/30, `demo.mjs` 12/12 on a scratch DB |
+| Security review | No high-severity finding; 3 medium, 5 low documented in `docs/validation-report.md` |
+| Not verified | Real Chrome extension runtime (`docs/extension-manual-check.md`); `frontend/out` still stale (dev server on :3000) |
+
 ## Advanced features: UPI Scam Guard, evidence report, scam network (2026-10-12)
 
 | Area | Evidence |

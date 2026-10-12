@@ -1,0 +1,677 @@
+{
+  "summary": {
+    "events_checked": 83,
+    "jaccard_ge_0.5": 1,
+    "jaccard_ge_0.3": 1,
+    "jaccard_ge_0.15": 8,
+    "events_sharing_an_identifier": 1
+  },
+  "rows": [
+    {
+      "scenario": "HM07",
+      "event": 2,
+      "max_trigram_jaccard": 0.714,
+      "closest_source": "tests:test_detector.py",
+      "closest_text": "https://www.amazon.in/gp/your-account",
+      "shared_identifiers": [
+        "amazon.in"
+      ]
+    },
+    {
+      "scenario": "HG02",
+      "event": 1,
+      "max_trigram_jaccard": 0.222,
+      "closest_source": "e2e:advanced.mjs",
+      "closest_text": "text that is not a UPI ID is rejected",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HD01",
+      "event": 1,
+      "max_trigram_jaccard": 0.222,
+      "closest_source": "e2e:extension-pages.mjs",
+      "closest_text": "Your account will be suspended today. Share the OTP sent to your phone to verify.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HD01",
+      "event": 2,
+      "max_trigram_jaccard": 0.222,
+      "closest_source": "e2e:extension-pages.mjs",
+      "closest_text": "Your account will be suspended today. Share the OTP sent to your phone to verify.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HD03",
+      "event": 1,
+      "max_trigram_jaccard": 0.222,
+      "closest_source": "e2e:extension-pages.mjs",
+      "closest_text": "Your account will be suspended today. Share the OTP sent to your phone to verify.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB10",
+      "event": 1,
+      "max_trigram_jaccard": 0.167,
+      "closest_source": "tests:test_detector.py",
+      "closest_text": "Never share your OTP with anyone. Bank staff will never ask for it.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HG01",
+      "event": 1,
+      "max_trigram_jaccard": 0.167,
+      "closest_source": "tests:test_upi_guard.py",
+      "closest_text": "upi://pay?pa=bad handle@ybl",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM02",
+      "event": 1,
+      "max_trigram_jaccard": 0.15,
+      "closest_source": "app:tactics.py",
+      "closest_text": "stay on (?:the )?(?:video )?call",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HO02",
+      "event": 1,
+      "max_trigram_jaccard": 0.143,
+      "closest_source": "tests:test_detector.py",
+      "closest_text": "Can you pick up milk on the way home?",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HG04",
+      "event": 1,
+      "max_trigram_jaccard": 0.133,
+      "closest_source": "e2e:extension-pages.mjs",
+      "closest_text": "Your account will be suspended today. Share the OTP sent to your phone to verify.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS05",
+      "event": 1,
+      "max_trigram_jaccard": 0.128,
+      "closest_source": "tests:test_upi_guard.py",
+      "closest_text": "Dear customer, SBI has approved your refund. Scan the QR and enter your UPI PIN to receive it within 10 minutes.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM02",
+      "event": 2,
+      "max_trigram_jaccard": 0.121,
+      "closest_source": "app:demo.py",
+      "closest_text": "Transfer your savings to the RBI safe account for verification. Pay to demo-rbi-vault@ybl. It will be refunded after the investigation.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HG05",
+      "event": 2,
+      "max_trigram_jaccard": 0.097,
+      "closest_source": "tests:test_scamdna_engine.py",
+      "closest_text": "Bank will never ask for your PIN. Share the OTP sent to your phone to verify your account.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB06",
+      "event": 1,
+      "max_trigram_jaccard": 0.091,
+      "closest_source": "tests:test_scamdna_engine.py",
+      "closest_text": "HDFC Bank: Rs 1,250.00 debited from A/c XX4821 on 11-Oct to UPI merchant FOODCOURT. Not you? Call the number on the back of your card. Never share your OTP or P",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HD03",
+      "event": 2,
+      "max_trigram_jaccard": 0.091,
+      "closest_source": "tests:test_forensics.py",
+      "closest_text": "Your account will be blocked today.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HU01",
+      "event": 1,
+      "max_trigram_jaccard": 0.083,
+      "closest_source": "tests:test_upi_guard.py",
+      "closest_text": "upi://pay?pa=bad handle@ybl",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HA04",
+      "event": 1,
+      "max_trigram_jaccard": 0.083,
+      "closest_source": "v1:B06",
+      "closest_text": "Your electricity bill of Rs 1,180 for September is generated. Due date 20-Oct. Pay through the official app or website.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM07",
+      "event": 1,
+      "max_trigram_jaccard": 0.077,
+      "closest_source": "tests:test_detector.py",
+      "closest_text": "Your Amazon order has shipped and will arrive Thursday.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM06",
+      "event": 2,
+      "max_trigram_jaccard": 0.074,
+      "closest_source": "v1:S11",
+      "closest_text": "Instant loan approved! Download our app to receive the money: http://quick-loan-demo.example/loanapp.apk",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB08",
+      "event": 1,
+      "max_trigram_jaccard": 0.062,
+      "closest_source": "tests:test_campaigns.py",
+      "closest_text": "congratulations you have won cashback approve the collect request in your upi app",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HA07",
+      "event": 1,
+      "max_trigram_jaccard": 0.062,
+      "closest_source": "tests:test_forensics.py",
+      "closest_text": "Dear SBI customer, your KYC is pending.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM08",
+      "event": 2,
+      "max_trigram_jaccard": 0.061,
+      "closest_source": "tests:test_upi_guard.py",
+      "closest_text": "upi://pay?pa=sbi.refund@ybl&pn=SBI%20Refund%20Desk&am=4999&cu=INR&tn=Scan%20to%20receive%20your%20refund",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HO01",
+      "event": 1,
+      "max_trigram_jaccard": 0.059,
+      "closest_source": "tests:test_detector.py",
+      "closest_text": "Happy birthday! Hope you have a great day.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS07",
+      "event": 1,
+      "max_trigram_jaccard": 0.059,
+      "closest_source": "tests:test_detector.py",
+      "closest_text": "Your electricity connection will be disconnected tonight at 9:30 pm. Call officer immediately.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HU02",
+      "event": 1,
+      "max_trigram_jaccard": 0.053,
+      "closest_source": "tests:test_upi_guard.py",
+      "closest_text": "upi://pay?pa=sbi.refund@ybl&pn=SBI%20Refund%20Desk&am=4999&cu=INR&tn=Scan%20to%20receive%20your%20refund",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM06",
+      "event": 3,
+      "max_trigram_jaccard": 0.05,
+      "closest_source": "v1:S04",
+      "closest_text": "Congratulations, you won Rs 10,000 in our lucky draw! Scan this QR code to receive the prize money instantly.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HU05",
+      "event": 1,
+      "max_trigram_jaccard": 0.049,
+      "closest_source": "tests:test_upi_guard.py",
+      "closest_text": "upi://pay?pa=sbi.refund@ybl&pn=SBI%20Refund%20Desk&am=4999&cu=INR&tn=Scan%20to%20receive%20your%20refund",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HD02",
+      "event": 1,
+      "max_trigram_jaccard": 0.047,
+      "closest_source": "tests:test_upi_guard.py",
+      "closest_text": "Dear customer, SBI has approved your refund. Scan the QR and enter your UPI PIN to receive it within 10 minutes.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HD02",
+      "event": 2,
+      "max_trigram_jaccard": 0.047,
+      "closest_source": "tests:test_upi_guard.py",
+      "closest_text": "Dear customer, SBI has approved your refund. Scan the QR and enter your UPI PIN to receive it within 10 minutes.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS08",
+      "event": 1,
+      "max_trigram_jaccard": 0.045,
+      "closest_source": "app:demo.py",
+      "closest_text": "Dear SBI user, KYC not updated. Account will be suspended in 24 hours. Verify now: http://sbi-kyc-update.example/kyc/verify/8812",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM01",
+      "event": 3,
+      "max_trigram_jaccard": 0.045,
+      "closest_source": "tests:test_upi_guard.py",
+      "closest_text": "upi://pay?pa=bad handle@ybl",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB03",
+      "event": 1,
+      "max_trigram_jaccard": 0.043,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS06",
+      "event": 1,
+      "max_trigram_jaccard": 0.043,
+      "closest_source": "app:demo.py",
+      "closest_text": "You are under digital arrest. Stay on the video call and do not tell anyone. Install AnyDesk so our officer can verify your bank account.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS09",
+      "event": 1,
+      "max_trigram_jaccard": 0.043,
+      "closest_source": "app:demo.py",
+      "closest_text": "India Post: your parcel is on hold. Pay the redelivery fee of Rs 25 within 12 hours at http://parcel-redeliver.example/pay",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HU04",
+      "event": 1,
+      "max_trigram_jaccard": 0.039,
+      "closest_source": "tests:test_upi_guard.py",
+      "closest_text": "upi://pay?pa=sbi.refund@ybl&pn=SBI%20Refund%20Desk&am=4999&cu=INR&tn=Scan%20to%20receive%20your%20refund",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM05",
+      "event": 2,
+      "max_trigram_jaccard": 0.038,
+      "closest_source": "v1:S06",
+      "closest_text": "Now open your banking app and enter your UPI PIN to receive the refund.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS13",
+      "event": 1,
+      "max_trigram_jaccard": 0.037,
+      "closest_source": "app:demo.py",
+      "closest_text": "HDFC Bank: unusual sign-in detected. Your account will be suspended. Confirm your login details at http://hdfc-secure-login.example/auth to keep access.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HA05",
+      "event": 1,
+      "max_trigram_jaccard": 0.037,
+      "closest_source": "app:rules.py",
+      "closest_text": "(?:don'?t|do not) (?:call|contact|visit) (?:the|your) (?:bank|branch|police)",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM04",
+      "event": 2,
+      "max_trigram_jaccard": 0.037,
+      "closest_source": "tests:test_cases_api.py",
+      "closest_text": "Update now at http://sbi-kyc-update.example/kyc/login to avoid suspension.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM01",
+      "event": 1,
+      "max_trigram_jaccard": 0.033,
+      "closest_source": "app:demo.py",
+      "closest_text": "India Post: your parcel is on hold. Pay the redelivery fee of Rs 25 within 12 hours at http://parcel-redeliver.example/pay",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS04",
+      "event": 1,
+      "max_trigram_jaccard": 0.031,
+      "closest_source": "app:rules.py",
+      "closest_text": "verify (?:your )?(?:account|identity|details|information|card|payment)",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HA02",
+      "event": 1,
+      "max_trigram_jaccard": 0.031,
+      "closest_source": "v1:B06",
+      "closest_text": "Your electricity bill of Rs 1,180 for September is generated. Due date 20-Oct. Pay through the official app or website.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS11",
+      "event": 1,
+      "max_trigram_jaccard": 0.03,
+      "closest_source": "v1:S06",
+      "closest_text": "Now open your banking app and enter your UPI PIN to receive the refund.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS12",
+      "event": 1,
+      "max_trigram_jaccard": 0.027,
+      "closest_source": "tests:test_detector.py",
+      "closest_text": "Your electricity connection will be disconnected tonight at 9:30 pm. Call officer immediately.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HG05",
+      "event": 1,
+      "max_trigram_jaccard": 0.027,
+      "closest_source": "app:demo.py",
+      "closest_text": "HDFC Bank: unusual sign-in detected. Your account will be suspended. Confirm your login details at http://hdfc-secure-login.example/auth to keep access.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB01",
+      "event": 1,
+      "max_trigram_jaccard": 0.026,
+      "closest_source": "app:tactics.py",
+      "closest_text": "\\b(?:never|do not|don'?t|not to)\\b[^.!?\\n]{0,25}?\\bshare\\b[^.!?\\n]{0,25}?\\b(?:otp|pin|password|cvv|code)\\b|\\b(?:bank|we|staff)\\b[^.!?\\n]{0,20}?\\b(?:will )?never",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS10",
+      "event": 1,
+      "max_trigram_jaccard": 0.026,
+      "closest_source": "app:demo.py",
+      "closest_text": "Congratulations! You have won Rs 5,000 cashback from PhonePe Rewards.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB11",
+      "event": 1,
+      "max_trigram_jaccard": 0.025,
+      "closest_source": "v1:S03",
+      "closest_text": "Your refund of Rs 1,499 is approved. To receive the refund, enter your UPI PIN on the request sent to your app.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB05",
+      "event": 1,
+      "max_trigram_jaccard": 0.023,
+      "closest_source": "v1:B09",
+      "closest_text": "Your order of 2 items has shipped and will be delivered by Thursday. Track it in the app.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS01",
+      "event": 1,
+      "max_trigram_jaccard": 0.023,
+      "closest_source": "v1:B11",
+      "closest_text": "Your net banking password was changed on 10-Oct at 18:42. If this was not you, call customer care on the number on your card.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS02",
+      "event": 1,
+      "max_trigram_jaccard": 0.023,
+      "closest_source": "tests:test_detector.py",
+      "closest_text": "Share the OTP sent to your phone to stop your account being blocked.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB04",
+      "event": 1,
+      "max_trigram_jaccard": 0.022,
+      "closest_source": "v1:B06",
+      "closest_text": "Your electricity bill of Rs 1,180 for September is generated. Due date 20-Oct. Pay through the official app or website.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB07",
+      "event": 1,
+      "max_trigram_jaccard": 0.021,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HS03",
+      "event": 1,
+      "max_trigram_jaccard": 0.02,
+      "closest_source": "app:demo.py",
+      "closest_text": "India Post: your parcel is on hold. Pay the redelivery fee of Rs 25 within 12 hours at http://parcel-redeliver.example/pay",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB02",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HB09",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HO03",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HO04",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HO05",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HO06",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HU03",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HU06",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HA01",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HA03",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HA06",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HA08",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HA09",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM01",
+      "event": 2,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM02",
+      "event": 3,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM03",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM04",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM05",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM06",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM07",
+      "event": 3,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM08",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HM08",
+      "event": 3,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HG03",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HG04",
+      "event": 2,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HG04",
+      "event": 3,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HG08",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HD04",
+      "event": 1,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HD04",
+      "event": 2,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    },
+    {
+      "scenario": "HD04",
+      "event": 3,
+      "max_trigram_jaccard": 0.0,
+      "closest_source": "v1:B01",
+      "closest_text": "ICICI Bank: Rs 2,340.00 debited from A/c XX7781 on 09-Oct via UPI to GROCERYMART. Not you? Call the number on your card. Never share OTP.",
+      "shared_identifiers": []
+    }
+  ]
+}

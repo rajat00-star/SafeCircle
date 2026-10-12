@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guardian Shield test page (DEMO DATA)</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:640px;margin:40px auto;padding:0 16px}li{margin:12px 0}code{background:#eee;padding:1px 4px}</style>
+</head>
+<body>
+<h1>Guardian Shield manual test page</h1>
+<p><strong>DEMO DATA.</strong> The risky links use the reserved <code>.example</code> domain, which can never resolve,
+so even "Open anyway" cannot reach a real site. See <code>docs/extension-manual-check.md</code>.</p>
+<ol>
+  <li><a id="high" href="http://sbi-kyc-verify-login.example/update">High-risk test link</a>
+      (expected: warning page, "Open anyway" disabled until the acknowledgement box is ticked)</li>
+  <li><a id="medium" href="http://free-gift-card-winner.example/claim">Medium-risk test link</a>
+      (expected: caution page, "Open anyway" is one click)</li>
+  <li><a id="high-newtab" href="http://sbi-kyc-verify-login.example/update" target="_blank" rel="noopener">High-risk test link, new tab</a>
+      (expected: warning opens in a new tab; "Go back" closes it)</li>
+  <li><a id="safe" href="https://example.com/">Safe link (example.com)</a>
+      (expected: opens normally with no warning)</li>
+  <li><a id="same-site" href="#same-site-anchor">Same-site link</a>
+      (expected: never checked, no request to the server)</li>
+</ol>
+<p id="same-site-anchor">Same-site anchor target.</p>
+</body>
+</html>
