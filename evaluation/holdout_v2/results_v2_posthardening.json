@@ -1,0 +1,2679 @@
+{
+  "label": "DEMO DATA - synthetic evaluation set. Fictional people, accounts and handles. Not real customer data.",
+  "metrics": {
+    "dataset": "dataset_v2.json",
+    "dataset_version": "2.0.0",
+    "dataset_sha256": "8ac1dba40e7eb2889e601b70dd877f31a782cd7132a48e81255f18b2f4c1ae7e",
+    "scenarios": 65,
+    "binary_scored": 51,
+    "scam": 24,
+    "benign": 27,
+    "ambiguous": 9,
+    "integration_only": 5,
+    "positive_definition": "flagged = outcome is review, warn or alert (any outcome other than clear); strict = warn or alert only. Ambiguous and integration scenarios are excluded from precision/recall and scored against their acceptable outcomes instead.",
+    "safecircle": {
+      "tp": 23,
+      "fp": 3,
+      "tn": 24,
+      "fn": 1,
+      "precision": {
+        "value": 0.885,
+        "numerator": 23,
+        "denominator": 26
+      },
+      "recall": {
+        "value": 0.958,
+        "numerator": 23,
+        "denominator": 24
+      },
+      "false_positive_rate": {
+        "value": 0.111,
+        "numerator": 3,
+        "denominator": 27
+      },
+      "false_negative_rate": {
+        "value": 0.042,
+        "numerator": 1,
+        "denominator": 24
+      },
+      "f1": 0.92
+    },
+    "safecircle_strict": {
+      "tp": 23,
+      "fp": 3,
+      "tn": 24,
+      "fn": 1,
+      "precision": {
+        "value": 0.885,
+        "numerator": 23,
+        "denominator": 26
+      },
+      "recall": {
+        "value": 0.958,
+        "numerator": 23,
+        "denominator": 24
+      },
+      "false_positive_rate": {
+        "value": 0.111,
+        "numerator": 3,
+        "denominator": 27
+      },
+      "false_negative_rate": {
+        "value": 0.042,
+        "numerator": 1,
+        "denominator": 24
+      },
+      "f1": 0.92
+    },
+    "baseline_keyword": {
+      "tp": 19,
+      "fp": 4,
+      "tn": 23,
+      "fn": 5,
+      "precision": {
+        "value": 0.826,
+        "numerator": 19,
+        "denominator": 23
+      },
+      "recall": {
+        "value": 0.792,
+        "numerator": 19,
+        "denominator": 24
+      },
+      "false_positive_rate": {
+        "value": 0.148,
+        "numerator": 4,
+        "denominator": 27
+      },
+      "false_negative_rate": {
+        "value": 0.208,
+        "numerator": 5,
+        "denominator": 24
+      },
+      "f1": 0.809
+    },
+    "baseline_legacy_detector": {
+      "tp": 22,
+      "fp": 18,
+      "tn": 9,
+      "fn": 2,
+      "precision": {
+        "value": 0.55,
+        "numerator": 22,
+        "denominator": 40
+      },
+      "recall": {
+        "value": 0.917,
+        "numerator": 22,
+        "denominator": 24
+      },
+      "false_positive_rate": {
+        "value": 0.667,
+        "numerator": 18,
+        "denominator": 27
+      },
+      "false_negative_rate": {
+        "value": 0.083,
+        "numerator": 2,
+        "denominator": 24
+      },
+      "f1": 0.688
+    },
+    "outcome_matrix_label_by_outcome": {
+      "scam": {
+        "clear": 1,
+        "review": 0,
+        "warn": 6,
+        "alert": 17
+      },
+      "benign": {
+        "clear": 24,
+        "review": 0,
+        "warn": 3,
+        "alert": 0
+      },
+      "ambiguous": {
+        "clear": 7,
+        "review": 0,
+        "warn": 2,
+        "alert": 0
+      },
+      "integration": {
+        "clear": 5,
+        "review": 0,
+        "warn": 0,
+        "alert": 0
+      }
+    },
+    "acceptable_outcome_rate": {
+      "ok": 55,
+      "of": 60
+    },
+    "ambiguous_acceptable": {
+      "ok": 8,
+      "of": 9
+    },
+    "integration_expectations": {
+      "ok": 9,
+      "of": 9
+    },
+    "alerts": {
+      "total_notifications": 30,
+      "benign_scenarios_with_a_notification": 3,
+      "scenarios_with_more_than_one_notification": 2
+    },
+    "latency_ms_per_event_api_inprocess": {
+      "p50": 7.8,
+      "max": 732.8,
+      "note": "TestClient in-process, includes local OCR for screenshots; not network latency"
+    }
+  },
+  "rows": [
+    {
+      "id": "HB01",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "Debit card spend notice with a block keyword",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 15,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation"
+      ],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 732.8,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HB02",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "IMPS credit notice",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 15,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation"
+      ],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.8,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HB03",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "EMI auto-debit reminder",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.9,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HB04",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "Fixed deposit renewal notice",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.4,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HB05",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "Credit card statement ready",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.3,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HB06",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "New-login security alert pointing to the official app",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 30,
+      "review_required": true,
+      "tactics": [
+        "credential_request"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 8.0,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": false
+    },
+    {
+      "id": "HB07",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "Cheque cleared",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 15,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation"
+      ],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.6,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HB08",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "UPI AutoPay mandate confirmation the user set up",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.8,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HB09",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "Quarterly interest credit",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.4,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HB10",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "Purchase OTP with amount and merchant (overlap: same family as v1 B03)",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.5,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HB11",
+      "category": "benign_bank",
+      "label": "benign",
+      "description": "Refund notice with no request (false-positive trap)",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 25,
+      "review_required": false,
+      "tactics": [
+        "reward_lure"
+      ],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.8,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HO01",
+      "category": "ordinary",
+      "label": "benign",
+      "description": "Birthday wish",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 8.0,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HO02",
+      "category": "ordinary",
+      "label": "benign",
+      "description": "Errand request",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.6,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HO03",
+      "category": "ordinary",
+      "label": "benign",
+      "description": "School holiday notice",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.3,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HO04",
+      "category": "ordinary",
+      "label": "benign",
+      "description": "Work chat as a conversation",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 13.0,
+      "steps": [
+        {
+          "kind": "conversation",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HO05",
+      "category": "ordinary",
+      "label": "benign",
+      "description": "Genuine delivery OTP that IS meant to be shared with the courier (false-positive trap)",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 59,
+      "review_required": true,
+      "tactics": [
+        "secret_request"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 7.5,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": false
+    },
+    {
+      "id": "HO06",
+      "category": "ordinary",
+      "label": "benign",
+      "description": "LPG booking confirmation",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 35,
+      "review_required": true,
+      "tactics": [
+        "payment_pressure"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 7.8,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": false
+    },
+    {
+      "id": "HU01",
+      "category": "legit_upi",
+      "label": "benign",
+      "description": "Tea stall static QR, no amount",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 9.8,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HU02",
+      "category": "legit_upi",
+      "label": "benign",
+      "description": "Grocery counter dynamic QR for a bill",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.7,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HU03",
+      "category": "legit_upi",
+      "label": "benign",
+      "description": "Friend shares a UPI ID for movie tickets",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.6,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HU04",
+      "category": "legit_upi",
+      "label": "benign",
+      "description": "Housing society maintenance QR",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.4,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HU05",
+      "category": "legit_upi",
+      "label": "benign",
+      "description": "Tutor shares a fee QR",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.3,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HU06",
+      "category": "legit_upi",
+      "label": "benign",
+      "description": "Canteen handle with no context (data is limited, so review is acceptable)",
+      "acceptable": [
+        "clear",
+        "review"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 6.7,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS01",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "PAN-update deactivation threat with look-alike link",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 42,
+      "review_required": false,
+      "tactics": [
+        "credential_link"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 119.3,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS02",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "Caller posing as bank asks for the code to unblock a card",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 85,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation",
+        "kyc_suspension",
+        "secret_request"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 7.7,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS03",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "Lottery win with processing fee to a UPI ID",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 76,
+      "review_required": false,
+      "tactics": [
+        "payment_diversion",
+        "payment_pressure",
+        "reward_lure"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 7.6,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS04",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "Fake income-tax refund link with deadline",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 77,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation",
+        "credential_link",
+        "credential_request",
+        "reward_lure",
+        "urgency"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 8.6,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS05",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "Cashback QR that is really a payment, with PIN-to-receive",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 96,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation",
+        "payment_pressure",
+        "reward_lure",
+        "secret_request",
+        "upi_collect"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 8.0,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS06",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "Courier drugs plus police arrest threat with secrecy",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 96,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation",
+        "digital_arrest",
+        "payment_diversion",
+        "payment_pressure",
+        "secrecy"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 8.5,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS07",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "Gas disconnection threat with a phone number (overlap: same family as v1 S08)",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 36,
+      "review_required": false,
+      "tactics": [
+        "threat",
+        "urgency"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 8.0,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS08",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "Account-ban threat pushing an APK",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 68,
+      "review_required": false,
+      "tactics": [
+        "remote_access",
+        "suspicious_link"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 8.2,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS09",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "PF release charge to a UPI ID",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 35,
+      "review_required": true,
+      "tactics": [
+        "payment_pressure"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 7.9,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS10",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "Product-rating job with registration fee",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 15,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation"
+      ],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.8,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": false
+    },
+    {
+      "id": "HS11",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "Short link asking for user ID, password and OTP",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 91,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation",
+        "credential_link",
+        "kyc_suspension",
+        "secret_request"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 8.1,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS12",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "SIM re-verification with SIM swap code request",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 70,
+      "review_required": false,
+      "tactics": [
+        "secret_request",
+        "threat"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 7.9,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HS13",
+      "category": "obvious_scam",
+      "label": "scam",
+      "description": "Bank-name phishing URL with no message",
+      "acceptable": [
+        "review",
+        "warn",
+        "alert"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 43,
+      "review_required": true,
+      "tactics": [
+        "credential_link"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 7.3,
+      "steps": [
+        {
+          "kind": "url",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HA01",
+      "category": "ambiguous",
+      "label": "ambiguous",
+      "description": "'Is this still your number?' opener",
+      "acceptable": [
+        "clear",
+        "review"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.6,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HA02",
+      "category": "ambiguous",
+      "label": "ambiguous",
+      "description": "Statement e-mail with no sender identity and no request",
+      "acceptable": [
+        "clear",
+        "review"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.1,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HA03",
+      "category": "ambiguous",
+      "label": "ambiguous",
+      "description": "Trip organiser asks for advance payment to a UPI ID",
+      "acceptable": [
+        "clear",
+        "review",
+        "warn"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.8,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HA04",
+      "category": "ambiguous",
+      "label": "ambiguous",
+      "description": "Overdue EMI with late-charge pressure, points to official app",
+      "acceptable": [
+        "clear",
+        "review",
+        "warn"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.2,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HA05",
+      "category": "ambiguous",
+      "label": "ambiguous",
+      "description": "Unknown 'branch manager' asks for a re-KYC visit",
+      "acceptable": [
+        "clear",
+        "review",
+        "warn"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 15,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation"
+      ],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.2,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": true,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HA06",
+      "category": "ambiguous",
+      "label": "ambiguous",
+      "description": "Friend stranded at airport asks for money (could be account takeover)",
+      "acceptable": [
+        "review",
+        "warn"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 35,
+      "review_required": true,
+      "tactics": [
+        "payment_pressure"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 7.7,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HA07",
+      "category": "ambiguous",
+      "label": "ambiguous",
+      "description": "Wallet KYC pending, asks for an in-person visit only",
+      "acceptable": [
+        "clear",
+        "review",
+        "warn"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 45,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation",
+        "kyc_suspension"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 7.4,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HA08",
+      "category": "ambiguous",
+      "label": "ambiguous",
+      "description": "Stock tip with a premium group",
+      "acceptable": [
+        "review",
+        "warn"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.4,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": false
+    },
+    {
+      "id": "HA09",
+      "category": "ambiguous",
+      "label": "ambiguous",
+      "description": "UPI ID with an unlisted suffix and no context",
+      "acceptable": [
+        "clear",
+        "review"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.0,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HM01",
+      "category": "multi_stage",
+      "label": "scam",
+      "description": "Courier hold, then tracking link, then small redelivery QR",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 47,
+      "review_required": false,
+      "tactics": [
+        "payment_pressure",
+        "suspicious_link"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 23.7,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "url",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": true,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HM02",
+      "category": "multi_stage",
+      "label": "scam",
+      "description": "Narcotics-bureau screenshot, transfer demand, then a UPI ID",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 77,
+      "review_required": false,
+      "tactics": [
+        "digital_arrest",
+        "payment_pressure"
+      ],
+      "conflicts": 0,
+      "notifications": 2,
+      "elapsed_ms": 168.2,
+      "steps": [
+        {
+          "kind": "screenshot",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": true,
+          "case_changed": true,
+          "ocr_status": "completed"
+        },
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HM03",
+      "category": "multi_stage",
+      "label": "scam",
+      "description": "Task-job conversation escalating to a top-up",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "warn",
+      "level": "medium",
+      "score": 50,
+      "review_required": false,
+      "tactics": [
+        "payment_diversion"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 12.0,
+      "steps": [
+        {
+          "kind": "conversation",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HM04",
+      "category": "multi_stage",
+      "label": "scam",
+      "description": "Look-alike billing link, then card-update pressure",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 80,
+      "review_required": false,
+      "tactics": [
+        "credential_link",
+        "credential_request",
+        "payment_pressure",
+        "urgency"
+      ],
+      "conflicts": 0,
+      "notifications": 2,
+      "elapsed_ms": 15.8,
+      "steps": [
+        {
+          "kind": "url",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HM05",
+      "category": "multi_stage",
+      "label": "scam",
+      "description": "Accidental credit, then screenshot of a PIN-approval request (overlap: same family as v1 S16)",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 84,
+      "review_required": false,
+      "tactics": [
+        "secret_request",
+        "upi_collect"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 102.2,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "screenshot",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": "completed"
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HM06",
+      "category": "multi_stage",
+      "label": "scam",
+      "description": "Marketplace buyer posing as army officer, then receive-money QR",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 74,
+      "review_required": false,
+      "tactics": [
+        "payment_pressure",
+        "upi_collect"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 23.6,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HM07",
+      "category": "multi_stage",
+      "label": "benign",
+      "description": "Order delivery updates with the official order link",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 15,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation"
+      ],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 22.9,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "url",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HM08",
+      "category": "multi_stage",
+      "label": "benign",
+      "description": "Restaurant bill, table QR, payment-success screenshot",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 103.5,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "screenshot",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": "completed"
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HG01",
+      "category": "malformed",
+      "label": "integration",
+      "description": "UPI link with empty payee and bad amount",
+      "acceptable": null,
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 5.5,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 422,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": false,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "expect_checks": {
+        "http_status": true,
+        "case_unchanged": true
+      },
+      "expect_ok": true
+    },
+    {
+      "id": "HG02",
+      "category": "malformed",
+      "label": "integration",
+      "description": "Free text instead of a UPI ID",
+      "acceptable": null,
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 4.8,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 422,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": false,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": true,
+      "expect_checks": {
+        "http_status": true,
+        "case_unchanged": true
+      },
+      "expect_ok": true
+    },
+    {
+      "id": "HG03",
+      "category": "malformed",
+      "label": "benign",
+      "description": "Emoji-only message",
+      "acceptable": [
+        "clear",
+        "review"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.6,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HG04",
+      "category": "irrelevant",
+      "label": "scam",
+      "description": "Scam followed by irrelevant evidence that must not dilute it",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 85,
+      "review_required": false,
+      "tactics": [
+        "authority_impersonation",
+        "kyc_suspension",
+        "secret_request"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 24.1,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "url",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HG05",
+      "category": "contradictory",
+      "label": "scam",
+      "description": "Phishing message, then a 'please ignore' follow-up claiming to be the bank",
+      "acceptable": [
+        "review",
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 74,
+      "review_required": true,
+      "tactics": [
+        "authority_impersonation",
+        "credential_link",
+        "kyc_suspension"
+      ],
+      "conflicts": 1,
+      "notifications": 1,
+      "elapsed_ms": 16.2,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true
+    },
+    {
+      "id": "HG06",
+      "category": "malformed",
+      "label": "integration",
+      "description": "Screenshot with no readable text",
+      "acceptable": null,
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 58.4,
+      "steps": [
+        {
+          "kind": "blank_screenshot",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": false,
+          "response_review_required": true,
+          "case_changed": false,
+          "ocr_status": "partial"
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "expect_checks": {
+        "http_status": true,
+        "case_unchanged": true,
+        "stored": true,
+        "review_required": true
+      },
+      "expect_ok": true
+    },
+    {
+      "id": "HG07",
+      "category": "malformed",
+      "label": "integration",
+      "description": "Message over the 5,000 character limit",
+      "acceptable": null,
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 5.1,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 422,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": false,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "expect_checks": {
+        "http_status": true,
+        "case_unchanged": true
+      },
+      "expect_ok": true
+    },
+    {
+      "id": "HG08",
+      "category": "malformed",
+      "label": "integration",
+      "description": "Garbage that is not a URL submitted as a link",
+      "acceptable": null,
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 7.5,
+      "steps": [
+        {
+          "kind": "url",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "expect_checks": {
+        "http_status": true,
+        "no_server_error": true
+      },
+      "expect_ok": true
+    },
+    {
+      "id": "HD01",
+      "category": "duplicate",
+      "label": "scam",
+      "description": "Same scam message added twice",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 74,
+      "review_required": false,
+      "tactics": [
+        "kyc_suspension",
+        "secret_request"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 14.0,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": true,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": false,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true,
+      "expect_checks": {
+        "duplicates": true,
+        "max_notifications": true
+      },
+      "expect_ok": true
+    },
+    {
+      "id": "HD02",
+      "category": "duplicate",
+      "label": "scam",
+      "description": "Same UPI check attached twice",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 92,
+      "review_required": false,
+      "tactics": [
+        "reward_lure",
+        "secret_request",
+        "upi_collect"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 14.6,
+      "steps": [
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "upi",
+          "http_status": 200,
+          "duplicate": true,
+          "stored": true,
+          "response_review_required": false,
+          "case_changed": false,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true,
+      "expect_checks": {
+        "duplicates": true,
+        "max_notifications": true
+      },
+      "expect_ok": true
+    },
+    {
+      "id": "HD03",
+      "category": "duplicate",
+      "label": "scam",
+      "description": "Same scam reworded slightly; risk does not change, so no second alert expected",
+      "acceptable": [
+        "warn",
+        "alert"
+      ],
+      "outcome": "alert",
+      "level": "high",
+      "score": 74,
+      "review_required": false,
+      "tactics": [
+        "kyc_suspension",
+        "secret_request"
+      ],
+      "conflicts": 0,
+      "notifications": 1,
+      "elapsed_ms": 15.2,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        }
+      ],
+      "flagged": true,
+      "flagged_strict": true,
+      "keyword_flagged": true,
+      "legacy_flagged": true,
+      "acceptable_ok": true,
+      "expect_checks": {
+        "duplicates": true,
+        "max_notifications": true
+      },
+      "expect_ok": true
+    },
+    {
+      "id": "HD04",
+      "category": "duplicate",
+      "label": "benign",
+      "description": "Benign message forwarded three times",
+      "acceptable": [
+        "clear"
+      ],
+      "outcome": "clear",
+      "level": "low",
+      "score": 0,
+      "review_required": false,
+      "tactics": [],
+      "conflicts": 0,
+      "notifications": 0,
+      "elapsed_ms": 19.8,
+      "steps": [
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": false,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": true,
+          "ocr_status": null
+        },
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": true,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": false,
+          "ocr_status": null
+        },
+        {
+          "kind": "message",
+          "http_status": 200,
+          "duplicate": true,
+          "stored": null,
+          "response_review_required": null,
+          "case_changed": false,
+          "ocr_status": null
+        }
+      ],
+      "flagged": false,
+      "flagged_strict": false,
+      "keyword_flagged": false,
+      "legacy_flagged": false,
+      "acceptable_ok": true,
+      "expect_checks": {
+        "duplicates": true,
+        "max_notifications": true
+      },
+      "expect_ok": true
+    }
+  ]
+}
