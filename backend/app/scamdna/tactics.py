@@ -173,6 +173,12 @@ _SAFETY_ADVICE = re.compile(
     r"|\b(?:bank|we|staff)\b[^.!?\n]{0,20}?\b(?:will )?never ask\b"
     r"|\bif (?:this was )?not (?:done by )?you\b[^.!?\n]{0,40}?\b(?:call|contact|report)\b")
 
+# A message telling the reader to disregard an earlier one. Recorded, never trusted: a newer message is not
+# more reliable because it is newer, so this only feeds conflict detection and never lowers a score.
+_RETRACTION = re.compile(
+    r"\b(?:ignore|disregard)\b[^.!?\n]{0,25}?\b(?:earlier|previous|last|above|prior|old|first)\b[^.!?\n]{0,15}?"
+    r"\b(?:message|msg|sms|e-?mail|mail|text|link|notice|call)s?\b")
+
 # Organisation names -> canonical keys. Used for "claimed identity" and campaign correlation.
 ORG_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     (key, re.compile(r"\b(?:" + pat + r")\b")) for key, pat in [
@@ -227,6 +233,7 @@ class EventDetection:
     claimed_orgs: list[str]
     text_length: int
     mitigation: str | None = None
+    retraction: list[str] = field(default_factory=list)
 
     @property
     def score(self) -> float:
@@ -296,6 +303,7 @@ def detect_text(text: str) -> EventDetection:
         ml_probability=base.ml["probability"] if base.ml else None,
         base_score=base.risk_score, safety_advice=advice,
         claimed_orgs=claimed_orgs(nt.text), text_length=len(text.strip()), mitigation=mitigation,
+        retraction=[m.group(0) for m in _RETRACTION.finditer(nt.text)][:2],
     )
 
 

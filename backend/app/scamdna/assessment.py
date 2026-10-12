@@ -15,7 +15,7 @@ import json
 from dataclasses import dataclass
 
 from .evidence import template_text
-from .tactics import CHAIN_STAGES, STAGES, TACTICS, EventDetection, official_domains
+from .tactics import CHAIN_STAGES, REQUEST_TACTICS, STAGES, TACTICS, EventDetection, official_domains
 
 SCORE_LABEL = "Heuristic risk indicator from transparent rules. It is not a calibrated probability of fraud."
 
@@ -80,6 +80,7 @@ def serialize_detection(det: EventDetection, redact, data_quality: dict, indicat
                  for u in det.urls],
         "ml_probability": det.ml_probability,
         "safety_advice": det.safety_advice,
+        "retraction": det.retraction,
         "mitigation": det.mitigation,
         "claimed_orgs": det.claimed_orgs,
         "data_quality": data_quality,
@@ -312,6 +313,27 @@ def _conflicts(ordered: list[dict]) -> list[str]:
                 out.append(f"Event #{a['seq']} reads like a genuine safety notice, while event #{b['seq']} asks for a "
                            "code or PIN. Check that both really belong to the same conversation; a genuine bank "
                            "message does not make a later request genuine.")
+    # A later message that retracts or reassures after an earlier risky request. Kept as a conflict for review;
+    # the earlier request still counts in full, because scammers send "ignore the last message" follow-ups too.
+    covered = {(a["id"], b["id"]) for a in advises for b in asks}
+    for j, later in enumerate(ordered):
+        det = later["detection"]
+        retracts, reassures = bool(det.get("retraction")), bool(det.get("safety_advice"))
+        if not (retracts or reassures):
+            continue
+        own = [TACTICS[t["code"]].title for t in det["tactics"] if t["code"] in REQUEST_TACTICS]
+        for earlier in ordered[:j]:
+            req = [TACTICS[t["code"]].title for t in earlier["detection"]["tactics"] if t["code"] in REQUEST_TACTICS]
+            if not req or (not retracts and (later["id"], earlier["id"]) in covered):
+                continue
+            what = "tells you to ignore an earlier message" if retracts else "reassures you with safety advice"
+            text = (f"Event #{later['seq']} {what} after event #{earlier['seq']} made a risky request "
+                    f"({', '.join(req[:2]).lower()}). A newer message is not more trustworthy because it is newer: "
+                    "both are kept, the earlier request still counts, and the sender should be verified through a "
+                    "channel you already trust.")
+            if own:
+                text += f" Event #{later['seq']} itself also makes a request ({', '.join(own[:2]).lower()})."
+            out.append(text)
     for e in ordered:
         for org in e["detection"].get("claimed_orgs", []):
             offic = official_domains(org)
